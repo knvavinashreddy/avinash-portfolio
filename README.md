@@ -1,6 +1,6 @@
 # Avinash Reddy Konala · Portfolio
 
-A playful portfolio built with React + Vite: an illustrated Bhimavaram → Hyderabad landscape with a Day/Night switch, a journey timeline, a pick-a-card project deck, an interactive toolkit, coding ratings, a YouTube launch countdown, a draggable "off the clock" board, a notes wall, a built-in lo-fi record player, and keyboard shortcuts (M, G, L, Y, R).
+A portfolio built with React + Vite: a hero with my cut-out photo in front of a Mustard Oil sun, a Day/Night switch, a journey timeline, a pick-a-card project deck, an interactive toolkit, coding ratings, a YouTube launch countdown, a draggable "off the clock" board, a notes wall, a built-in lo-fi record player, and keyboard shortcuts (M, G, L, Y, R).
 
 ## Run it
 
@@ -18,7 +18,6 @@ Almost everything lives in **`src/data.js`**:
 | --- | --- |
 | Headline, intro, degree | `profile` |
 | Email, GitHub, LinkedIn, YouTube, resume | `links` |
-| Clickable places on the landscape | `places` |
 | Journey map: nine stops, stories, years, gallery photos | `journeyStops` |
 | Projects, stats, repo and demo links | `projects` |
 | Tools and what you use them for | `toolkit` |
@@ -28,7 +27,12 @@ Almost everything lives in **`src/data.js`**:
 
 Search the file for `PLACEHOLDER` to find every link you still need to replace.
 
-**Your photo:** replace `src/assets/avinash.jpg` (square image works best).
+**Your photo:** the small avatar in the top bar uses `src/assets/avinash.jpg`. The big hero photo is `src/assets/avinash-cutout.png`, made from that JPG by `scripts/cutout.mjs` (it removes a plain black background). For a new photo on a black background:
+
+```bash
+sips -s format bmp src/assets/avinash.jpg --out /tmp/avinash.bmp
+node scripts/cutout.mjs /tmp/avinash.bmp src/assets/avinash-cutout.png
+```
 **Resume:** put `resume.pdf` inside the `public/` folder.
 **Board photos:** put images in `public/` and add `src: '/your-photo.jpg'` to a photo item in `boardItems`.
 

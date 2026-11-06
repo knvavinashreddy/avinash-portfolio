@@ -281,91 +281,6 @@ p { margin: 0; }
 .theme-toggle span { padding: 5px 12px; border-radius: 999px; font-size: 0.85rem; font-weight: 700; color: var(--muted); }
 .theme-toggle span.on { background: var(--ink); color: var(--bg); }
 
-/* ───────── Scene ───────── */
-.scene-scroll { overflow-x: auto; scrollbar-width: none; }
-.scene-scroll::-webkit-scrollbar { display: none; }
-.scene { position: relative; min-width: 900px; aspect-ratio: 1440 / 560; }
-.scene svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-.scene svg * { transition: fill 0.6s, stroke 0.6s, opacity 0.6s, stop-color 0.6s; }
-.sky-a { stop-color: var(--sky-a); }
-.sky-b { stop-color: var(--sky-b); }
-.stars { fill: #fff; opacity: var(--stars); }
-.sun circle { fill: var(--sun); }
-.sun .moon-cut { opacity: var(--moon-cut); }
-.clouds { fill: var(--cloud); opacity: var(--clouds); }
-.hill-far { fill: var(--hill-far); }
-.hill-near { fill: var(--hill-near); }
-.city { fill: var(--city); }
-.arch { fill: var(--sky-b); opacity: 0.85; }
-.windows { fill: var(--win); opacity: var(--win-op); }
-.campus rect, .campus circle:not(.clock) { fill: var(--campus); }
-.campus polygon { fill: var(--campus-roof); }
-.campus .clock { fill: var(--win); }
-.houses { fill: var(--house); }
-.roofs { fill: var(--roof); }
-.temple { fill: var(--temple); }
-.college-b rect { fill: var(--house); }
-.college-b polygon { fill: var(--campus-roof); }
-.field-a { fill: var(--field-a); }
-.field-b { fill: var(--field-b); }
-.field-c { fill: var(--field-c); }
-.rows path { stroke: var(--row); stroke-width: 2; fill: none; }
-.canal { fill: none; stroke: var(--water); stroke-width: 20; stroke-linecap: round; }
-.track { fill: none; stroke: var(--track); stroke-width: 3; }
-.track-ties { fill: none; stroke: var(--track); stroke-width: 9; stroke-dasharray: 2 10; opacity: 0.6; }
-.train rect { fill: var(--paper); stroke: var(--ink); stroke-width: 2; }
-.train .engine { fill: var(--accent); }
-.trunk { stroke: var(--trunk); }
-.fronds { fill: var(--frond); }
-
-.pin {
-  position: absolute; transform: translate(-50%, -100%);
-  display: flex; flex-direction: column; align-items: center; gap: 4px;
-  background: none; border: 0; cursor: pointer; padding: 0;
-}
-.pin-label {
-  background: var(--paper); color: var(--ink);
-  border: 2px solid var(--ink);
-  padding: 3px 10px; border-radius: 999px;
-  font-weight: 700; font-size: 0.82rem; white-space: nowrap;
-  box-shadow: 0 3px 0 var(--ink);
-  transition: transform 0.15s, background-color 0.2s;
-}
-.pin-dot {
-  order: 2; width: 12px; height: 12px; border-radius: 50%;
-  background: var(--accent); border: 2px solid var(--ink);
-}
-.pin:hover .pin-label, .pin.is-open .pin-label { transform: translateY(-3px); background: var(--accent); color: var(--on-accent); }
-.pop {
-  position: absolute; z-index: 5; width: 260px;
-  transform: translate(-12px, 14px);
-  background: var(--paper); color: var(--ink);
-  border: 2px solid var(--ink); border-radius: 18px;
-  padding: 16px 18px; box-shadow: 0 6px 0 var(--ink);
-}
-.pop-left { transform: translate(calc(-100% + 12px), 14px); }
-.pop strong { font-family: var(--display); font-size: 1.05rem; display: block; margin-bottom: 4px; padding-right: 20px; }
-.pop p { font-size: 0.95rem; color: var(--muted); }
-.pop-close { position: absolute; top: 6px; right: 10px; border: 0; background: none; font-size: 1.4rem; cursor: pointer; line-height: 1; }
-.scene-hint { position: absolute; left: 20px; bottom: 14px; color: #fff; text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5); }
-
-/* ───────── Intro ───────── */
-.intro { padding-top: 0; }
-.intro-grid {
-  display: grid; grid-template-columns: 300px 1fr; gap: 56px; align-items: center;
-  margin-top: -90px; position: relative; z-index: 2;
-}
-.portrait { margin: 0; position: relative; }
-.portrait img {
-  width: 300px; height: 300px; border-radius: 50%; object-fit: cover; object-position: 50% 30%;
-  border: 8px solid var(--accent); background: #000;
-  box-shadow: 0 0 0 8px var(--bg);
-}
-.portrait figcaption { position: absolute; left: 230px; bottom: -18px; transform: rotate(-6deg); white-space: nowrap; }
-.intro-grid > div { padding-top: 90px; }
-.hello { font-family: var(--hand); font-size: 1.8rem; color: var(--muted); margin-bottom: 6px; }
-.degree { margin-top: 10px; font-weight: 700; }
-
 /* ───────── Journey: map world ───────── */
 .m-land { fill: var(--m-land); }
 /* Topographic background: dot grid, contour lines, a glow inside the heart, chart labels */
@@ -797,11 +712,6 @@ p { margin: 0; }
   section, .yt-section, #life, #wall { padding-top: 80px; }
   .nav-links { display: none; }
   .nav-actions { margin-left: auto; }
-  .intro-grid { grid-template-columns: 1fr; gap: 20px; margin-top: -48px; }
-  .scene-hint { top: 12px; bottom: auto; }
-  .intro-grid > div { padding-top: 0; }
-  .portrait img { width: 200px; height: 200px; }
-  .portrait figcaption { position: static; display: inline-block; margin-top: 10px; transform: rotate(-3deg); }
   .stats { grid-template-columns: 1fr; }
   .mini-stats { grid-template-columns: 1fr 1fr; }
   .keys { grid-template-columns: 1fr 1fr; }
@@ -850,18 +760,6 @@ body::after {
   opacity: 0; transition: opacity 0.35s;
 }
 .spot:hover::before, .stat:hover::before, .detail:hover::before, .keys a:hover::before, .yt:hover::before, .wall-form:hover::before { opacity: 1; }
-
-/* Soft aurora behind the hero copy */
-.intro-grid::before {
-  content: ''; position: absolute; z-index: -1; pointer-events: none;
-  left: 30%; top: 10%; width: 60%; height: 120%;
-  background:
-    radial-gradient(closest-side, color-mix(in srgb, var(--ai-1) 22%, transparent), transparent),
-    radial-gradient(closest-side at 70% 60%, color-mix(in srgb, var(--ai-2) 14%, transparent), transparent);
-  filter: blur(40px); opacity: 0.8;
-  animation: aurora 14s ease-in-out infinite alternate;
-}
-@keyframes aurora { to { transform: translate3d(-6%, 8%, 0) scale(1.08); } }
 
 /* Top bar: brand, a live status, music and theme. Section links moved to the dock. */
 .nav-status {
@@ -930,19 +828,6 @@ body::after {
 .btn-primary:hover { box-shadow: 0 6px 0 color-mix(in srgb, var(--accent) 55%, #000); }
 .dock-bar a.dock-resume { box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--accent) 55%, #000); }
 
-/* Portrait ring through the whole palette */
-.portrait img {
-  border-color: transparent;
-  background: conic-gradient(from 200deg, var(--chicory), var(--mustard), var(--lime), var(--sky), var(--chicory)) border-box;
-}
-
-/* Hero aurora: chicory and light blue in the day, lime and blue at night */
-.intro-grid::before {
-  background:
-    radial-gradient(closest-side, color-mix(in srgb, var(--ai-1) 20%, transparent), transparent),
-    radial-gradient(closest-side at 70% 60%, color-mix(in srgb, var(--ai-2) 28%, transparent), transparent);
-}
-
 /* Status dots: Lime Cream "online" light */
 .nav-status i { background: #9ec24f; animation: ping-lime 2.4s infinite; }
 @keyframes ping-lime { 70% { box-shadow: 0 0 0 8px rgba(158, 194, 79, 0); } 0% { box-shadow: 0 0 0 0 rgba(158, 194, 79, 0.6); } }
@@ -967,3 +852,74 @@ body::after {
   .palette .c5 { grid-column: 1 / -1; }
 }
 .palette em { font-style: normal; opacity: 0.8; }
+
+/* ═════════ Hero: me, in front of a Mustard Oil sun ═════════ */
+.hero {
+  position: relative; overflow: hidden; padding: clamp(28px, 4.5vh, 52px) 0 0; text-align: center;
+  display: flex; flex-direction: column;
+  /* pure black in both themes; the only colour is the sun behind me */
+  background: #000; color: #f8f1df;
+}
+.hero-copy { position: relative; z-index: 2; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 14px;
+  font: 600 0.72rem var(--mono); letter-spacing: 0.32em; text-transform: uppercase; color: #f8f1df;
+}
+.hero-eyebrow::after { content: ''; width: 28px; height: 6px; border-radius: 6px; background: var(--mustard); }
+.hero h1 {
+  margin-top: 12px; font-size: clamp(2.4rem, 6.7vw, 5.3rem); line-height: 0.98; letter-spacing: -0.035em; font-weight: 800; color: #f8f1df;
+}
+.hero-dot { color: var(--mustard); }
+.hero-sub { margin: 14px auto 0; max-width: 46ch; color: rgba(248, 241, 223, 0.72); font-size: clamp(0.92rem, 1.3vw, 1rem); }
+
+.hero-figure {
+  /* as big as fits: the whole hero stays on one laptop screen, buttons clear of the dock */
+  position: relative; width: min(560px, 92vw, calc(100svh - 330px)); margin: 18px auto 0;
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.hero-sun {
+  position: absolute; left: 50%; bottom: -32%; width: 100%; aspect-ratio: 1; border-radius: 50%;
+  transform: translateX(-50%);
+  background: var(--mustard);
+}
+.hero-photo {
+  position: relative; z-index: 1; width: 100%; height: auto; display: block;
+}
+.hero-note { position: absolute; z-index: 2; right: -34%; top: 26%; transform: rotate(-6deg); white-space: nowrap; color: rgba(248, 241, 223, 0.6); font-size: 1.15rem; }
+.hero-ctas {
+  position: absolute; z-index: 3; left: 50%; bottom: 9%; transform: translateX(-50%);
+  display: flex; gap: 14px; white-space: nowrap;
+}
+.hero-btn {
+  display: inline-flex; align-items: center; gap: 9px; padding: 12px 20px; border-radius: 999px;
+  font: 700 0.9rem var(--body); text-decoration: none; transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+.hero-btn:hover { transform: translateY(-2px); }
+.hero-btn-primary { background: var(--mustard); color: #2d1218; }
+.hero-btn-ghost {
+  color: #f8f1df; background: rgba(28, 23, 22, 0.72); border: 1.5px solid rgba(248, 241, 223, 0.85);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+
+/* Entrance: text settles, the sun rises, I step in */
+@keyframes hero-up { from { opacity: 0; transform: translateY(18px); } }
+@keyframes sun-rise { from { opacity: 0; transform: translateX(-50%) translateY(14%) scale(0.92); } }
+.hero-copy > * { animation: hero-up 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.hero-copy > :nth-child(2) { animation-delay: 0.08s; }
+.hero-copy > :nth-child(3) { animation-delay: 0.16s; }
+.hero-sun { animation: sun-rise 1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s both; }
+.hero-photo { animation: hero-up 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.3s both; }
+.hero-ctas > * { animation: hero-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) 0.55s both; }
+
+@media (max-width: 960px) {
+  .hero-note { display: none; }
+}
+@media (max-width: 560px) {
+  .hero-eyebrow-loc { display: none; }
+}
+@media (max-width: 760px) {
+  .hero-eyebrow { font-size: 0.7rem; letter-spacing: 0.22em; }
+  .hero-ctas { gap: 8px; bottom: 18px; }
+  .hero-btn { padding: 11px 16px; font-size: 0.9rem; gap: 8px; }
+  .hero-eyebrow { white-space: nowrap; }
+}

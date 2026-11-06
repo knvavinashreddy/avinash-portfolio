@@ -24,54 +24,6 @@ export const links = {
   resume: '/resume.pdf', // PLACEHOLDER: drop resume.pdf into /public
 }
 
-// Clickable spots on the hero landscape. x / y are percentages of the scene.
-export const places = [
-  {
-    id: 'home',
-    x: 13,
-    y: 64,
-    label: 'Bhimavaram',
-    title: 'Home base',
-    text: 'Paddy fields, fish ponds and the best food in Andhra. I will not be taking questions.',
-  },
-  {
-    id: 'school',
-    x: 24,
-    y: 58,
-    label: 'Sri Chaitanya',
-    title: 'Sri Chaitanya Techno School',
-    text: 'Where I learned that every problem has a formula. Mostly.',
-  },
-  {
-    id: 'college',
-    x: 36,
-    y: 62,
-    label: 'Aditya Jr. College',
-    title: 'Aditya Junior College · 2023',
-    text: 'Intermediate. Joined CCBP 4.0 in second year and wrote my first line of code. First bug, same day.',
-  },
-  {
-    id: 'bits',
-    x: 67,
-    y: 55,
-    label: 'NIAT',
-    title: 'NIAT · 2024',
-    text: 'Four years of practical, company-ready skills in Hyderabad’s Financial District, with Google and Amazon as neighbours.',
-  },
-  {
-    id: 'now',
-    x: 87,
-    y: 47,
-    label: 'Now',
-    title: 'Right now',
-    text: 'Shipping RAG apps, learning Three.js, and getting ready to raise my first open source PRs.',
-  },
-]
-
-// ─── The journey map ───
-// Nine stops, in order. `pos` is where the pin sits on the map (map is 2400 × 1700).
-// `gallery` items: add `src: '/photos/your-image.jpg'` (files go in /public/photos).
-// Wrap words in **double stars** to highlight them in the story.
 export const journeyIntro = {
   title: 'Dropout by choice, builder by obsession.',
   text: 'Nine stops from Bhimavaram to Hyderabad. Open the map and walk the path.',

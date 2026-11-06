@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import Nav from './components/Nav'
-import Scene from './components/Scene'
-import Intro from './components/Intro'
+import Hero from './components/Hero'
 import Journey from './components/Journey'
 import Work from './components/Work'
 import Stack from './components/Stack'
@@ -59,8 +58,7 @@ export default function App() {
         onToggleMusic={toggleMusic}
       />
       <main id="top">
-        <Scene />
-        <Intro />
+        <Hero />
         <Journey theme={theme} onToggleTheme={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))} />
         <Work />
         <Stack />
