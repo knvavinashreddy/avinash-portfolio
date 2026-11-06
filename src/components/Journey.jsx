@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { journeyIntro, journeyStops } from '../data'
 import MapWorld, { stopPos, labelSide } from './MapWorld'
 import JourneyMap from './JourneyMap'
+import { scrollToSection } from '../lib/scroll'
 
 function MapIcon() {
   return (
@@ -23,10 +24,9 @@ export default function Journey({ theme, onToggleTheme }) {
   const exitTo = (dir) => {
     setOpen(null)
     const target = dir > 0 ? document.getElementById('work') : document.getElementById('journey')
-    const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (dir < 0) ctaRef.current?.focus({ preventScroll: true })
-    // wait for the map to unmount and give page scrolling back
-    setTimeout(() => target?.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' }), 30)
+    // wait for the map to unmount and give page scrolling back, then glide there
+    setTimeout(() => scrollToSection(target, { duration: 900 }), 30)
   }
 
   return (

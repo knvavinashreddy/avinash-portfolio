@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import { journeyStops } from '../data'
 import { buildRoute } from '../lib/route'
 
@@ -30,9 +31,6 @@ export const stopPos = stopLens.map((l) => {
 // Labels go to the right of a pin, except at the dip, where both sides are taken
 export const labelSide = fracs.map((f) => (Math.abs(f - 0.5) < 0.03 ? 'below' : 'right'))
 
-// Solid line up to the last stop that has happened; upcoming stops stay dotted
-const lastDone = journeyStops.reduce((acc, s, i) => (s.upcoming ? acc : i), 0)
-export const doneLen = stopLens[lastDone]
 
 // ── deterministic pseudo-random so the map never reshuffles ──
 function rng(seed) {
@@ -81,9 +79,22 @@ const AREAS = [
   { name: 'HYDERABAD', x: 1200, y: 440 },
 ]
 
+// Left and right edges of the heart, so the colour runs across it
+const HEART_LEFT = HEART.cx - HEART.k * 16
+const HEART_RIGHT = HEART.cx + HEART.k * 16
+
 export default function MapWorld({ traveledRef, showTraveled = false }) {
+  const grad = `route-${useId().replace(/:/g, '')}`
   return (
     <g>
+      <defs>
+        {/* The heart's colour: Light Blue → Lime Cream → Mustard Oil, left to right */}
+        <linearGradient id={grad} gradientUnits="userSpaceOnUse" x1={HEART_LEFT} y1="0" x2={HEART_RIGHT} y2="0">
+          <stop offset="0" className="route-a" />
+          <stop offset="0.5" className="route-b" />
+          <stop offset="1" className="route-c" />
+        </linearGradient>
+      </defs>
       <rect className="m-land" x="0" y="0" width={WORLD.w} height={WORLD.h} />
 
       {/* Lakes and parks */}
@@ -117,15 +128,14 @@ export default function MapWorld({ traveledRef, showTraveled = false }) {
         <text key={a.name} className="m-city" x={a.x} y={a.y} textAnchor="middle">{a.name}</text>
       ))}
 
-      {/* The route: dotted all the way round, solid where I've been */}
-      <path className="m-route-ghost" d={route.d} />
+      {/* The route: a soft line all the way round, and a bright one where the traveller has been */}
+      <path className="m-route-ghost" d={route.d} stroke={`url(#${grad})`} />
       <path
         ref={traveledRef}
         className="m-route"
         d={route.d}
-        style={{
-          strokeDasharray: `${showTraveled ? doneLen : 0} ${route.total}`,
-        }}
+        stroke={`url(#${grad})`}
+        style={showTraveled ? undefined : { strokeDasharray: `0 ${route.total}` }}
       />
     </g>
   )

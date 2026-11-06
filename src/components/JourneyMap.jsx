@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { journeyStops } from '../data'
-import MapWorld, { WORLD, route, stopLens, stopPos, labelSide, doneLen } from './MapWorld'
+import MapWorld, { WORLD, route, stopLens, stopPos, labelSide } from './MapWorld'
 
 const N = journeyStops.length
 const pad = (n) => String(n).padStart(2, '0')
@@ -18,9 +18,8 @@ function layout(vp) {
   return { fx: 470 + (w - 470) / 2, fy: h * 0.5, base: w > 1500 ? 1.15 : 0.95 }
 }
 
-// Camera feel: spring stiffness (higher = snappier) and map distance per pixel of scroll
+// Camera feel for key, dot and pin jumps (higher = snappier). Scrolling is 1:1, not sprung.
 const SPRING = 7.5
-const SCROLL_SPEED = 0.9
 const EXIT_PUSH = 170 // px of extra scroll past an end that leaves the map
 const nearestStop = (len) => {
   let best = 0
@@ -70,8 +69,8 @@ export default function JourneyMap({ startAt = 0, onClose, onExit, theme, onTogg
     const ty = fy - p.y * z + c.panY
     layerRef.current.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(${z})`
     const tr = traveledRef.current
-    // Solid behind the traveler, but upcoming stops stay dotted
-    tr.style.strokeDasharray = `${Math.min(c.len, doneLen)} ${route.total}`
+    // Bright behind the traveller; the soft line underneath shows the road ahead
+    tr.style.strokeDasharray = `${c.len} ${route.total}`
     travelerRef.current.style.transform = `translate3d(${p.x * z + tx}px, ${p.y * z + ty}px, 0)`
     arrowRef.current.style.transform = `rotate(${p.angle}rad)`
     needleRef.current.style.transform = `rotate(${p.angle + Math.PI / 2}rad)`
@@ -248,28 +247,29 @@ export default function JourneyMap({ startAt = 0, onClose, onExit, theme, onTogg
     }
   }, [apply])
 
-  // Scroll / trackpad moves you continuously along the heart, then settles on a stop
+  // Scroll / trackpad drives the camera directly. Every pixel you scroll moves the map
+  // the same number of pixels along the heart, in the same frame: fast scroll, fast
+  // travel; slow scroll, slow travel. No smoothing, no easing, no snapping to stops.
   useEffect(() => {
     const vp = viewportRef.current.parentElement
     const first = stopLens[0]
     const last = stopLens[N - 1]
-    const gap = N > 1 ? stopLens[1] - stopLens[0] : 1
-    let lastWheel = 0
-    let fromStop = 0
     let over = 0
     let overDir = 0
     let overTimer = 0
-    let snapTimer = 0
+    let pulling = false
 
-    // When scrolling stops, finish the move: a small nudge (a quarter of the way)
-    // is enough to carry on to the next stop, less than that falls back
-    const snap = () => {
-      const u = (target.current - first) / gap
-      let i = fromStop
-      if (u > fromStop + 0.001) i = Math.floor(u + 0.75)
-      else if (u < fromStop - 0.001) i = Math.ceil(u - 0.75)
-      target.current = stopLens[Math.max(0, Math.min(N - 1, i))]
-      run()
+    const sync = () => {
+      const i = nearestStop(cam.current.len)
+      if (i !== indexRef.current) {
+        indexRef.current = i
+        setIndex(i)
+      }
+    }
+    const setBar = (v) => {
+      if (v === 0 && !pulling) return
+      pulling = v !== 0
+      setPull(v)
     }
 
     const onWheel = (e) => {
@@ -286,59 +286,66 @@ export default function JourneyMap({ startAt = 0, onClose, onExit, theme, onTogg
         return
       }
       if (exitingRef.current) return
-      const now = performance.now()
-      // A pause of 250ms+ means a new scroll gesture (trackpads keep coasting after you let go)
-      if (now - lastWheel > 250) fromStop = nearestStop(target.current)
-      lastWheel = now
+      const c = cam.current
+      // A key or dot glide in progress hands over to the scroll at once
+      if (loop.current) {
+        cancelAnimationFrame(loop.current)
+        loop.current = 0
+      }
+      c.vel = 0
       const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? vp.clientHeight : 1
-      let dy = (Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX) * unit
-      dy = Math.max(-140, Math.min(140, dy)) // tame chunky mouse wheels
-      const raw = target.current + dy * SCROLL_SPEED
-      clearTimeout(snapTimer)
+      const dy = (Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX) * unit
+      // screen pixels → map distance at the current zoom, so the map moves exactly as far as you scrolled
+      const z = layout(viewportRef.current).base * c.zoom * c.userZoom
+      const raw = c.len + dy / z
+      // a map you dragged aside drifts back onto the route as you scroll
+      const k = Math.min(1, Math.abs(dy) / 400)
+      c.panX *= 1 - k
+      c.panY *= 1 - k
+      setMoved(true)
+
       if (raw > last || raw < first) {
-        // Pushing past an end: once the camera has (almost) reached that end, every
-        // bit of extra scroll fills the "keep going" bar; a full bar leaves the map.
+        // Pushing past an end fills the "keep going" bar by exactly how far you push;
+        // a full bar leaves the map
         const dir = raw > last ? 1 : -1
         const end = dir > 0 ? last : first
+        c.len = end
         target.current = end
-        if (Math.abs(cam.current.len - end) < gap * 0.12) {
-          if (overDir !== dir) {
-            over = 0
-            overDir = dir
-          }
-          over += Math.abs(dy)
-          clearTimeout(overTimer)
-          if (over >= EXIT_PUSH) {
-            setPull(0)
-            exit(dir)
-            return
-          }
-          setPull(dir * (over / EXIT_PUSH))
-          // stop pushing for a moment and the bar drains away
-          overTimer = setTimeout(() => {
-            over = 0
-            setPull(0)
-          }, 450)
+        apply()
+        sync()
+        if (overDir !== dir) {
+          over = 0
+          overDir = dir
         }
-        setMoved(true)
-        run()
+        over += Math.abs(raw - end) * z
+        clearTimeout(overTimer)
+        if (over >= EXIT_PUSH) {
+          setBar(0)
+          exit(dir)
+          return
+        }
+        setBar(dir * (over / EXIT_PUSH))
+        // stop pushing for a moment and the bar drains away
+        overTimer = setTimeout(() => {
+          over = 0
+          setBar(0)
+        }, 450)
         return
       }
       over = 0
-      setPull(0)
+      setBar(0)
+      c.len = raw
       target.current = raw
-      setMoved(true)
-      run()
-      snapTimer = setTimeout(snap, 160)
+      apply()
+      sync()
     }
     vp.addEventListener('wheel', onWheel, { passive: false })
     return () => {
-      clearTimeout(snapTimer)
       clearTimeout(overTimer)
       vp.removeEventListener('wheel', onWheel)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [run, exit])
+  }, [apply, exit])
 
   // Keyboard
   useEffect(() => {

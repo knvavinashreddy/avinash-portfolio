@@ -42,8 +42,11 @@
   --m-park: #d4e79e;
   --m-label: #8a7a6e;
   --m-state: rgba(20, 35, 44, 0.07);
-  --m-route: #a33c52;
-  --m-ghost: rgba(163, 60, 82, 0.35);
+  --route-a: #4f9ab3;
+  --route-b: #7d9c3c;
+  --route-c: #b59a35;
+  --m-route: #7d9c3c;
+  --m-ghost: 0.28;
 
   --n1: #ecdd94;
   --n2: #cfe8f0;
@@ -111,8 +114,11 @@
     --m-park: #242d1f;
     --m-label: #6e5c56;
     --m-state: rgba(255, 255, 255, 0.05);
+    --route-a: #add8e6;
+    --route-b: #d4e79e;
+    --route-c: #dbc977;
     --m-route: #d4e79e;
-    --m-ghost: rgba(212, 231, 158, 0.32);
+    --m-ghost: 0.3;
     --accent: #d4e79e;
     --on-accent: #22101a;
     --ai-1: #d4627c;
@@ -159,8 +165,11 @@
   --m-park: #242d1f;
   --m-label: #6e5c56;
   --m-state: rgba(255, 255, 255, 0.05);
+  --route-a: #add8e6;
+  --route-b: #d4e79e;
+  --route-c: #dbc977;
   --m-route: #d4e79e;
-  --m-ghost: rgba(212, 231, 158, 0.32);
+  --m-ghost: 0.3;
   --accent: #d4e79e;
   --on-accent: #22101a;
   --ai-1: #d4627c;
@@ -363,8 +372,12 @@ p { margin: 0; }
 .m-sea-label { fill: var(--m-label); font: 700 34px var(--body); letter-spacing: 0.4em; opacity: 0.7; }
 .m-shield rect { fill: var(--m-highway); }
 .m-shield text { fill: #1d1600; font: 800 16px var(--body); }
-.m-route-ghost { stroke: var(--m-ghost); stroke-width: 6; stroke-dasharray: 2 14; stroke-linecap: round; fill: none; }
-.m-route { stroke: var(--m-route); stroke-width: 9; stroke-linecap: round; fill: none; filter: drop-shadow(0 0 10px color-mix(in srgb, var(--m-route) 55%, transparent)); }
+/* The heart: one gradient thread. The road ahead is the same colours, softer (no dots). */
+.route-a { stop-color: var(--route-a); }
+.route-b { stop-color: var(--route-b); }
+.route-c { stop-color: var(--route-c); }
+.m-route-ghost { opacity: var(--m-ghost); stroke-width: 7; stroke-linecap: round; fill: none; }
+.m-route { stroke-width: 9; stroke-linecap: round; fill: none; filter: drop-shadow(0 0 10px color-mix(in srgb, var(--m-route) 55%, transparent)); }
 .m-land, .m-block, .m-road, .m-water, .m-park { transition: fill 0.5s, stroke 0.5s; }
 
 /* ───────── Journey: preview ───────── */
