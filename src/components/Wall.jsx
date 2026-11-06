@@ -47,6 +47,7 @@ export default function Wall() {
   return (
     <section id="wall" aria-labelledby="wall-title">
       <div className="wrap">
+        <p className="eyebrow">06 · Guestbook</p>
         <h2 id="wall-title">Before you go, leave a note.</h2>
         <p className="lede">Say hi, share feedback, or tell me what you’re building.</p>
 

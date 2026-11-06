@@ -9,6 +9,8 @@ import YouTube from './components/YouTube'
 import Life from './components/Life'
 import Wall from './components/Wall'
 import Contact from './components/Contact'
+import Dock from './components/Dock'
+import { useFx } from './lib/fx'
 import { createLofi } from './lib/lofi'
 
 function initialTheme() {
@@ -25,6 +27,7 @@ export default function App() {
   const [theme, setTheme] = useState(initialTheme)
   const [playing, setPlaying] = useState(false)
   const lofi = useRef(null)
+  useFx()
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
@@ -66,6 +69,7 @@ export default function App() {
         <Wall />
         <Contact />
       </main>
+      <Dock />
     </>
   )
 }

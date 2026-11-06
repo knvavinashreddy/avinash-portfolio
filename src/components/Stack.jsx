@@ -8,6 +8,7 @@ export default function Stack() {
   return (
     <section id="stack" aria-labelledby="stack-title">
       <div className="wrap">
+        <p className="eyebrow">03 · Toolkit</p>
         <h2 id="stack-title">Everything in my toolkit.</h2>
         <p className="lede">Hover or tap a tool to see what I use it for.</p>
 

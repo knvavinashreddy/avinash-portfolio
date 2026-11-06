@@ -14,6 +14,7 @@ export default function Work() {
   return (
     <section id="work" aria-labelledby="work-title">
       <div className="wrap">
+        <p className="eyebrow">02 · Work</p>
         <h2 id="work-title">Things I built, and what they actually do.</h2>
         <p className="lede">Pick a card from the deck.</p>
 

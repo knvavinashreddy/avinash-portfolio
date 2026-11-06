@@ -1,5 +1,5 @@
 import photo from '../assets/avinash.jpg'
-import { links, profile } from '../data'
+import { profile } from '../data'
 
 export default function Nav({ theme, onToggleTheme, playing, onToggleMusic }) {
   return (
@@ -9,14 +9,9 @@ export default function Nav({ theme, onToggleTheme, playing, onToggleMusic }) {
           <img src={photo} alt="" />
           <span>{profile.short}</span>
         </a>
-        <nav className="nav-links" aria-label="Sections">
-          <a href="#journey">Journey</a>
-          <a href="#work">Work</a>
-          <a href="#stack">Stack</a>
-          <a href="#life">About</a>
-          <a href="#hello">Contact</a>
-          <a href={links.resume} target="_blank" rel="noreferrer">Resume ↗</a>
-        </nav>
+        <span className="nav-status">
+          <i aria-hidden="true" /> Building AI in Hyderabad
+        </span>
         <div className="nav-actions">
           <button
             className={`icon-btn record ${playing ? 'is-playing' : ''}`}

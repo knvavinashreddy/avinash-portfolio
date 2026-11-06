@@ -24,6 +24,7 @@ export default function YouTube() {
       <div className="wrap">
         <div className="yt">
           <div>
+            <p className="eyebrow">04 · Coming soon</p>
             <h2 id="yt-title">{t.done ? 'My Telugu tech channel is live.' : youtube.title}</h2>
             <p>{youtube.text}</p>
             <a className="btn btn-primary" href={links.youtube} target="_blank" rel="noreferrer">

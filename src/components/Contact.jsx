@@ -28,6 +28,7 @@ export default function Contact() {
   return (
     <section id="hello" className="contact" aria-labelledby="hello-title">
       <div className="wrap">
+        <p className="eyebrow">07 · Contact</p>
         <h2 id="hello-title">Got a project, a role, or a bug that won’t die?</h2>
         <p className="lede">I reply fast. Faster if it involves AI or food.</p>
         <p className="hand">psst, these work on your keyboard too</p>
@@ -41,6 +42,13 @@ export default function Contact() {
               </a>
             </li>
           ))}
+        </ul>
+        <ul className="palette" aria-label="The colours of this site">
+          <li className="c1"><span>COLOR 01 <em>#A33C52</em></span><strong>Red Chicory.</strong></li>
+          <li className="c2"><span>COLOR 02 <em>#DBC977</em></span><strong>Mustard Oil.</strong></li>
+          <li className="c3"><span>COLOR 03 <em>#F8F1DF</em></span><strong>Breezy Beige.</strong></li>
+          <li className="c4"><span>COLOR 04 <em>#D4E79E</em></span><strong>Lime Cream</strong></li>
+          <li className="c5"><span>COLOR 05 <em>#ADD8E6</em></span><strong>Light Blue</strong></li>
         </ul>
       </div>
       <footer className="wrap footer">

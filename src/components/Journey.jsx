@@ -32,6 +32,7 @@ export default function Journey({ theme, onToggleTheme }) {
   return (
     <section id="journey" className="journey" aria-labelledby="journey-title">
       <div className="wrap journey-head">
+        <p className="eyebrow">01 · The journey</p>
         <h2 id="journey-title">{journeyIntro.title}</h2>
         <p className="lede">{journeyIntro.text}</p>
       </div>
@@ -56,7 +57,7 @@ export default function Journey({ theme, onToggleTheme }) {
                 >
                   <path className="jp-pin-shape" d="M0 0 C -10 -16, -32 -30, -32 -56 A32 32 0 1 1 32 -56 C 32 -30, 10 -16, 0 0Z" fill={s.color} />
                   <circle cx="0" cy="-56" r="23" className="jp-pin-face" />
-                  <text x="0" y="-48" textAnchor="middle" className="jp-pin-badge" fill={s.dark ? '#7a5b00' : s.color}>{s.badge}</text>
+                  <text x="0" y="-48" textAnchor="middle" className="jp-pin-badge" fill={s.dark ? '#6b5a14' : s.color}>{s.badge}</text>
                   {below ? (
                     <>
                       <rect x={-labelW / 2} y="14" width={labelW} height="50" rx="25" className="jp-label-bg" />

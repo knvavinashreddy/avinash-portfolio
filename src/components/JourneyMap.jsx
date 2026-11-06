@@ -21,6 +21,7 @@ function layout(vp) {
 // Camera feel: spring stiffness (higher = snappier) and map distance per pixel of scroll
 const SPRING = 7.5
 const SCROLL_SPEED = 0.9
+const EXIT_PUSH = 170 // px of extra scroll past an end that leaves the map
 const nearestStop = (len) => {
   let best = 0
   for (let i = 1; i < N; i++) if (Math.abs(stopLens[i] - len) < Math.abs(stopLens[best] - len)) best = i
@@ -35,6 +36,7 @@ export default function JourneyMap({ startAt = 0, onClose, onExit, theme, onTogg
   const [index, setIndex] = useState(startAt)
   const [moved, setMoved] = useState(false)
   const [exiting, setExiting] = useState(false)
+  const [pull, setPull] = useState(0) // -1..1: how hard the visitor is pushing past an end
   const exitingRef = useRef(false)
   const settledAt = useRef(0) // when the camera last came to rest
   const indexRef = useRef(startAt)
@@ -253,9 +255,10 @@ export default function JourneyMap({ startAt = 0, onClose, onExit, theme, onTogg
     const last = stopLens[N - 1]
     const gap = N > 1 ? stopLens[1] - stopLens[0] : 1
     let lastWheel = 0
-    let gestureStart = 0
     let fromStop = 0
     let over = 0
+    let overDir = 0
+    let overTimer = 0
     let snapTimer = 0
 
     // When scrolling stops, finish the move: a small nudge (a quarter of the way)
@@ -285,11 +288,7 @@ export default function JourneyMap({ startAt = 0, onClose, onExit, theme, onTogg
       if (exitingRef.current) return
       const now = performance.now()
       // A pause of 250ms+ means a new scroll gesture (trackpads keep coasting after you let go)
-      if (now - lastWheel > 250) {
-        gestureStart = now
-        fromStop = nearestStop(target.current)
-        over = 0
-      }
+      if (now - lastWheel > 250) fromStop = nearestStop(target.current)
       lastWheel = now
       const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? vp.clientHeight : 1
       let dy = (Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX) * unit
@@ -297,18 +296,37 @@ export default function JourneyMap({ startAt = 0, onClose, onExit, theme, onTogg
       const raw = target.current + dy * SCROLL_SPEED
       clearTimeout(snapTimer)
       if (raw > last || raw < first) {
-        const end = raw > last ? last : first
+        // Pushing past an end: once the camera has (almost) reached that end, every
+        // bit of extra scroll fills the "keep going" bar; a full bar leaves the map.
+        const dir = raw > last ? 1 : -1
+        const end = dir > 0 ? last : first
         target.current = end
-        // Leaving needs a fresh gesture that began after the camera came to rest on this end
-        const restingHere = !loop.current && Math.abs(cam.current.len - end) < 1 && settledAt.current < gestureStart
-        if (restingHere) {
+        if (Math.abs(cam.current.len - end) < gap * 0.12) {
+          if (overDir !== dir) {
+            over = 0
+            overDir = dir
+          }
           over += Math.abs(dy)
-          if (over > 120) exit(raw > last ? 1 : -1)
-          return
+          clearTimeout(overTimer)
+          if (over >= EXIT_PUSH) {
+            setPull(0)
+            exit(dir)
+            return
+          }
+          setPull(dir * (over / EXIT_PUSH))
+          // stop pushing for a moment and the bar drains away
+          overTimer = setTimeout(() => {
+            over = 0
+            setPull(0)
+          }, 450)
         }
-      } else {
-        target.current = raw
+        setMoved(true)
+        run()
+        return
       }
+      over = 0
+      setPull(0)
+      target.current = raw
       setMoved(true)
       run()
       snapTimer = setTimeout(snap, 160)
@@ -316,6 +334,7 @@ export default function JourneyMap({ startAt = 0, onClose, onExit, theme, onTogg
     vp.addEventListener('wheel', onWheel, { passive: false })
     return () => {
       clearTimeout(snapTimer)
+      clearTimeout(overTimer)
       vp.removeEventListener('wheel', onWheel)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -379,7 +398,7 @@ export default function JourneyMap({ startAt = 0, onClose, onExit, theme, onTogg
               key={s.id}
               ref={(el) => (pinRefs.current[i] = el)}
               className={`jm-pin label-${labelSide[i]} ${i === index ? 'is-active' : i < index ? 'is-past' : 'is-future'}`}
-              style={{ '--c': s.color, '--on-c': s.dark ? '#1d1600' : '#fff' }}
+              style={{ '--c': s.color, '--on-c': s.dark ? '#2d1218' : '#fff' }}
               onClick={() => go(i)}
               aria-label={`Go to ${s.org}, ${s.when}`}
             >
@@ -418,7 +437,7 @@ export default function JourneyMap({ startAt = 0, onClose, onExit, theme, onTogg
         <button onClick={() => zoomBy(0.8)} aria-label="Zoom out">−</button>
       </div>
 
-      <aside className="jm-card" ref={cardRef} style={{ '--c': stop.color, '--on-c': stop.dark ? '#1d1600' : '#fff' }} aria-live="polite">
+      <aside className="jm-card" ref={cardRef} style={{ '--c': stop.color, '--on-c': stop.dark ? '#2d1218' : '#fff' }} aria-live="polite">
         <div className="jm-card-inner" key={stop.id}>
           <header className="jm-card-head">
             <span className="jm-card-badge">{stop.badge}</span>
@@ -468,7 +487,21 @@ export default function JourneyMap({ startAt = 0, onClose, onExit, theme, onTogg
         <button className="jm-step" onClick={() => travel(1)} aria-label={index === N - 1 ? 'Leave the map, on to my projects' : 'Next stop'}>↓</button>
       </div>
 
-      {!moved && <p className="jm-hint hand">scroll to travel</p>}
+      {!moved && index < N - 1 && <p className="jm-hint hand">scroll to travel</p>}
+
+      {/* At either end: how to leave, and how close the visitor is to leaving */}
+      {(index === N - 1 || pull > 0) && pull >= 0 && (
+        <div className="jm-pull is-down" style={{ '--p': pull }} aria-hidden="true">
+          <span>Keep scrolling · on to my projects ↓</span>
+          <i />
+        </div>
+      )}
+      {pull < 0 && (
+        <div className="jm-pull is-up" style={{ '--p': -pull }} aria-hidden="true">
+          <span>↑ Keep scrolling · back to the journey</span>
+          <i />
+        </div>
+      )}
     </div>
   )
 }

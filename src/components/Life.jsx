@@ -72,6 +72,7 @@ export default function Life() {
   return (
     <section id="life" aria-labelledby="life-title">
       <div className="wrap">
+        <p className="eyebrow">05 · Off the clock</p>
         <h2 id="life-title">Off the clock.</h2>
         <p className="lede">The non-work version of me: sports, music, food and way too many games.</p>
         <p className="hand board-hint">it’s my board, but go ahead, move stuff around</p>
