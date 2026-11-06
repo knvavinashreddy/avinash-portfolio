@@ -40,7 +40,7 @@ export default function App() {
   useEffect(() => () => lofi.current?.stop(), [])
 
   const toggleMusic = () => {
-    if (!lofi.current) lofi.current = createLofi()
+    if (!lofi.current) lofi.current = createLofi({ onKick: () => window.dispatchEvent(new Event('lofi-kick')) })
     if (playing) {
       lofi.current.stop()
       setPlaying(false)
@@ -58,7 +58,7 @@ export default function App() {
         onToggleMusic={toggleMusic}
       />
       <main id="top">
-        <Hero />
+        <Hero playing={playing} onToggleMusic={toggleMusic} />
         <Journey theme={theme} onToggleTheme={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))} />
         <Work />
         <Stack />

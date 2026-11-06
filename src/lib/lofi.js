@@ -8,7 +8,8 @@ const CHORDS = [
   [196.0, 246.94, 293.66, 349.23], // G7
 ]
 
-export function createLofi() {
+// onKick fires in time with each kick drum, so the page can move to the beat
+export function createLofi({ onKick } = {}) {
   let ctx = null
   let out = null
   let timer = null
@@ -33,6 +34,7 @@ export function createLofi() {
   }
 
   function kick(t) {
+    if (onKick) setTimeout(onKick, Math.max(0, (t - ctx.currentTime) * 1000))
     const o = ctx.createOscillator()
     const g = ctx.createGain()
     o.frequency.setValueAtTime(130, t)
