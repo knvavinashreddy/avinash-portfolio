@@ -337,7 +337,7 @@ p { margin: 0; }
 .m-park { fill: var(--m-park); }
 .m-border { stroke: var(--m-label); stroke-width: 3; stroke-dasharray: 2 14; stroke-linecap: round; fill: none; opacity: 0.6; }
 .m-state { fill: var(--m-state); font: 800 92px var(--display); letter-spacing: 0.2em; }
-.m-city { fill: var(--m-label); font: 800 54px var(--display); letter-spacing: 0.35em; opacity: 0.6; }
+.m-city { fill: var(--m-label); font: 800 30px var(--display); letter-spacing: 0.35em; opacity: 0.55; }
 .m-small { fill: var(--m-label); font: 600 22px var(--body); }
 .m-sea-label { fill: var(--m-label); font: 700 34px var(--body); letter-spacing: 0.4em; opacity: 0.7; }
 .m-shield rect { fill: var(--m-highway); }
@@ -351,7 +351,7 @@ p { margin: 0; }
 .journey-head h2 { max-width: 16ch; font-size: clamp(2.4rem, 6vw, 4.8rem); }
 .jp { position: relative; margin-top: 36px; display: flex; flex-direction: column; align-items: center; }
 .jp-map {
-  width: 100%; max-width: 1100px; height: auto; display: block;
+  width: 100%; max-width: 820px; height: auto; display: block;
   -webkit-mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000 55%, transparent 100%);
   mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000 55%, transparent 100%);
 }
@@ -360,9 +360,10 @@ p { margin: 0; }
 .jp-pin-face { fill: #fff; }
 .jp-pin-badge { font: 800 18px var(--display); }
 .jp-label-bg { fill: var(--paper); stroke: var(--line); stroke-width: 2; }
-.jp-label { fill: var(--ink); font: 700 25px var(--body); }
+.jp-label { fill: var(--ink); font: 700 30px var(--body); }
 .jp-pin:hover .jp-pin-shape, .jp-pin:focus-visible .jp-pin-shape { transform: translateY(-6px); }
 .jp-pin:focus-visible .jp-label-bg { stroke: var(--accent); stroke-width: 4; }
+.jp-pin.is-upcoming .jp-label-bg { stroke-dasharray: 6 6; }
 .jp-cta {
   margin-top: -40px; position: relative;
   display: inline-flex; align-items: center; gap: 12px;
@@ -420,6 +421,9 @@ p { margin: 0; }
 .jm-pin.is-active .jm-pin-head { transform: rotate(-45deg) scale(1.28); }
 .jm-pin.is-active .jm-pin-label { background: var(--c); color: var(--on-c); border-color: var(--c); left: 44px; top: -70px; font-size: 1.05rem; }
 .jm-pin:hover .jm-pin-head { opacity: 1; filter: none; }
+/* The pin in the heart's dip has lines on both sides, so its label sits underneath */
+.jm-pin.label-below .jm-pin-label,
+.jm-pin.label-below.is-active .jm-pin-label { left: 0; top: 14px; transform: translateX(-50%); }
 
 .jm-traveler { position: absolute; left: 0; top: 0; will-change: transform; }
 .jm-pulse {

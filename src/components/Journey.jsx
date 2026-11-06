@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { journeyIntro, journeyStops } from '../data'
-import MapWorld from './MapWorld'
+import MapWorld, { stopPos, labelSide } from './MapWorld'
 import JourneyMap from './JourneyMap'
 
 function MapIcon() {
@@ -29,26 +29,39 @@ export default function Journey({ theme, onToggleTheme }) {
 
       <div className="wrap">
         <div className="jp">
-          <svg className="jp-map" viewBox="260 160 2140 1420" role="group" aria-label="Map of my journey from Bhimavaram to Tumakuru to Hyderabad">
+          <svg className="jp-map" viewBox="300 70 1400 1170" role="group" aria-label="My journey from Bhimavaram to Tumakuru to Hyderabad, drawn as a heart">
             <MapWorld showTraveled />
-            {journeyStops.map((s, i) => (
-              <g
-                key={s.id}
-                className="jp-pin"
-                transform={`translate(${s.pos.x} ${s.pos.y})`}
-                role="button"
-                tabIndex={0}
-                aria-label={`Open the map at ${s.org}, ${s.when}`}
-                onClick={() => setOpen(i)}
-                onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), setOpen(i))}
-              >
-                <path className="jp-pin-shape" d="M0 0 C -10 -16, -32 -30, -32 -56 A32 32 0 1 1 32 -56 C 32 -30, 10 -16, 0 0Z" fill={s.color} />
-                <circle cx="0" cy="-56" r="23" className="jp-pin-face" />
-                <text x="0" y="-48" textAnchor="middle" className="jp-pin-badge" fill={s.dark ? '#7a5b00' : s.color}>{s.badge}</text>
-                <rect x="42" y="-80" width={s.short.length * 14.5 + 30} height="44" rx="22" className="jp-label-bg" />
-                <text x="57" y="-50" className="jp-label">{s.short}</text>
-              </g>
-            ))}
+            {journeyStops.map((s, i) => {
+              const labelW = s.short.length * 17 + 34
+              const below = labelSide[i] === 'below'
+              return (
+                <g
+                  key={s.id}
+                  className={`jp-pin ${s.upcoming ? 'is-upcoming' : ''}`}
+                  transform={`translate(${stopPos[i].x} ${stopPos[i].y})`}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Open the map at ${s.org}, ${s.when}`}
+                  onClick={() => setOpen(i)}
+                  onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), setOpen(i))}
+                >
+                  <path className="jp-pin-shape" d="M0 0 C -10 -16, -32 -30, -32 -56 A32 32 0 1 1 32 -56 C 32 -30, 10 -16, 0 0Z" fill={s.color} />
+                  <circle cx="0" cy="-56" r="23" className="jp-pin-face" />
+                  <text x="0" y="-48" textAnchor="middle" className="jp-pin-badge" fill={s.dark ? '#7a5b00' : s.color}>{s.badge}</text>
+                  {below ? (
+                    <>
+                      <rect x={-labelW / 2} y="14" width={labelW} height="50" rx="25" className="jp-label-bg" />
+                      <text x="0" y="49" textAnchor="middle" className="jp-label">{s.short}</text>
+                    </>
+                  ) : (
+                    <>
+                      <rect x="42" y="-83" width={labelW} height="50" rx="25" className="jp-label-bg" />
+                      <text x="59" y="-48" className="jp-label">{s.short}</text>
+                    </>
+                  )}
+                </g>
+              )
+            })}
           </svg>
           <button className="jp-cta" ref={ctaRef} onClick={() => setOpen(0)}>
             <MapIcon />

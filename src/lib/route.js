@@ -26,12 +26,13 @@ function cubic(s, t) {
   }
 }
 
-export function buildRoute(points) {
+// `steps` = samples per segment for the length lookup (fewer when points are dense)
+export function buildRoute(points, steps = 80) {
   const segs = toBeziers(points)
   const lut = [{ ...points[0], len: 0 }]
   const lenAtPoint = [0]
   let len = 0
-  const STEPS = 80
+  const STEPS = steps
   segs.forEach((s) => {
     let prev = s.a
     for (let k = 1; k <= STEPS; k++) {
@@ -44,8 +45,8 @@ export function buildRoute(points) {
   })
 
   const d =
-    `M${points[0].x} ${points[0].y}` +
-    segs.map((s) => ` C${s.c1.x.toFixed(1)} ${s.c1.y.toFixed(1)} ${s.c2.x.toFixed(1)} ${s.c2.y.toFixed(1)} ${s.b.x} ${s.b.y}`).join('')
+    `M${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}` +
+    segs.map((s) => ` C${s.c1.x.toFixed(1)} ${s.c1.y.toFixed(1)} ${s.c2.x.toFixed(1)} ${s.c2.y.toFixed(1)} ${s.b.x.toFixed(1)} ${s.b.y.toFixed(1)}`).join('')
 
   function at(l) {
     const target = Math.max(0, Math.min(len, l))

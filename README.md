@@ -19,7 +19,7 @@ Almost everything lives in **`src/data.js`**:
 | Headline, intro, degree | `profile` |
 | Email, GitHub, LinkedIn, YouTube, resume | `links` |
 | Clickable places on the landscape | `places` |
-| Journey map: nine stops, stories, years, pin positions, gallery photos | `journeyStops` |
+| Journey map: nine stops, stories, years, gallery photos | `journeyStops` |
 | Projects, stats, repo and demo links | `projects` |
 | Tools and what you use them for | `toolkit` |
 | LeetCode / Codeforces / CodeChef | `ratings` |
@@ -54,5 +54,6 @@ The same API can also power a visitor counter.
 
 - **Photos:** put images in `public/photos/` and add `src: '/photos/name.jpg'` to a gallery item.
 - **Highlights:** wrap words in `**double stars**` inside `story`.
-- **Pin positions:** `pos` is a point on a 2400 × 1700 map. Bhimavaram is around x 1950, Tumakuru around x 550, Hyderabad around x 1250.
+- **The heart:** the route is drawn as a heart, and stops are spaced evenly around it in the order they appear in `journeyStops` (up the left side, through the dip at the top, down the right side). Add or remove a stop and the spacing adjusts on its own. With an odd number of stops, the middle one sits in the dip.
+- **Upcoming stops:** add `upcoming: true` and the line to that stop stays dotted.
 - **Controls:** scroll or arrow keys travel between stops, drag to look around, +/− to zoom, Esc to close.

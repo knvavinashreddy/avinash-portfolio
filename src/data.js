@@ -86,7 +86,6 @@ export const journeyStops = [
     color: '#2f6fd6',
     when: '2021', // year of your 10th, edit if needed
     place: 'Bhimavaram',
-    pos: { x: 1950, y: 1090 },
     headline: 'Not the topper. Not even close.',
     story:
       'I did my schooling and **10th** at **Sri Chaitanya Techno School**. Studies and I didn’t get along, and I honestly believed I was just bad at them.',
@@ -100,7 +99,6 @@ export const journeyStops = [
     color: '#e0702f',
     when: '2021 – 2023',
     place: 'Bhimavaram',
-    pos: { x: 2060, y: 960 },
     headline: 'Same textbooks, same doubt.',
     story:
       'Intermediate at **Aditya Junior College**. Somewhere in those two years I made a promise to myself: after this, I’m leaving my **comfort zone**. New state, new start.',
@@ -114,7 +112,6 @@ export const journeyStops = [
     color: '#7b4dff',
     when: '2023',
     place: 'Bhimavaram · online',
-    pos: { x: 1830, y: 1010 },
     headline: 'It wasn’t me. It was the system.',
     story:
       'In intermediate second year I joined **CCBP 4.0**, NxtWave’s online course, and wrote my first line of code. For the first time, learning clicked. I wasn’t bad at studies. The way I was being taught was. That’s where my real journey started.',
@@ -128,7 +125,6 @@ export const journeyStops = [
     color: '#0f9d8a',
     when: '2023 – 2024',
     place: 'Tumakuru, Karnataka',
-    pos: { x: 575, y: 1310 },
     headline: 'Out of my comfort zone, out of my state.',
     story:
       'I wrote **COMEDK**, got a rank around **7,600**, and landed **Information Science Engineering** at **Siddaganga Institute of Technology**, one of Karnataka’s top 10 colleges. Great campus, great placements. I thought a new state meant a new kind of education.',
@@ -142,7 +138,6 @@ export const journeyStops = [
     color: '#d63c4a',
     when: '2024',
     place: 'Tumakuru, Karnataka',
-    pos: { x: 470, y: 1430 },
     headline: 'Same story, different state.',
     story:
       'It was theory, mugging, exams, repeat. Nothing I could actually build with. After first year I made the hardest call so far: I **dropped out**, even with good placements on the table.',
@@ -157,7 +152,6 @@ export const journeyStops = [
     dark: true,
     when: '2024',
     place: 'Financial District, Hyderabad',
-    pos: { x: 1075, y: 500 },
     headline: 'Finally, a college that builds.',
     story:
       'I joined **NIAT**, NxtWave’s four-year program, with my **BSc in Computer Science**. No mugging, just the skills companies actually hire for. Next door: **Google, Amazon, Microsoft, Accenture, Infosys, Wipro**. Meeting engineers, managers and HRs here changed how I think.',
@@ -171,7 +165,6 @@ export const journeyStops = [
     color: '#e43f7a',
     when: '2024',
     place: 'Hyderabad',
-    pos: { x: 1175, y: 385 },
     headline: 'Hit record, cringed, kept going.',
     story:
       'Two months into NIAT I recorded my **first piece of content**. Rough? Very. But it was the start of something I really care about.',
@@ -185,7 +178,6 @@ export const journeyStops = [
     color: '#2aa36b',
     when: '2025 – 2026', // edit if needed
     place: 'Hyderabad',
-    pos: { x: 1300, y: 575 },
     headline: 'From learning to shipping.',
     story:
       'MERN apps, RAG systems and n8n automations. My **HR chatbot** scored **90.54** in the NIAT RAG Challenge, and **CareOps** came together in a 24-hour hackathon.',
@@ -199,7 +191,6 @@ export const journeyStops = [
     color: '#ff3b30',
     when: 'January 2027',
     place: 'Hyderabad',
-    pos: { x: 1445, y: 410 },
     upcoming: true,
     headline: 'Going big on YouTube.',
     story:

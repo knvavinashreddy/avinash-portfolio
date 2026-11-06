@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { journeyStops } from '../data'
-import MapWorld, { WORLD, route, stopLens } from './MapWorld'
+import MapWorld, { WORLD, route, stopLens, stopPos, labelSide, doneLen } from './MapWorld'
 
 const N = journeyStops.length
 const pad = (n) => String(n).padStart(2, '0')
@@ -14,8 +14,8 @@ function Story({ text }) {
 function layout(vp) {
   const w = vp.clientWidth
   const h = vp.clientHeight
-  if (w < 760) return { fx: w / 2, fy: h * 0.31, base: 0.62 }
-  return { fx: 470 + (w - 470) / 2, fy: h * 0.5, base: w > 1500 ? 1.45 : 1.25 }
+  if (w < 760) return { fx: w / 2, fy: h * 0.31, base: 0.5 }
+  return { fx: 470 + (w - 470) / 2, fy: h * 0.5, base: w > 1500 ? 1.15 : 0.95 }
 }
 
 export default function JourneyMap({ startAt = 0, onClose, theme, onToggleTheme }) {
@@ -49,14 +49,14 @@ export default function JourneyMap({ startAt = 0, onClose, theme, onToggleTheme 
     const ty = fy - p.y * z + c.panY
     layerRef.current.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(${z})`
     const tr = traveledRef.current
-    tr.style.strokeDasharray = route.total
-    tr.style.strokeDashoffset = Math.max(0, route.total - c.len)
+    // Solid behind the traveler, but upcoming stops stay dotted
+    tr.style.strokeDasharray = `${Math.min(c.len, doneLen)} ${route.total}`
     travelerRef.current.style.transform = `translate3d(${p.x * z + tx}px, ${p.y * z + ty}px, 0)`
     arrowRef.current.style.transform = `rotate(${p.angle}rad)`
     needleRef.current.style.transform = `rotate(${p.angle + Math.PI / 2}rad)`
-    journeyStops.forEach((s, i) => {
+    stopPos.forEach((p, i) => {
       const el = pinRefs.current[i]
-      if (el) el.style.transform = `translate3d(${s.pos.x * z + tx}px, ${s.pos.y * z + ty}px, 0)`
+      if (el) el.style.transform = `translate3d(${p.x * z + tx}px, ${p.y * z + ty}px, 0)`
     })
   }, [])
 
@@ -241,7 +241,7 @@ export default function JourneyMap({ startAt = 0, onClose, theme, onToggleTheme 
             <button
               key={s.id}
               ref={(el) => (pinRefs.current[i] = el)}
-              className={`jm-pin ${i === index ? 'is-active' : i < index ? 'is-past' : 'is-future'}`}
+              className={`jm-pin label-${labelSide[i]} ${i === index ? 'is-active' : i < index ? 'is-past' : 'is-future'}`}
               style={{ '--c': s.color, '--on-c': s.dark ? '#1d1600' : '#fff' }}
               onClick={() => go(i)}
               aria-label={`Go to ${s.org}, ${s.when}`}
