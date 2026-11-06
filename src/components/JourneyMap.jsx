@@ -18,6 +18,15 @@ function layout(vp) {
   return { fx: 470 + (w - 470) / 2, fy: h * 0.5, base: w > 1500 ? 1.15 : 0.95 }
 }
 
+// Camera feel: spring stiffness (higher = snappier) and map distance per pixel of scroll
+const SPRING = 7.5
+const SCROLL_SPEED = 0.9
+const nearestStop = (len) => {
+  let best = 0
+  for (let i = 1; i < N; i++) if (Math.abs(stopLens[i] - len) < Math.abs(stopLens[best] - len)) best = i
+  return best
+}
+
 // Centre of the heart, used to frame the whole thing on the way out
 const HEART_CENTER = { x: 900, y: 690 }
 const HEART_SIZE = { w: 1180, h: 1080 }
@@ -27,9 +36,12 @@ export default function JourneyMap({ startAt = 0, onClose, onExit, theme, onTogg
   const [moved, setMoved] = useState(false)
   const [exiting, setExiting] = useState(false)
   const exitingRef = useRef(false)
-  const arrivedAt = useRef(0) // when the camera last settled on a stop
+  const settledAt = useRef(0) // when the camera last came to rest
   const indexRef = useRef(startAt)
-  const cam = useRef({ len: stopLens[startAt], zoom: 1, userZoom: 1, panX: 0, panY: 0 })
+  const cam = useRef({ len: stopLens[startAt], vel: 0, zoom: 1, userZoom: 1, panX: 0, panY: 0 })
+  const target = useRef(stopLens[startAt]) // where along the heart the camera is heading
+  const loop = useRef(0)
+  const drag = useRef(null)
   const anim = useRef(0)
   const zoomAnim = useRef(0)
   const reduced = useRef(false)
@@ -67,39 +79,64 @@ export default function JourneyMap({ startAt = 0, onClose, onExit, theme, onTogg
     })
   }, [])
 
-  // Glide the camera along the heart to a stop. The zoom never changes here.
-  const go = useCallback(
-    (target) => {
-      if (target < 0 || target >= N || exitingRef.current) return
-      indexRef.current = target
-      setIndex(target)
-      setMoved(true)
-      const c = cam.current
-      const from = c.len
-      const to = stopLens[target]
-      const pan0 = { x: c.panX, y: c.panY }
-      cancelAnimationFrame(anim.current)
-      if (reduced.current) {
-        Object.assign(c, { len: to, panX: 0, panY: 0 })
+  // One animation loop moves the camera. It follows `target` on a critically damped
+  // spring: eases in, eases out, never overshoots, and stays smooth when the
+  // target keeps changing mid-scroll. The zoom never changes here.
+  const run = useCallback(() => {
+    if (loop.current || exitingRef.current) return
+    const c = cam.current
+    const sync = () => {
+      const i = nearestStop(c.len)
+      if (i !== indexRef.current) {
+        indexRef.current = i
+        setIndex(i)
+      }
+    }
+    if (reduced.current) {
+      Object.assign(c, { len: target.current, vel: 0, panX: 0, panY: 0 })
+      apply()
+      sync()
+      settledAt.current = performance.now()
+      return
+    }
+    let prev = performance.now()
+    const tick = (now) => {
+      const dt = Math.min(1 / 30, (now - prev) / 1000)
+      prev = now
+      const d = target.current - c.len
+      c.vel += (SPRING * SPRING * d - 2 * SPRING * c.vel) * dt
+      c.len += c.vel * dt
+      if (!drag.current) {
+        // drift back onto the route if the visitor dragged the map aside
+        const k = 1 - Math.exp(-dt * 6)
+        c.panX -= c.panX * k
+        c.panY -= c.panY * k
+      }
+      apply()
+      sync()
+      const resting = Math.abs(d) < 0.4 && Math.abs(c.vel) < 2 && Math.abs(c.panX) + Math.abs(c.panY) < 0.6
+      if (resting) {
+        Object.assign(c, { len: target.current, vel: 0 })
+        if (!drag.current) Object.assign(c, { panX: 0, panY: 0 })
         apply()
-        arrivedAt.current = performance.now()
+        loop.current = 0
+        settledAt.current = now
         return
       }
-      const dur = Math.min(1800, 700 + Math.abs(to - from) * 0.9)
-      const t0 = performance.now()
-      const step = (now) => {
-        const t = Math.min(1, (now - t0) / dur)
-        const e = easeInOut(t)
-        c.len = from + (to - from) * e
-        c.panX = pan0.x * (1 - e)
-        c.panY = pan0.y * (1 - e)
-        apply()
-        if (t < 1) anim.current = requestAnimationFrame(step)
-        else arrivedAt.current = now
-      }
-      anim.current = requestAnimationFrame(step)
+      loop.current = requestAnimationFrame(tick)
+    }
+    loop.current = requestAnimationFrame(tick)
+  }, [apply])
+
+  // Head for a stop (dots, pins, arrow keys)
+  const go = useCallback(
+    (i) => {
+      if (i < 0 || i >= N || exitingRef.current) return
+      target.current = stopLens[i]
+      setMoved(true)
+      run()
     },
-    [apply]
+    [run]
   )
 
   // Past either end of the heart: pull back to show the whole heart, then leave the map
@@ -108,6 +145,8 @@ export default function JourneyMap({ startAt = 0, onClose, onExit, theme, onTogg
       if (exitingRef.current) return
       exitingRef.current = true
       setExiting(true)
+      cancelAnimationFrame(loop.current)
+      loop.current = 0
       cancelAnimationFrame(anim.current)
       cancelAnimationFrame(zoomAnim.current)
       let left = false
@@ -155,7 +194,8 @@ export default function JourneyMap({ startAt = 0, onClose, onExit, theme, onTogg
   // One step forward or back; past the ends it leaves the map
   const travel = useCallback(
     (dir) => {
-      const next = indexRef.current + dir
+      // step from the stop we're heading to, so quick presses queue up smoothly
+      const next = nearestStop(target.current) + dir
       if (next < 0 || next >= N) exit(dir)
       else go(next)
     },
@@ -193,24 +233,42 @@ export default function JourneyMap({ startAt = 0, onClose, onExit, theme, onTogg
     document.body.style.overflow = 'hidden'
     closeRef.current?.focus()
     apply()
-    arrivedAt.current = performance.now()
+    settledAt.current = performance.now()
     const onResize = () => apply()
     window.addEventListener('resize', onResize)
     return () => {
       document.body.style.overflow = prevOverflow
       window.removeEventListener('resize', onResize)
+      cancelAnimationFrame(loop.current)
+      loop.current = 0
       cancelAnimationFrame(anim.current)
       cancelAnimationFrame(zoomAnim.current)
     }
   }, [apply])
 
-  // Scroll / trackpad = travel. One stop per gesture.
+  // Scroll / trackpad moves you continuously along the heart, then settles on a stop
   useEffect(() => {
     const vp = viewportRef.current.parentElement
-    let acc = 0
-    let lockUntil = 0
+    const first = stopLens[0]
+    const last = stopLens[N - 1]
+    const gap = N > 1 ? stopLens[1] - stopLens[0] : 1
     let lastWheel = 0
     let gestureStart = 0
+    let fromStop = 0
+    let over = 0
+    let snapTimer = 0
+
+    // When scrolling stops, finish the move: a small nudge (a quarter of the way)
+    // is enough to carry on to the next stop, less than that falls back
+    const snap = () => {
+      const u = (target.current - first) / gap
+      let i = fromStop
+      if (u > fromStop + 0.001) i = Math.floor(u + 0.75)
+      else if (u < fromStop - 0.001) i = Math.ceil(u - 0.75)
+      target.current = stopLens[Math.max(0, Math.min(N - 1, i))]
+      run()
+    }
+
     const onWheel = (e) => {
       const card = cardRef.current
       if (card && card.contains(e.target)) {
@@ -224,39 +282,54 @@ export default function JourneyMap({ startAt = 0, onClose, onExit, theme, onTogg
         zoomBy(e.deltaY < 0 ? 1.1 : 0.9)
         return
       }
+      if (exitingRef.current) return
       const now = performance.now()
       // A pause of 250ms+ means a new scroll gesture (trackpads keep coasting after you let go)
-      if (now - lastWheel > 250) gestureStart = now
+      if (now - lastWheel > 250) {
+        gestureStart = now
+        fromStop = nearestStop(target.current)
+        over = 0
+      }
       lastWheel = now
-      if (now < lockUntil || exitingRef.current) return
-      acc += Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX
-      if (Math.abs(acc) > 45) {
-        const dir = acc > 0 ? 1 : -1
-        acc = 0
-        const next = indexRef.current + dir
-        if (next < 0 || next >= N) {
-          // Leaving needs a fresh gesture that began after the camera settled on the end stop
-          if (gestureStart > arrivedAt.current) exit(dir)
+      const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? vp.clientHeight : 1
+      let dy = (Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX) * unit
+      dy = Math.max(-140, Math.min(140, dy)) // tame chunky mouse wheels
+      const raw = target.current + dy * SCROLL_SPEED
+      clearTimeout(snapTimer)
+      if (raw > last || raw < first) {
+        const end = raw > last ? last : first
+        target.current = end
+        // Leaving needs a fresh gesture that began after the camera came to rest on this end
+        const restingHere = !loop.current && Math.abs(cam.current.len - end) < 1 && settledAt.current < gestureStart
+        if (restingHere) {
+          over += Math.abs(dy)
+          if (over > 120) exit(raw > last ? 1 : -1)
           return
         }
-        lockUntil = now + 1150
-        go(next)
+      } else {
+        target.current = raw
       }
+      setMoved(true)
+      run()
+      snapTimer = setTimeout(snap, 160)
     }
     vp.addEventListener('wheel', onWheel, { passive: false })
-    return () => vp.removeEventListener('wheel', onWheel)
+    return () => {
+      clearTimeout(snapTimer)
+      vp.removeEventListener('wheel', onWheel)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [go, exit])
+  }, [run, exit])
 
   // Keyboard
   useEffect(() => {
     const onKey = (e) => {
       if (['ArrowDown', 'ArrowRight', 'PageDown', ' '].includes(e.key)) {
         e.preventDefault()
-        if (!e.repeat || indexRef.current < N - 1) travel(1)
+        if (!e.repeat || nearestStop(target.current) < N - 1) travel(1)
       } else if (['ArrowUp', 'ArrowLeft', 'PageUp'].includes(e.key)) {
         e.preventDefault()
-        if (!e.repeat || indexRef.current > 0) travel(-1)
+        if (!e.repeat || nearestStop(target.current) > 0) travel(-1)
       } else if (e.key === 'Escape') onClose()
       else if (e.key === '+' || e.key === '=') zoomBy(1.25)
       else if (e.key === '-') zoomBy(0.8)
@@ -267,7 +340,6 @@ export default function JourneyMap({ startAt = 0, onClose, onExit, theme, onTogg
   }, [travel, onClose])
 
   // Drag to look around
-  const drag = useRef(null)
   const onPointerDown = (e) => {
     if (e.target.closest('button')) return
     drag.current = { x: e.clientX, y: e.clientY }
