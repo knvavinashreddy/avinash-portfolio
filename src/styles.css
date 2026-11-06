@@ -34,13 +34,16 @@
   --trunk: #7a5a3a;
   --frond: #3f7f3a;
 
-  --m-land: #f3eed8;
+  --m-land: #f5eedb;
   --m-block: #e6e2c6;
   --m-road: #fbf8ec;
   --m-highway: #dbc977;
   --m-water: #add8e6;
   --m-park: #d4e79e;
-  --m-label: #8a7a6e;
+  --m-line: rgba(45, 18, 24, 0.11);
+  --m-line-strong: rgba(45, 18, 24, 0.22);
+  --m-dotc: rgba(45, 18, 24, 0.13);
+  --m-label: #8a7266;
   --m-state: rgba(20, 35, 44, 0.07);
   --route-a: #4f9ab3;
   --route-b: #7d9c3c;
@@ -106,13 +109,16 @@
     --track: #8b7a6a;
     --trunk: #3a2c24;
     --frond: #142a1e;
-    --m-land: #211b1a;
+    --m-land: #1f1a19;
     --m-block: #2c2523;
     --m-road: #262020;
     --m-highway: #6e6430;
     --m-water: #1f2f38;
     --m-park: #242d1f;
-    --m-label: #6e5c56;
+    --m-line: rgba(248, 241, 223, 0.075);
+    --m-line-strong: rgba(248, 241, 223, 0.16);
+    --m-dotc: rgba(248, 241, 223, 0.08);
+    --m-label: #8d7d74;
     --m-state: rgba(255, 255, 255, 0.05);
     --route-a: #add8e6;
     --route-b: #d4e79e;
@@ -157,13 +163,16 @@
   --track: #8b7a6a;
   --trunk: #3a2c24;
   --frond: #142a1e;
-  --m-land: #211b1a;
+  --m-land: #1f1a19;
   --m-block: #2c2523;
   --m-road: #262020;
   --m-highway: #6e6430;
   --m-water: #1f2f38;
   --m-park: #242d1f;
-  --m-label: #6e5c56;
+  --m-line: rgba(248, 241, 223, 0.075);
+  --m-line-strong: rgba(248, 241, 223, 0.16);
+  --m-dotc: rgba(248, 241, 223, 0.08);
+  --m-label: #8d7d74;
   --m-state: rgba(255, 255, 255, 0.05);
   --route-a: #add8e6;
   --route-b: #d4e79e;
@@ -359,26 +368,26 @@ p { margin: 0; }
 
 /* ───────── Journey: map world ───────── */
 .m-land { fill: var(--m-land); }
-.m-block { fill: var(--m-block); }
-.m-road { stroke: var(--m-road); stroke-width: 10; fill: none; }
-.m-highway { stroke: var(--m-highway); stroke-width: 14; fill: none; stroke-linecap: round; opacity: 0.9; }
-.m-water { fill: var(--m-water); }
-.m-river { stroke: var(--m-water); stroke-width: 18; fill: none; stroke-linecap: round; }
-.m-park { fill: var(--m-park); }
-.m-border { stroke: var(--m-label); stroke-width: 3; stroke-dasharray: 2 14; stroke-linecap: round; fill: none; opacity: 0.6; }
-.m-state { fill: var(--m-state); font: 800 92px var(--display); letter-spacing: 0.2em; }
-.m-city { fill: var(--m-label); font: 800 30px var(--display); letter-spacing: 0.35em; opacity: 0.55; }
-.m-small { fill: var(--m-label); font: 600 22px var(--body); }
-.m-sea-label { fill: var(--m-label); font: 700 34px var(--body); letter-spacing: 0.4em; opacity: 0.7; }
-.m-shield rect { fill: var(--m-highway); }
-.m-shield text { fill: #1d1600; font: 800 16px var(--body); }
+/* Topographic background: dot grid, contour lines, a glow inside the heart, chart labels */
+.m-dot { fill: var(--m-dotc); }
+.m-contours path { fill: none; stroke: var(--m-line); stroke-width: 1; stroke-linejoin: round; }
+.m-contours path.major { stroke: var(--m-line-strong); stroke-width: 1.6; }
+.m-glow-a { stop-color: var(--route-b); stop-opacity: 0.16; }
+.m-glow-b { stop-color: var(--route-a); stop-opacity: 0.07; }
+.m-glow-c { stop-color: var(--route-a); stop-opacity: 0; }
+.m-place { fill: var(--m-label); font: 700 28px var(--mono); letter-spacing: 0.3em; }
+.m-coords { font: 500 22px var(--mono); letter-spacing: 0.1em; opacity: 0.8; }
+.m-compass circle, .m-compass path { fill: none; stroke: var(--m-label); stroke-width: 2; opacity: 0.8; }
+.m-compass .needle { fill: var(--route-c); stroke: none; opacity: 1; }
+.m-compass text { fill: var(--m-label); font: 700 20px var(--mono); }
+
 /* The heart: one gradient thread. The road ahead is the same colours, softer (no dots). */
 .route-a { stop-color: var(--route-a); }
 .route-b { stop-color: var(--route-b); }
 .route-c { stop-color: var(--route-c); }
 .m-route-ghost { opacity: var(--m-ghost); stroke-width: 7; stroke-linecap: round; fill: none; }
 .m-route { stroke-width: 9; stroke-linecap: round; fill: none; filter: drop-shadow(0 0 10px color-mix(in srgb, var(--m-route) 55%, transparent)); }
-.m-land, .m-block, .m-road, .m-water, .m-park { transition: fill 0.5s, stroke 0.5s; }
+.m-land { transition: fill 0.5s; }
 
 /* ───────── Journey: preview ───────── */
 .journey-head { text-align: center; display: flex; flex-direction: column; align-items: center; }
