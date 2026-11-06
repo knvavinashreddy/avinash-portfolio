@@ -19,6 +19,15 @@ export default function Journey({ theme, onToggleTheme }) {
     ctaRef.current?.focus({ preventScroll: true })
     setOpen(null)
   }
+  // Scrolled past an end of the heart: close the map and carry on down (or back up) the page
+  const exitTo = (dir) => {
+    setOpen(null)
+    const target = dir > 0 ? document.getElementById('work') : document.getElementById('journey')
+    const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (dir < 0) ctaRef.current?.focus({ preventScroll: true })
+    // wait for the map to unmount and give page scrolling back
+    setTimeout(() => target?.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' }), 30)
+  }
 
   return (
     <section id="journey" className="journey" aria-labelledby="journey-title">
@@ -71,7 +80,7 @@ export default function Journey({ theme, onToggleTheme }) {
       </div>
 
       {open !== null && (
-        <JourneyMap startAt={open} onClose={close} theme={theme} onToggleTheme={onToggleTheme} />
+        <JourneyMap startAt={open} onClose={close} onExit={exitTo} theme={theme} onToggleTheme={onToggleTheme} />
       )}
     </section>
   )

@@ -383,6 +383,10 @@ p { margin: 0; }
   animation: jm-in 0.4s ease both;
 }
 @keyframes jm-in { from { opacity: 0; } }
+/* Leaving the map: the heart pulls back while the panels get out of the way */
+.jm.is-exiting .jm-card, .jm.is-exiting .jm-progress, .jm.is-exiting .jm-zoom,
+.jm.is-exiting .jm-compass, .jm.is-exiting .jm-top, .jm.is-exiting .jm-hint { opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.jm.is-exiting { pointer-events: none; }
 .jm-viewport { position: absolute; inset: 0; cursor: grab; touch-action: none; }
 .jm-viewport:active { cursor: grabbing; }
 .jm-layer { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; }

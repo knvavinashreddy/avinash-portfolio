@@ -18,11 +18,18 @@ function layout(vp) {
   return { fx: 470 + (w - 470) / 2, fy: h * 0.5, base: w > 1500 ? 1.15 : 0.95 }
 }
 
-export default function JourneyMap({ startAt = 0, onClose, theme, onToggleTheme }) {
+// Centre of the heart, used to frame the whole thing on the way out
+const HEART_CENTER = { x: 900, y: 690 }
+const HEART_SIZE = { w: 1180, h: 1080 }
+
+export default function JourneyMap({ startAt = 0, onClose, onExit, theme, onToggleTheme }) {
   const [index, setIndex] = useState(startAt)
   const [moved, setMoved] = useState(false)
+  const [exiting, setExiting] = useState(false)
+  const exitingRef = useRef(false)
+  const arrivedAt = useRef(0) // when the camera last settled on a stop
   const indexRef = useRef(startAt)
-  const cam = useRef({ len: stopLens[startAt], zoom: 0.55, userZoom: 1, panX: 0, panY: 0 })
+  const cam = useRef({ len: stopLens[startAt], zoom: 1, userZoom: 1, panX: 0, panY: 0 })
   const anim = useRef(0)
   const zoomAnim = useRef(0)
   const reduced = useRef(false)
@@ -60,10 +67,10 @@ export default function JourneyMap({ startAt = 0, onClose, theme, onToggleTheme 
     })
   }, [])
 
-  // Fly the camera along the route to a stop
+  // Glide the camera along the heart to a stop. The zoom never changes here.
   const go = useCallback(
     (target) => {
-      if (target < 0 || target >= N) return
+      if (target < 0 || target >= N || exitingRef.current) return
       indexRef.current = target
       setIndex(target)
       setMoved(true)
@@ -71,30 +78,88 @@ export default function JourneyMap({ startAt = 0, onClose, theme, onToggleTheme 
       const from = c.len
       const to = stopLens[target]
       const pan0 = { x: c.panX, y: c.panY }
-      const zoom0 = c.zoom
       cancelAnimationFrame(anim.current)
       if (reduced.current) {
-        Object.assign(c, { len: to, panX: 0, panY: 0, zoom: 1 })
+        Object.assign(c, { len: to, panX: 0, panY: 0 })
         apply()
+        arrivedAt.current = performance.now()
         return
       }
-      const dist = Math.abs(to - from)
-      const dur = Math.min(2600, 900 + dist * 0.5)
-      const dip = Math.min(0.5, dist / 2600) // zoom out on long trips, like a flight
+      const dur = Math.min(1800, 700 + Math.abs(to - from) * 0.9)
       const t0 = performance.now()
       const step = (now) => {
         const t = Math.min(1, (now - t0) / dur)
         const e = easeInOut(t)
         c.len = from + (to - from) * e
-        c.zoom = zoom0 + (1 - zoom0) * e - dip * Math.sin(Math.PI * t)
         c.panX = pan0.x * (1 - e)
         c.panY = pan0.y * (1 - e)
         apply()
         if (t < 1) anim.current = requestAnimationFrame(step)
+        else arrivedAt.current = now
       }
       anim.current = requestAnimationFrame(step)
     },
     [apply]
+  )
+
+  // Past either end of the heart: pull back to show the whole heart, then leave the map
+  const exit = useCallback(
+    (dir) => {
+      if (exitingRef.current) return
+      exitingRef.current = true
+      setExiting(true)
+      cancelAnimationFrame(anim.current)
+      cancelAnimationFrame(zoomAnim.current)
+      let left = false
+      const leave = () => {
+        if (left) return
+        left = true
+        onExit(dir)
+      }
+      const vp = viewportRef.current
+      if (reduced.current || !vp) {
+        leave()
+        return
+      }
+      // Safety net: if the browser pauses animation frames (background tab), still leave
+      setTimeout(leave, 1400)
+      const c = cam.current
+      const p = route.at(c.len)
+      const { fx, fy, base } = layout(vp)
+      const w = vp.clientWidth
+      const h = vp.clientHeight
+      const z0 = base * c.zoom * c.userZoom
+      const zFit = Math.min(w / HEART_SIZE.w, h / HEART_SIZE.h) * 0.85
+      const s0 = { x: fx + c.panX, y: fy + c.panY } // where the camera point sits on screen now
+      const s1 = { x: w / 2, y: h / 2 }
+      const t0 = performance.now()
+      const step = (now) => {
+        const t = Math.min(1, (now - t0) / 750)
+        const e = easeInOut(t)
+        const z = z0 + (zFit - z0) * e
+        const F = { x: p.x + (HEART_CENTER.x - p.x) * e, y: p.y + (HEART_CENTER.y - p.y) * e }
+        const S = { x: s0.x + (s1.x - s0.x) * e, y: s0.y + (s1.y - s0.y) * e }
+        // Express the framing as zoom + pan around the current route point, so apply() can draw it
+        c.zoom = z / (base * c.userZoom)
+        c.panX = S.x - F.x * z - fx + p.x * z
+        c.panY = S.y - F.y * z - fy + p.y * z
+        apply()
+        if (t < 1) anim.current = requestAnimationFrame(step)
+        else setTimeout(leave, 180)
+      }
+      anim.current = requestAnimationFrame(step)
+    },
+    [apply, onExit]
+  )
+
+  // One step forward or back; past the ends it leaves the map
+  const travel = useCallback(
+    (dir) => {
+      const next = indexRef.current + dir
+      if (next < 0 || next >= N) exit(dir)
+      else go(next)
+    },
+    [go, exit]
   )
 
   const tweenView = useCallback(
@@ -119,27 +184,16 @@ export default function JourneyMap({ startAt = 0, onClose, theme, onToggleTheme 
     },
     [apply]
   )
-  const zoomBy = (f) => tweenView(Math.min(2.4, Math.max(0.45, cam.current.userZoom * f)), false)
+  const zoomBy = (f) => !exitingRef.current && tweenView(Math.min(2.4, Math.max(0.45, cam.current.userZoom * f)), false)
 
-  // Opening: lock page scroll, focus, fly in
+  // Opening: lock page scroll, focus, draw (no zoom animation)
   useLayoutEffect(() => {
     reduced.current = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const prevOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
     closeRef.current?.focus()
-    if (reduced.current) cam.current.zoom = 1
     apply()
-    if (!reduced.current) {
-      const c = cam.current
-      const t0 = performance.now()
-      const step = (now) => {
-        const t = Math.min(1, (now - t0) / 1100)
-        c.zoom = 0.55 + 0.45 * easeInOut(t)
-        apply()
-        if (t < 1) anim.current = requestAnimationFrame(step)
-      }
-      anim.current = requestAnimationFrame(step)
-    }
+    arrivedAt.current = performance.now()
     const onResize = () => apply()
     window.addEventListener('resize', onResize)
     return () => {
@@ -155,6 +209,8 @@ export default function JourneyMap({ startAt = 0, onClose, theme, onToggleTheme 
     const vp = viewportRef.current.parentElement
     let acc = 0
     let lockUntil = 0
+    let lastWheel = 0
+    let gestureStart = 0
     const onWheel = (e) => {
       const card = cardRef.current
       if (card && card.contains(e.target)) {
@@ -169,29 +225,38 @@ export default function JourneyMap({ startAt = 0, onClose, theme, onToggleTheme 
         return
       }
       const now = performance.now()
-      if (now < lockUntil) return
+      // A pause of 250ms+ means a new scroll gesture (trackpads keep coasting after you let go)
+      if (now - lastWheel > 250) gestureStart = now
+      lastWheel = now
+      if (now < lockUntil || exitingRef.current) return
       acc += Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX
       if (Math.abs(acc) > 45) {
         const dir = acc > 0 ? 1 : -1
         acc = 0
+        const next = indexRef.current + dir
+        if (next < 0 || next >= N) {
+          // Leaving needs a fresh gesture that began after the camera settled on the end stop
+          if (gestureStart > arrivedAt.current) exit(dir)
+          return
+        }
         lockUntil = now + 1150
-        go(indexRef.current + dir)
+        go(next)
       }
     }
     vp.addEventListener('wheel', onWheel, { passive: false })
     return () => vp.removeEventListener('wheel', onWheel)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [go])
+  }, [go, exit])
 
   // Keyboard
   useEffect(() => {
     const onKey = (e) => {
       if (['ArrowDown', 'ArrowRight', 'PageDown', ' '].includes(e.key)) {
         e.preventDefault()
-        go(indexRef.current + 1)
+        if (!e.repeat || indexRef.current < N - 1) travel(1)
       } else if (['ArrowUp', 'ArrowLeft', 'PageUp'].includes(e.key)) {
         e.preventDefault()
-        go(indexRef.current - 1)
+        if (!e.repeat || indexRef.current > 0) travel(-1)
       } else if (e.key === 'Escape') onClose()
       else if (e.key === '+' || e.key === '=') zoomBy(1.25)
       else if (e.key === '-') zoomBy(0.8)
@@ -199,7 +264,7 @@ export default function JourneyMap({ startAt = 0, onClose, theme, onToggleTheme 
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [go, onClose])
+  }, [travel, onClose])
 
   // Drag to look around
   const drag = useRef(null)
@@ -221,7 +286,7 @@ export default function JourneyMap({ startAt = 0, onClose, theme, onToggleTheme 
   const stop = journeyStops[index]
 
   return (
-    <div className="jm" role="dialog" aria-modal="true" aria-label="Journey map">
+    <div className={`jm ${exiting ? 'is-exiting' : ''}`} role="dialog" aria-modal="true" aria-label="Journey map">
       <div
         className="jm-viewport"
         ref={viewportRef}
@@ -313,7 +378,7 @@ export default function JourneyMap({ startAt = 0, onClose, theme, onToggleTheme 
       </aside>
 
       <div className="jm-progress">
-        <button className="jm-step" onClick={() => go(index - 1)} disabled={index === 0} aria-label="Previous stop">↑</button>
+        <button className="jm-step" onClick={() => travel(-1)} aria-label={index === 0 ? 'Leave the map, back to the journey section' : 'Previous stop'}>↑</button>
         <ol className="jm-dots">
           {journeyStops.map((s, i) => (
             <li key={s.id}>
@@ -328,7 +393,7 @@ export default function JourneyMap({ startAt = 0, onClose, theme, onToggleTheme 
           ))}
         </ol>
         <span className="jm-progress-label">{stop.when} · {stop.place.split(',')[0]}</span>
-        <button className="jm-step" onClick={() => go(index + 1)} disabled={index === N - 1} aria-label="Next stop">↓</button>
+        <button className="jm-step" onClick={() => travel(1)} aria-label={index === N - 1 ? 'Leave the map, on to my projects' : 'Next stop'}>↓</button>
       </div>
 
       {!moved && <p className="jm-hint hand">scroll to travel</p>}
