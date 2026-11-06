@@ -4,6 +4,8 @@ import MapWorld, { stopPos, labelSide } from './MapWorld'
 import JourneyMap from './JourneyMap'
 import { scrollToSection } from '../lib/scroll'
 
+const PIN = 'M0 0 C -10 -16, -32 -30, -32 -56 A32 32 0 1 1 32 -56 C 32 -30, 10 -16, 0 0Z'
+
 function MapIcon() {
   return (
     <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round">
@@ -55,7 +57,9 @@ export default function Journey({ theme, onToggleTheme }) {
                   onClick={() => setOpen(i)}
                   onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), setOpen(i))}
                 >
-                  <path className="jp-pin-shape" d="M0 0 C -10 -16, -32 -30, -32 -56 A32 32 0 1 1 32 -56 C 32 -30, 10 -16, 0 0Z" fill={s.color} />
+                  {/* a ring in the map's own colour cuts the heart line around the pin, so they never blend */}
+                  <path className="jp-pin-halo" d={PIN} />
+                  <path className="jp-pin-shape" d={PIN} fill={s.color} />
                   <circle cx="0" cy="-56" r="23" className="jp-pin-face" />
                   <text x="0" y="-48" textAnchor="middle" className="jp-pin-badge" fill={s.dark ? '#6b5a14' : s.color}>{s.badge}</text>
                   {below ? (
