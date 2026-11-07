@@ -1,0 +1,28 @@
+/* Bottom bar: previous / next buttons and one dot per stop. */
+
+.journey-progress {
+  position: absolute; left: 50%; bottom: calc(28px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
+  display: flex; align-items: center; gap: 14px;
+  padding: 10px 12px; border-radius: 999px;
+  background: color-mix(in srgb, var(--color-surface) 90%, transparent); border: 2px solid var(--color-border);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+.journey-progress-step {
+  width: 40px; height: 40px; border-radius: 50%; border: 0; cursor: pointer;
+  background: var(--color-text); color: var(--color-page); font-weight: 800; font-size: 1.1rem;
+}
+.journey-progress-step:disabled { opacity: 0.25; cursor: default; }
+.journey-progress-dots { list-style: none; display: flex; align-items: center; gap: 8px; margin: 0; padding: 0; }
+.journey-progress-dots button {
+  display: block; width: 10px; height: 10px; border-radius: 50%; border: 0; padding: 0; cursor: pointer;
+  background: var(--color-border); transition: transform 0.3s, background-color 0.3s;
+}
+.journey-progress-dots button.is-done { background: var(--stop-color); }
+.journey-progress-dots button.is-current { background: var(--stop-color); transform: scale(1.9); box-shadow: 0 0 0 3px color-mix(in srgb, var(--stop-color) 30%, transparent); }
+.journey-progress-label { font: 700 1rem var(--font-display); white-space: nowrap; min-width: 190px; padding-right: 6px; }
+@media (max-width: 760px) {
+  .journey-progress { bottom: calc(14px + env(safe-area-inset-bottom, 0px)); gap: 8px; padding: 8px; width: calc(100% - 24px); justify-content: space-between; }
+  .journey-progress-label { display: none; }
+  .journey-progress-dots { gap: 7px; }
+}

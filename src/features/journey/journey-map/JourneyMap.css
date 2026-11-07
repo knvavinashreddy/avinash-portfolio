@@ -1,0 +1,23 @@
+/* Full-screen journey map: the layer that moves with the camera, the leaving animation, the scroll hint. */
+
+.journey-map {
+  position: fixed; inset: 0; z-index: 100;
+  background: var(--map-land); color: var(--color-text);
+  overflow: hidden; overscroll-behavior: contain;
+  animation: journey-map-fade-in 0.4s ease both;
+}
+@keyframes journey-map-fade-in { from { opacity: 0; } }
+/* Leaving the map: the heart pulls back while the panels get out of the way */
+.journey-map.is-exiting .story-card, .journey-map.is-exiting .journey-progress, .journey-map.is-exiting .zoom-controls,
+.journey-map.is-exiting .map-compass, .journey-map.is-exiting .map-top-bar, .journey-map.is-exiting .scroll-hint { opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.journey-map.is-exiting { pointer-events: none; }
+.journey-map-viewport { position: absolute; inset: 0; cursor: grab; touch-action: none; }
+.journey-map-viewport:active { cursor: grabbing; }
+.journey-map-world { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; }
+.journey-map-world svg { display: block; }
+.journey-map-pins { position: absolute; inset: 0; pointer-events: none; }
+.scroll-hint { position: absolute; left: 50%; bottom: 104px; transform: translateX(-50%) rotate(-2deg); color: var(--color-text); animation: scroll-hint-bob 1.6s ease-in-out infinite; }
+@keyframes scroll-hint-bob { 50% { transform: translateX(-50%) translateY(-6px) rotate(-2deg); } }
+@media (max-width: 760px) {
+  .scroll-hint { display: none; }
+}

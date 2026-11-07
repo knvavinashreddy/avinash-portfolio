@@ -1,0 +1,24 @@
+/* "See my work →" (mustard) and "▶ Walk my journey" (outline), sitting over my chest. */
+
+.hero-buttons {
+  position: absolute; z-index: 3; left: 50%; bottom: 9%; transform: translateX(-50%);
+  display: flex; gap: 14px; white-space: nowrap;
+}
+.hero-buttons > * { animation: hero-rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) 0.55s both; }
+
+.hero-button {
+  display: inline-flex; align-items: center; gap: 9px; padding: 12px 20px; border-radius: 999px;
+  font: 700 0.9rem var(--font-body); text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+.hero-button:hover { transform: translateY(-2px); }
+.hero-button-primary { background: var(--brand-mustard-oil); color: #2d1218; }
+.hero-button-outline {
+  color: var(--brand-breezy-beige); background: rgba(28, 23, 22, 0.72); border: 1.5px solid rgba(248, 241, 223, 0.85);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+
+@media (max-width: 760px) {
+  .hero-buttons { gap: 8px; bottom: 18px; }
+  .hero-button { padding: 11px 16px; font-size: 0.9rem; gap: 8px; }
+}

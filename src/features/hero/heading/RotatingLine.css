@@ -1,0 +1,12 @@
+/* "I build …" under my name. The bold phrase is re-mounted with a new key each time it
+   changes (RotatingLine.jsx), so this entrance animation plays for every new phrase. */
+
+.hero-rotating-line {
+  margin: 14px auto 0; max-width: 46ch; color: rgba(248, 241, 223, 0.72); font-size: clamp(0.92rem, 1.3vw, 1rem);
+}
+.hero-rotating-phrase { display: inline-block; vertical-align: bottom; overflow: hidden; padding: 0 2px; }
+.hero-rotating-phrase strong {
+  display: inline-block; color: var(--brand-breezy-beige); font-weight: 700;
+  animation: rotating-phrase-enter 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes rotating-phrase-enter { from { opacity: 0; transform: translateY(70%); filter: blur(4px); } }

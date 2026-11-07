@@ -1,0 +1,8 @@
+/* Day / Night switch in the top bar. */
+
+.theme-toggle {
+  display: flex; padding: 3px; border-radius: 999px;
+  border: 2px solid var(--color-border); background: var(--color-surface); cursor: pointer;
+}
+.theme-toggle span { padding: 5px 12px; border-radius: 999px; font-size: 0.85rem; font-weight: 700; color: var(--color-text-muted); }
+.theme-toggle span.is-selected { background: var(--color-text); color: var(--color-page); }

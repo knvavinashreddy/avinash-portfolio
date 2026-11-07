@@ -1,0 +1,26 @@
+/* Page-wide effects:
+   1. film grain over the whole page
+   2. headings and cards that rise into view as you scroll   (driven by shared/effects/useScrollReveal.js)
+   3. cards that glow softly under the mouse                  (driven by shared/effects/useCardGlow.js) */
+
+/* 1. Film grain: a tiny noise texture, very faint, so flat colour feels like a material */
+body::after {
+  content: ''; position: fixed; inset: 0; z-index: 45; pointer-events: none; opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* 2. Rise into view: JS adds .scroll-reveal (hidden, slightly low), then .is-revealed when it scrolls in */
+.scroll-reveal {
+  opacity: 0; transform: translateY(26px);
+  transition: opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.scroll-reveal.is-revealed { opacity: 1; transform: none; }
+
+/* 3. Card glow: JS sets --glow-x / --glow-y to the mouse position inside the card */
+.card-glow { position: relative; isolation: isolate; }
+.card-glow::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: -1;
+  background: radial-gradient(420px circle at var(--glow-x, 50%) var(--glow-y, 0%), color-mix(in srgb, var(--glow-warm) 16%, transparent), transparent 60%);
+  opacity: 0; transition: opacity 0.35s;
+}
+.card-glow:hover::before { opacity: 1; }

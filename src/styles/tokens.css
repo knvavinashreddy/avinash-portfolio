@@ -1,0 +1,114 @@
+/* Design tokens: every colour, font and theme value the site uses, in one place.
+   Other CSS files only ever say var(--something); change a value here and it changes everywhere.
+
+   The five brand colours and their jobs:
+     Red Chicory  · Day accent: buttons, focus rings
+     Lime Cream   · Night accent: the one luminous colour on charcoal
+     Light Blue   · the cool end of the heart line
+     Mustard Oil  · the sun behind my photo, warm highlights
+     Breezy Beige · Day background, Night text
+*/
+
+/* ───────── Day (the default) ───────── */
+:root {
+  /* page */
+  --color-page: #f8f1df;
+  --color-surface: #fffaf0;
+  --color-text: #2d1218;
+  --color-text-muted: #7b5d58;
+  --color-border: #e9d8bd;
+  --color-accent: #a33c52;
+  --color-on-accent: #f8f1df;
+  --color-glass: color-mix(in srgb, var(--color-surface) 78%, transparent);
+
+  /* the five brand colours (the same in Day and Night) */
+  --brand-red-chicory: #a33c52;
+  --brand-mustard-oil: #dbc977;
+  --brand-breezy-beige: #f8f1df;
+  --brand-lime-cream: #d4e79e;
+  --brand-light-blue: #add8e6;
+
+  /* soft glow behind section labels and under the cursor on cards */
+  --glow-warm: #a33c52;
+  /* film grain strength over the whole page */
+  --grain-opacity: 0.035;
+
+  /* journey map */
+  --map-land: #f5eedb;
+  --map-contour: rgba(45, 18, 24, 0.11);
+  --map-contour-strong: rgba(45, 18, 24, 0.22);
+  --map-grid-dot: rgba(45, 18, 24, 0.13);
+  --map-label: #8a7266;
+  --heart-route-start: #4f9ab3;
+  --heart-route-middle: #7d9c3c;
+  --heart-route-end: #b59a35;
+  --heart-route-glow: #7d9c3c;
+  --heart-route-ahead-opacity: 0.28;
+
+  /* sticky notes (life board and guestbook) */
+  --note-mustard: #ecdd94;
+  --note-light-blue: #cfe8f0;
+  --note-lime: #e1eeb8;
+  --note-rose: #efc7cf;
+
+  /* fonts */
+  --font-display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Figtree', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-handwritten: 'Caveat', 'Comic Sans MS', cursive;
+
+  color-scheme: light;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ───────── Night ─────────
+   Used when the visitor picks Night, or when their device is in dark mode and they haven't picked.
+   The same values appear twice because CSS can't share one block between those two cases. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-page: #1c1716;
+    --color-surface: #272120;
+    --color-text: #f8f1df;
+    --color-text-muted: #b9a79a;
+    --color-border: #3e3431;
+    --color-accent: #d4e79e;
+    --color-on-accent: #22101a;
+    --glow-warm: #d4627c;
+    --grain-opacity: 0.05;
+    --map-land: #1f1a19;
+    --map-contour: rgba(248, 241, 223, 0.075);
+    --map-contour-strong: rgba(248, 241, 223, 0.16);
+    --map-grid-dot: rgba(248, 241, 223, 0.08);
+    --map-label: #8d7d74;
+    --heart-route-start: #add8e6;
+    --heart-route-middle: #d4e79e;
+    --heart-route-end: #dbc977;
+    --heart-route-glow: #d4e79e;
+    --heart-route-ahead-opacity: 0.3;
+    color-scheme: dark;
+  }
+}
+:root[data-theme='dark'] {
+  --color-page: #1c1716;
+  --color-surface: #272120;
+  --color-text: #f8f1df;
+  --color-text-muted: #b9a79a;
+  --color-border: #3e3431;
+  --color-accent: #d4e79e;
+  --color-on-accent: #22101a;
+  --glow-warm: #d4627c;
+  --grain-opacity: 0.05;
+  --map-land: #1f1a19;
+  --map-contour: rgba(248, 241, 223, 0.075);
+  --map-contour-strong: rgba(248, 241, 223, 0.16);
+  --map-grid-dot: rgba(248, 241, 223, 0.08);
+  --map-label: #8d7d74;
+  --heart-route-start: #add8e6;
+  --heart-route-middle: #d4e79e;
+  --heart-route-end: #dbc977;
+  --heart-route-glow: #d4e79e;
+  --heart-route-ahead-opacity: 0.3;
+  color-scheme: dark;
+}

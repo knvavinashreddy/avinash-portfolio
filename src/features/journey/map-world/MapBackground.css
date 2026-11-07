@@ -1,0 +1,17 @@
+/* Topographic background: land, dot grid, contour lines, glow inside the heart, place names, compass rose. */
+
+.map-land { fill: var(--map-land); transition: fill 0.5s; }
+.map-grid-dot { fill: var(--map-grid-dot); }
+.map-contour-lines path { fill: none; stroke: var(--map-contour); stroke-width: 1; stroke-linejoin: round; }
+/* every fifth contour line is stronger, like a real topographic map */
+.map-contour-lines path.is-major { stroke: var(--map-contour-strong); stroke-width: 1.6; }
+/* soft light inside the heart (a radial gradient) */
+.map-heart-glow-center { stop-color: var(--heart-route-middle); stop-opacity: 0.16; }
+.map-heart-glow-middle { stop-color: var(--heart-route-start); stop-opacity: 0.07; }
+.map-heart-glow-edge { stop-color: var(--heart-route-start); stop-opacity: 0; }
+/* "HYDERABAD 17.39°N 78.49°E" */
+.map-place-name { fill: var(--map-label); font: 700 28px var(--font-mono); letter-spacing: 0.3em; }
+.map-place-coords { font: 500 22px var(--font-mono); letter-spacing: 0.1em; opacity: 0.8; }
+.map-compass-rose circle, .map-compass-rose path { fill: none; stroke: var(--map-label); stroke-width: 2; opacity: 0.8; }
+.map-compass-rose .map-compass-rose-needle { fill: var(--heart-route-end); stroke: none; opacity: 1; }
+.map-compass-rose text { fill: var(--map-label); font: 700 20px var(--font-mono); }

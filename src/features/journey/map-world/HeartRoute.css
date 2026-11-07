@@ -1,0 +1,11 @@
+/* The heart line: one gradient thread (Light Blue → Lime Cream → Mustard Oil, left to right).
+   The full route is drawn soft ("ahead"); the bright copy on top is revealed up to where the traveller is. */
+
+/* colour stops of the gradient */
+.heart-route-start { stop-color: var(--heart-route-start); }
+.heart-route-middle { stop-color: var(--heart-route-middle); }
+.heart-route-end { stop-color: var(--heart-route-end); }
+/* the whole heart, softer */
+.heart-route-ahead { opacity: var(--heart-route-ahead-opacity); stroke-width: 7; stroke-linecap: round; fill: none; }
+/* the bright part: its stroke-dasharray is set to "how far travelled" */
+.heart-route-travelled { stroke-width: 9; stroke-linecap: round; fill: none; filter: drop-shadow(0 0 10px color-mix(in srgb, var(--heart-route-glow) 55%, transparent)); }

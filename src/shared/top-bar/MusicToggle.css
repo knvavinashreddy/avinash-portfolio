@@ -1,0 +1,15 @@
+/* The record button in the top bar: plays the lo-fi music, and spins while it plays. */
+
+.top-bar-icon-button {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 2px solid var(--color-border); background: var(--color-surface);
+  display: grid; place-items: center; cursor: pointer; padding: 0;
+}
+/* the record: dark disc, accent-coloured label, faint groove */
+.music-toggle svg { width: 26px; height: 26px; }
+.music-toggle circle { fill: var(--color-text); }
+.music-toggle .music-toggle-groove { fill: none; stroke: var(--color-surface); stroke-width: 0.6; opacity: 0.5; }
+.music-toggle .music-toggle-label { fill: var(--color-accent); }
+.music-toggle.is-playing svg { animation: music-toggle-spin 1.8s linear infinite; }
+.music-toggle.is-playing { border-color: var(--color-accent); }
+@keyframes music-toggle-spin { to { transform: rotate(360deg); } }

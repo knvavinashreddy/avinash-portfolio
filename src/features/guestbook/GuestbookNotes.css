@@ -1,0 +1,7 @@
+/* Pinned notes grid. */
+
+.guestbook-notes { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+.guestbook-notes .sticky-note { width: auto; transform: rotate(var(--tilt-angle)); }
+.guestbook-notes .sticky-note p { margin-bottom: 12px; }
+.guestbook-notes .sticky-note strong { font-size: 1rem; margin: 0; }
+.guestbook-notes .sticky-note span { font-size: 0.85rem; opacity: 0.7; }

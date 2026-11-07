@@ -1,0 +1,9 @@
+/* Polaroid photos on the board. */
+
+.polaroid-photo { margin: 0; width: 170px; background: #fff; padding: 10px 10px 8px; box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18); }
+.polaroid-photo img { width: 100%; aspect-ratio: 1; object-fit: cover; pointer-events: none; }
+.polaroid-placeholder {
+  aspect-ratio: 1; display: grid; place-items: center; color: #8a8a8a; font-size: 0.85rem;
+  background: repeating-linear-gradient(45deg, #efefef, #efefef 8px, #f8f8f8 8px, #f8f8f8 16px);
+}
+.polaroid-photo figcaption { color: #555; text-align: center; padding-top: 6px; }

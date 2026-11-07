@@ -1,0 +1,36 @@
+/* The yellow headphones in my photo are an invisible button placed over them.
+   A ring pulses to invite the tap; music notes float up from here on every beat. */
+
+.headphones-button {
+  position: absolute; z-index: 3; left: 62%; top: 7%; width: 16%; height: 40%;
+  border: 0; padding: 0; background: none; cursor: pointer; border-radius: 40%;
+  /* moves with the photo */
+  translate: calc(var(--mouse-x, 0) * 14px) calc(var(--mouse-y, 0) * 8px);
+}
+.headphones-button:focus-visible { outline: 3px solid var(--brand-mustard-oil); outline-offset: 2px; }
+
+.headphones-hint-ring {
+  position: absolute; left: 30%; top: 38%; width: 70%; height: 46%; border-radius: 50%;
+  border: 2px solid var(--brand-mustard-oil); opacity: 0; pointer-events: none;
+  animation: headphones-hint-pulse 2.4s ease-out 1.6s infinite;
+}
+@keyframes headphones-hint-pulse { 0% { opacity: 0.9; transform: scale(0.85); } 70%, 100% { opacity: 0; transform: scale(1.5); } }
+.hero.is-playing .headphones-hint-ring { animation: none; }
+
+/* where the ♪ notes start (each note is added and animated by useBeatEffects.js) */
+.music-notes {
+  position: absolute; z-index: 3; left: 68%; top: 24%; width: 0; height: 0; pointer-events: none;
+  translate: calc(var(--mouse-x, 0) * 14px) calc(var(--mouse-y, 0) * 8px);
+}
+.music-note { position: absolute; left: 0; top: 0; font-size: 1.6rem; color: var(--brand-mustard-oil); text-shadow: 0 0 12px rgba(219, 201, 119, 0.5); }
+
+/* "psst, tap my headphones ↙" */
+.hero-handwritten-note {
+  position: absolute; z-index: 2; left: 92%; top: 22%; transform: rotate(-6deg); white-space: nowrap;
+  color: rgba(248, 241, 223, 0.65); font-size: 1.15rem;
+  translate: calc(var(--mouse-x, 0) * 14px) calc(var(--mouse-y, 0) * 8px);
+}
+
+@media (max-width: 960px) {
+  .hero-handwritten-note { display: none; }
+}

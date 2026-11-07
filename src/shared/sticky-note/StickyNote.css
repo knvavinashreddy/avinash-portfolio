@@ -1,0 +1,9 @@
+/* Sticky note look, shared by the life board and the guestbook. */
+
+.sticky-note { width: 210px; padding: 18px 18px 20px; border-radius: 6px; color: #241d07; box-shadow: 0 10px 22px rgba(0, 0, 0, 0.16); }
+.sticky-note strong { font-family: var(--font-display); font-size: 1.25rem; display: block; margin-bottom: 4px; }
+.sticky-note p { font-size: 0.98rem; line-height: 1.45; }
+.sticky-note-mustard { background: var(--note-mustard); }
+.sticky-note-light-blue { background: var(--note-light-blue); }
+.sticky-note-lime { background: var(--note-lime); }
+.sticky-note-rose { background: var(--note-rose); }

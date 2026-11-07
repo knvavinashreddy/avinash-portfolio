@@ -1,0 +1,15 @@
+/* One pin on the small heart preview: a coloured map pin with a white face and the stop's badge,
+   a ring in the map's colour ("halo") that cuts the heart line around it, and a name label. */
+
+.heart-preview-pin { cursor: pointer; outline: none; }
+/* the halo is the same pin shape, drawn thicker in the map colour, underneath */
+.heart-preview-pin-halo { fill: var(--map-land); stroke: var(--map-land); stroke-width: 16; stroke-linejoin: round; transition: transform 0.2s; }
+.heart-preview-pin-shape { stroke: #fff; stroke-width: 4; filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.3)); transition: transform 0.2s; }
+.heart-preview-pin:hover .heart-preview-pin-halo, .heart-preview-pin:focus-visible .heart-preview-pin-halo { transform: translateY(-6px); }
+.heart-preview-pin-face { fill: #fff; }
+.heart-preview-pin-badge { font: 800 18px var(--font-display); }
+.heart-preview-pin-label-background { fill: var(--color-surface); stroke: var(--color-border); stroke-width: 2; }
+.heart-preview-pin-label { fill: var(--color-text); font: 700 30px var(--font-body); }
+.heart-preview-pin:hover .heart-preview-pin-shape, .heart-preview-pin:focus-visible .heart-preview-pin-shape { transform: translateY(-6px); }
+.heart-preview-pin:focus-visible .heart-preview-pin-label-background { stroke: var(--color-accent); stroke-width: 4; }
+.heart-preview-pin.is-upcoming .heart-preview-pin-label-background { stroke-dasharray: 6 6; }

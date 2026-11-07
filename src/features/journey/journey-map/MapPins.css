@@ -1,0 +1,42 @@
+/* Pins on the full-screen map. */
+
+.map-pin {
+  position: absolute; left: 0; top: 0; pointer-events: auto;
+  background: none; border: 0; padding: 0; cursor: pointer;
+  will-change: transform;
+}
+.map-pin-head {
+  position: absolute; left: -27px; top: -68px; width: 54px; height: 54px;
+  border-radius: 50% 50% 50% 0; transform: rotate(-45deg);
+  background: var(--stop-color); border: 3px solid #fff;
+  /* ring in the map's colour so the pin stands clear of the heart line */
+  outline: 6px solid var(--map-land);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+  display: grid; place-items: center;
+  transition: transform 0.35s cubic-bezier(0.3, 1.4, 0.5, 1), opacity 0.3s, filter 0.3s;
+  transform-origin: 0 100%;
+}
+.map-pin-badge {
+  transform: rotate(45deg); width: 38px; height: 38px; border-radius: 50%;
+  background: #fff; color: var(--stop-color); display: grid; place-items: center;
+  font: 800 0.8rem var(--font-display); letter-spacing: -0.02em;
+}
+.map-pin-label {
+  position: absolute; left: 34px; top: -60px; white-space: nowrap;
+  padding: 6px 14px; border-radius: 999px;
+  background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+  border: 2px solid var(--color-border); color: var(--color-text);
+  font: 700 0.95rem var(--font-body);
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s, opacity 0.3s;
+}
+.map-pin.is-future .map-pin-head { opacity: 0.7; filter: saturate(0.55); }
+.map-pin.is-future .map-pin-label { opacity: 0.55; }
+.map-pin.is-active .map-pin-head { transform: rotate(-45deg) scale(1.28); }
+.map-pin.is-active .map-pin-label { background: var(--stop-color); color: var(--stop-text-color); border-color: var(--stop-color); left: 44px; top: -70px; font-size: 1.05rem; }
+.map-pin:hover .map-pin-head { opacity: 1; filter: none; }
+/* The pin in the heart's dip has lines on both sides, so its label sits underneath */
+.map-pin.has-label-below .map-pin-label,
+.map-pin.has-label-below.is-active .map-pin-label { left: 0; top: 14px; transform: translateX(-50%); }
+@media (max-width: 760px) {
+  .map-pin-label, .map-pin.is-active .map-pin-label { display: none; }
+}

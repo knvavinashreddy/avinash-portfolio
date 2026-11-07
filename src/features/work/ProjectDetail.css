@@ -1,0 +1,18 @@
+/* Details of the picked project: summary, numbers, highlights, tech. */
+
+.project-detail { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 28px; padding: 36px; }
+.project-detail h3 { font-size: 2rem; margin-bottom: 10px; }
+.project-detail > p { color: var(--color-text-muted); max-width: 60ch; }
+.project-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 28px 0; }
+.project-stats div { border-top: 3px solid var(--color-accent); padding-top: 10px; }
+.project-stats dd { margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 2rem; line-height: 1.1; }
+.project-stats dt { color: var(--color-text-muted); font-size: 0.9rem; }
+.project-highlights { padding-left: 20px; margin: 0 0 20px; }
+.project-highlights li { margin-bottom: 6px; }
+.project-highlights li::marker { color: var(--color-accent); }
+.project-tech-tags { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.project-tech-tags li { font-size: 0.85rem; font-weight: 500; padding: 4px 12px; border-radius: 999px; background: var(--color-page); border: 1px solid var(--color-border); }
+@media (max-width: 760px) {
+  .project-stats { grid-template-columns: 1fr 1fr; }
+  .project-detail { padding: 26px; }
+}

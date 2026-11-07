@@ -1,0 +1,14 @@
+/* Draggable "off the clock" board. */
+
+.life-board-hint { margin: 28px 0 10px; transform: rotate(-2deg); display: inline-block; }
+.life-board-scroll { overflow-x: auto; padding-bottom: 10px; }
+.life-board {
+  position: relative; width: 920px; height: 560px; margin: 0 auto;
+  border-radius: 32px; border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  background-image: radial-gradient(var(--color-border) 1.5px, transparent 1.5px);
+  background-size: 22px 22px;
+  overflow: hidden;
+}
+.life-board-item { position: absolute; touch-action: none; cursor: grab; user-select: none; transform: rotate(var(--tilt-angle)); border-radius: 8px; }
+.life-board-item:active { cursor: grabbing; }

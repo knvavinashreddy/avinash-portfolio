@@ -1,0 +1,22 @@
+/* Tools grouped by what they are for; hover one to read what I use it for. */
+
+.toolkit-layout { display: grid; grid-template-columns: 1fr 340px; gap: 48px; margin-top: 44px; align-items: start; }
+.toolkit-group + .toolkit-group { margin-top: 28px; }
+.toolkit-group h3 { font-size: 1.05rem; margin-bottom: 12px; color: var(--color-text-muted); }
+.toolkit-tools { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.toolkit-tool {
+  padding: 9px 16px; border-radius: 999px; border: 2px solid var(--color-border);
+  background: var(--color-surface); font-weight: 500; cursor: pointer; transition: background-color 0.15s, border-color 0.15s;
+}
+.toolkit-tool.is-selected { background: var(--color-text); color: var(--color-page); border-color: var(--color-text); }
+.toolkit-tool-note {
+  position: sticky; top: 100px;
+  background: var(--color-accent); color: var(--color-on-accent);
+  border-radius: 28px 28px 28px 6px; padding: 32px; min-height: 200px;
+}
+.toolkit-tool-note strong { font-family: var(--font-display); font-size: 2rem; line-height: 1.05; display: block; margin-bottom: 10px; }
+.toolkit-tool-note p { font-size: 1.15rem; }
+@media (max-width: 960px) {
+  .toolkit-layout { grid-template-columns: 1fr; }
+  .toolkit-tool-note { position: static; min-height: 0; }
+}

@@ -1,0 +1,21 @@
+/* The small heart map on the page (faded at the edges) and the "View journey map" button. */
+
+.heart-preview { position: relative; margin-top: 36px; display: flex; flex-direction: column; align-items: center; }
+.heart-preview-map {
+  width: 100%; max-width: 600px; height: auto; display: block;
+  -webkit-mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000 55%, transparent 100%);
+  mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000 55%, transparent 100%);
+}
+.heart-preview-open-button {
+  margin-top: -40px; position: relative;
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 18px 34px; border-radius: 999px; cursor: pointer;
+  font: 700 1.2rem var(--font-display);
+  background: var(--color-text); color: var(--color-page); border: 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s;
+}
+.heart-preview-open-button:hover { transform: translateY(-3px) scale(1.02); }
+@media (max-width: 760px) {
+  .heart-preview-open-button { margin-top: 12px; padding: 14px 24px; font-size: 1.05rem; }
+}

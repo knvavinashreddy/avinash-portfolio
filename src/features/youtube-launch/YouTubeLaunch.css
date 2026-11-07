@@ -1,0 +1,11 @@
+/* Telugu YouTube channel launch card. */
+
+.youtube-launch-card {
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center;
+  background: var(--color-text); color: var(--color-page); border-radius: 36px; padding: 56px;
+}
+.youtube-launch-card h2 { max-width: 16ch; }
+.youtube-launch-card p { opacity: 0.8; margin: 16px 0 26px; max-width: 46ch; font-size: 1.1rem; }
+@media (max-width: 960px) {
+  .youtube-launch-card { grid-template-columns: 1fr; padding: 40px 28px; }
+}

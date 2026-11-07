@@ -1,0 +1,57 @@
+/* Proof chips floating around the sun: "90.54 RAG challenge", "24h hackathon build", "1,200 LeetCode".
+   Hover one to see a tooltip; click to glide to that section. On phones they line up above the photo. */
+
+/* the layer covers the whole stage; only the chips themselves catch the mouse */
+.proof-chips { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.proof-chips .proof-chip { pointer-events: auto; }
+
+.proof-chip {
+  position: absolute; z-index: 3; display: flex; align-items: baseline; gap: 8px; white-space: nowrap;
+  padding: 10px 14px; border-radius: 16px; text-decoration: none; text-align: left;
+  color: var(--brand-breezy-beige); background: rgba(28, 23, 22, 0.62); border: 1px solid rgba(248, 241, 223, 0.16);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  /* chips are the nearest layer, so they drift the most */
+  translate: calc(var(--mouse-x, 0) * 26px) calc(var(--mouse-y, 0) * 16px);
+  animation: proof-chip-fade-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both, proof-chip-float 6s ease-in-out infinite;
+  transition: border-color 0.25s, background-color 0.25s;
+}
+.proof-chip:hover, .proof-chip:focus-visible { border-color: var(--brand-mustard-oil); background: rgba(28, 23, 22, 0.85); }
+
+.proof-chip strong { font: 800 1.15rem var(--font-display); color: var(--brand-mustard-oil); letter-spacing: -0.01em; }
+.proof-chip span { font: 500 0.78rem var(--font-mono); letter-spacing: 0.04em; color: rgba(248, 241, 223, 0.75); }
+
+/* tooltip under the chip */
+.proof-chip em {
+  position: absolute; left: 0; top: calc(100% + 8px); padding: 7px 11px; border-radius: 10px;
+  font: 500 0.8rem var(--font-body); font-style: normal; color: var(--brand-breezy-beige); white-space: nowrap;
+  background: rgba(28, 23, 22, 0.92); border: 1px solid rgba(219, 201, 119, 0.4);
+  opacity: 0; transform: translateY(-4px); pointer-events: none; transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.proof-chip:hover em, .proof-chip:focus-visible em { opacity: 1; transform: none; }
+
+/* where each chip floats; the delays keep them from bobbing in step */
+.proof-chip.is-upper-left { left: -24%; top: 40%; animation-delay: 0.7s, 0s; }
+.proof-chip.is-right { right: -26%; top: 58%; animation-delay: 0.85s, -2s; }
+.proof-chip.is-right em { left: auto; right: 0; }
+.proof-chip.is-lower-left { left: -16%; top: 72%; animation-delay: 1s, -4s; }
+
+@keyframes proof-chip-fade-in { from { opacity: 0; } }
+@keyframes proof-chip-float { 50% { transform: translateY(-8px); } }
+
+/* narrower screens: pull the chips in so they stay on screen */
+@media (max-width: 1180px) {
+  .proof-chip.is-upper-left { left: -6%; }
+  .proof-chip.is-right { right: -6%; }
+  .proof-chip.is-lower-left { left: 0; }
+  .proof-chip em { display: none; }
+}
+/* phones: the chips line up above the photo instead of covering it */
+@media (max-width: 760px) {
+  .proof-chips { position: static; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 10px; }
+  .proof-chip { position: relative; left: auto; right: auto; top: auto; padding: 6px 10px; border-radius: 12px; gap: 6px; translate: none; }
+  .proof-chip, .proof-chip.is-upper-left, .proof-chip.is-right, .proof-chip.is-lower-left {
+    animation: proof-chip-fade-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) 0.6s both;
+  }
+  .proof-chip strong { font-size: 0.88rem; }
+  .proof-chip span { font-size: 0.64rem; }
+}

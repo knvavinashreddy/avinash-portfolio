@@ -1,0 +1,12 @@
+/* Recenter / zoom in / zoom out buttons. */
+
+.zoom-controls { position: absolute; right: 28px; bottom: 120px; display: grid; gap: 10px; }
+.zoom-controls button {
+  width: 48px; height: 48px; border-radius: 14px; cursor: pointer;
+  background: color-mix(in srgb, var(--color-surface) 88%, transparent); color: var(--color-text);
+  border: 2px solid var(--color-border); font-size: 1.3rem; font-weight: 700;
+}
+.zoom-controls button:hover { border-color: var(--color-accent); }
+@media (max-width: 760px) {
+  .zoom-controls { display: none; }
+}

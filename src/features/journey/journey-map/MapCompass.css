@@ -1,0 +1,22 @@
+/* Compass in the corner of the map; its needle turns with the route. */
+
+.map-compass {
+  position: absolute; right: 28px; top: calc(84px + env(safe-area-inset-top, 0px));
+  width: 104px; height: 104px; border-radius: 50%;
+  border: 2px dashed var(--color-border); background: color-mix(in srgb, var(--color-surface) 70%, transparent);
+  font: 700 0.75rem var(--font-body); color: var(--color-text-muted);
+}
+.map-compass span:not(.map-compass-needle) { position: absolute; }
+.map-compass .compass-north { top: 6px; left: 50%; transform: translateX(-50%); color: var(--color-text); }
+.map-compass .compass-south { bottom: 6px; left: 50%; transform: translateX(-50%); }
+.map-compass .compass-east { right: 9px; top: 50%; transform: translateY(-50%); }
+.map-compass .compass-west { left: 9px; top: 50%; transform: translateY(-50%); }
+.map-compass-needle {
+  position: absolute; left: 50%; top: 50%; width: 10px; height: 64px; margin: -32px 0 0 -5px;
+  background: linear-gradient(#ef5a3c 50%, var(--color-text-muted) 50%);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+@media (max-width: 760px) {
+  .map-compass { width: 72px; height: 72px; right: 16px; top: calc(70px + env(safe-area-inset-top, 0px)); }
+  .map-compass-needle { height: 44px; margin-top: -22px; }
+}

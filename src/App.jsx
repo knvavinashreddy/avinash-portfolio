@@ -1,73 +1,53 @@
-import { useEffect, useRef, useState } from 'react'
-import Nav from './components/Nav'
-import Hero from './components/Hero'
-import Journey from './components/Journey'
-import Work from './components/Work'
-import Stack from './components/Stack'
-import YouTube from './components/YouTube'
-import Life from './components/Life'
-import Wall from './components/Wall'
-import Contact from './components/Contact'
-import Dock from './components/Dock'
-import { useFx } from './lib/fx'
-import { createLofi } from './lib/lofi'
+// The whole page, top to bottom. Start reading here.
+//
+//   TopBar          avatar, status, music button, Day/Night       shared/top-bar
+//   Hero            "Hey, I'm Avinash." + photo on the sun          features/hero
+//   Journey         the heart map                                   features/journey
+//   Work            project card deck                               features/work
+//   Toolkit         tools + coding ratings                          features/toolkit
+//   YouTubeLaunch   channel launch countdown                        features/youtube-launch
+//   LifeBoard       draggable "off the clock" board                 features/life-board
+//   Guestbook       leave a note                                    features/guestbook
+//   Contact         contact cards, palette, footer                  features/contact
+//   SectionDock     floating navigation at the bottom               shared/section-dock
+//
+// App owns the two pieces of state several parts share: the theme and the music.
 
-function initialTheme() {
-  try {
-    const saved = localStorage.getItem('theme')
-    if (saved === 'light' || saved === 'dark') return saved
-  } catch {
-    /* ignore */
-  }
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-}
+import Contact from './features/contact/Contact'
+import Guestbook from './features/guestbook/Guestbook'
+import Hero from './features/hero/Hero'
+import Journey from './features/journey/Journey'
+import LifeBoard from './features/life-board/LifeBoard'
+import Toolkit from './features/toolkit/Toolkit'
+import Work from './features/work/Work'
+import YouTubeLaunch from './features/youtube-launch/YouTubeLaunch'
+import { useCardGlow } from './shared/effects/useCardGlow'
+import { useScrollReveal } from './shared/effects/useScrollReveal'
+import { useLofiMusic } from './shared/music/useLofiMusic'
+import SectionDock from './shared/section-dock/SectionDock'
+import { useTheme } from './shared/theme/useTheme'
+import TopBar from './shared/top-bar/TopBar'
 
 export default function App() {
-  const [theme, setTheme] = useState(initialTheme)
-  const [playing, setPlaying] = useState(false)
-  const lofi = useRef(null)
-  useFx()
-
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme
-    try {
-      localStorage.setItem('theme', theme)
-    } catch {
-      /* ignore */
-    }
-  }, [theme])
-
-  useEffect(() => () => lofi.current?.stop(), [])
-
-  const toggleMusic = () => {
-    if (!lofi.current) lofi.current = createLofi({ onKick: () => window.dispatchEvent(new Event('lofi-kick')) })
-    if (playing) {
-      lofi.current.stop()
-      setPlaying(false)
-    } else if (lofi.current.start()) {
-      setPlaying(true)
-    }
-  }
+  const { theme, toggleTheme } = useTheme()
+  const { isMusicPlaying, toggleMusic } = useLofiMusic()
+  useCardGlow()
+  useScrollReveal()
 
   return (
     <>
-      <Nav
-        theme={theme}
-        onToggleTheme={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
-        playing={playing}
-        onToggleMusic={toggleMusic}
-      />
+      <TopBar theme={theme} onToggleTheme={toggleTheme} isMusicPlaying={isMusicPlaying} onToggleMusic={toggleMusic} />
       <main id="top">
-        <Hero playing={playing} onToggleMusic={toggleMusic} />
-        <Journey theme={theme} onToggleTheme={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))} />
+        <Hero isMusicPlaying={isMusicPlaying} onToggleMusic={toggleMusic} />
+        <Journey theme={theme} onToggleTheme={toggleTheme} />
         <Work />
-        <Stack />
-        <YouTube />
-        <Life />
-        <Wall />
+        <Toolkit />
+        <YouTubeLaunch />
+        <LifeBoard />
+        <Guestbook />
         <Contact />
       </main>
-      <Dock />
+      <SectionDock />
     </>
   )
 }
