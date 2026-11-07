@@ -16,9 +16,14 @@ export const journeyStops = [
     color: '#a33c52',
     when: '2021', // year of your 10th, edit if needed
     place: 'Bhimavaram',
-    headline: 'Not the topper. Not even close.',
+    headline: 'My School Journey — A Journey Beyond Academics',
+    // a blank line between paragraphs ("\n\n") starts a new paragraph on the story card
     story:
-      'I did my schooling and **10th** at **Sri Chaitanya Techno School**. Studies and I didn’t get along, and I honestly believed I was just bad at them.',
+      'My school years were shaped by sports, games, friendships, and active participation in cultural activities. Academically, however, I faced challenges, particularly in mathematics, which was never my strongest subject.' +
+      '\n\n' +
+      'After 9th grade, I began recognising the importance of building a strong academic foundation. During the COVID period, I joined private coaching classes and started revisiting the fundamentals of mathematics. Gradually, my understanding improved, and I began making consistent progress.' +
+      '\n\n' +
+      'I wasn’t an outstanding student or a topper, but this phase marked an important shift in my approach to learning and personal growth.',
     gallery: [{ caption: 'School days' }, { caption: 'The classroom' }, { caption: '10th results day' }],
   },
   {

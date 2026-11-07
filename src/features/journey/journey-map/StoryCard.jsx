@@ -36,7 +36,10 @@ export default function StoryCard({ stopIndex, storyCardRef }) {
         <div className="story-card-body">
           {stop.upcoming && <span className="story-card-coming-up">Coming up</span>}
           <h3>{stop.headline}</h3>
-          <p><StoryText text={stop.story} /></p>
+          {/* a blank line in the story text starts a new paragraph */}
+          {stop.story.split('\n\n').map((paragraph, i) => (
+            <p key={i} className="story-card-paragraph"><StoryText text={paragraph} /></p>
+          ))}
           {stop.gallery?.length > 0 && (
             <>
               <p className="story-card-gallery-title handwritten">from the camera roll</p>
