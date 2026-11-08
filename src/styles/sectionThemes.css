@@ -10,7 +10,7 @@
    Backgrounds down the page (Day uses only the four pastels; neighbours never match):
                    Day                  Night
      Hero          Ice Blue             Deep Navy        (Hero.css)
-     Journey       Blush Pink           deep Sapphire
+     Journey       Rose Gold            deep Sapphire
      Work          Mint Whisper         Dark Evergreen
      Stack         Lilac Mist           Midnight Plum
      YouTube       Blush Pink           Deep Bordeaux
@@ -55,19 +55,31 @@
   --card-on-accent: var(--color-on-accent);
 }
 
-/* ───────── Journey: Blush Pink by day, deep Sapphire by night ───────── */
+/* ───────── Journey: Rose Gold by day, deep Sapphire by night ───────── */
 .section-theme-journey {
-  --color-page: #fadadd;
-  --color-surface: #fdeef0;
+  --color-page: #b66e79;
+  --color-surface: #fadadd;
+  --color-text: #2a1411;
+  --color-text-muted: #3b1f1b;
+  --color-border: #c98a93;
+  --color-accent: #fadadd;
+  --color-on-accent: #3b1f1b;
+  --glow-warm: #fadadd;
+}
+/* the full-screen map opens inside this section but keeps its own blue map colours */
+.section-theme-journey .journey-map {
+  --color-page: #d6e6f3;
+  --color-surface: #f2f7fc;
   --color-text: #000926;
   --color-text-muted: #3e5571;
-  --color-border: #e9b9bf;
+  --color-border: #b8cfe1;
   --color-accent: #0f52ba;
   --color-on-accent: #ffffff;
   --glow-warm: #0f52ba;
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .section-theme-journey {
+  :root:not([data-theme='light']) .section-theme-journey,
+  :root:not([data-theme='light']) .section-theme-journey .journey-map {
     --color-page: #06245c;
     --color-surface: #0c3275;
     --color-text: #d6e6f3;
@@ -78,7 +90,8 @@
     --glow-warm: #4d86d9;
   }
 }
-:root[data-theme='dark'] .section-theme-journey {
+:root[data-theme='dark'] .section-theme-journey,
+:root[data-theme='dark'] .section-theme-journey .journey-map {
   --color-page: #06245c;
   --color-surface: #0c3275;
   --color-text: #d6e6f3;
