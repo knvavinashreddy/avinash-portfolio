@@ -19,31 +19,78 @@
      Contact       Lilac Mist           Dark Evergreen
 */
 
-/* Every themed section is a rounded sheet laid over the one before it, lit by two soft glows
-   in its own colours (top right: the glow colour, bottom left: the accent). */
+/* Every themed section starts with a torn, uneven top edge (styles/torn-edge.svg) that bites
+   into the section above, and is lit by two soft glows in its own colours. */
 .section-theme-journey, .section-theme-work, .section-theme-stack, .section-theme-youtube,
 .section-theme-life-board, .section-theme-guestbook, .section-theme-contact {
   /* re-mixed here because the root version was mixed from the root surface colour */
   --color-glass: color-mix(in srgb, var(--color-surface) 78%, transparent);
-  --section-sheet-radius: 44px;
+  --section-edge-height: 40px;
+  --section-edge-width: 1600px;
   position: relative;
-  margin-top: calc(var(--section-sheet-radius) * -1);
-  border-radius: var(--section-sheet-radius) var(--section-sheet-radius) 0 0;
   background:
-    radial-gradient(70% 45% at 100% 0%, color-mix(in srgb, var(--glow-warm) 22%, transparent), transparent 70%),
+    /* the glows stay clear of the top edge, so the torn strip matches the section exactly */
+    radial-gradient(60% 50% at 100% 50%, color-mix(in srgb, var(--glow-warm) 20%, transparent), transparent 70%),
     radial-gradient(60% 40% at 0% 100%, color-mix(in srgb, var(--color-accent) 14%, transparent), transparent 70%),
     var(--color-page);
-  /* a thin lighter line along the top edge, so each sheet reads as its own layer */
-  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 22%, transparent), 0 -18px 40px -24px rgba(0, 0, 0, 0.35);
   color: var(--color-text);
   padding-bottom: 112px;
   transition: color 0.5s;
 }
-/* the journey sits right under the hero, so it starts flush (its corners show the hero's colour) */
-.section-theme-journey { margin-top: 0; }
+/* the torn edge: a strip in the section's colour, cut to the ragged shape, sitting on top of the
+   section above. ::before is a darker copy a few pixels higher, giving the edge a soft dark rim. */
+.section-theme-journey::before,
+.section-theme-work::before,
+.section-theme-stack::before,
+.section-theme-youtube::before,
+.section-theme-life-board::before,
+.section-theme-guestbook::before,
+.section-theme-contact::before,
+.section-theme-journey::after,
+.section-theme-work::after,
+.section-theme-stack::after,
+.section-theme-youtube::after,
+.section-theme-life-board::after,
+.section-theme-guestbook::after,
+.section-theme-contact::after {
+  content: ''; position: absolute; left: 0; right: 0; pointer-events: none;
+  height: var(--section-edge-height);
+  -webkit-mask: url('./torn-edge.svg') var(--section-edge-offset, 0px) 0 / var(--section-edge-width) 100% repeat-x;
+  mask: url('./torn-edge.svg') var(--section-edge-offset, 0px) 0 / var(--section-edge-width) 100% repeat-x;
+}
+.section-theme-journey::after,
+.section-theme-work::after,
+.section-theme-stack::after,
+.section-theme-youtube::after,
+.section-theme-life-board::after,
+.section-theme-guestbook::after,
+.section-theme-contact::after {
+  top: calc(var(--section-edge-height) * -1 + 1px);
+  background: var(--color-page);
+}
+.section-theme-journey::before,
+.section-theme-work::before,
+.section-theme-stack::before,
+.section-theme-youtube::before,
+.section-theme-life-board::before,
+.section-theme-guestbook::before,
+.section-theme-contact::before {
+  top: calc(var(--section-edge-height) * -1 - 3px);
+  background: color-mix(in srgb, var(--color-page) 55%, #000);
+  opacity: 0.45;
+}
+/* each section tears in a different place */
+.section-theme-work { --section-edge-offset: -310px; }
+.section-theme-stack { --section-edge-offset: -655px; }
+.section-theme-youtube { --section-edge-offset: -905px; }
+.section-theme-life-board { --section-edge-offset: -1150px; }
+.section-theme-guestbook { --section-edge-offset: -430px; }
+.section-theme-contact { --section-edge-offset: -805px; }
 @media (max-width: 760px) {
   .section-theme-journey, .section-theme-work, .section-theme-stack, .section-theme-youtube,
-.section-theme-life-board, .section-theme-guestbook, .section-theme-contact { --section-sheet-radius: 28px; padding-bottom: 80px; }
+.section-theme-life-board, .section-theme-guestbook, .section-theme-contact {
+    --section-edge-height: 26px; --section-edge-width: 1000px; padding-bottom: 80px;
+  }
 }
 
 /* selected text takes the colours of the section (or card) it is in */

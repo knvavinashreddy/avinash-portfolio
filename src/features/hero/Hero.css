@@ -1,30 +1,17 @@
-/* Hero section: Ice Blue by day and Deep Navy by night, my name on top, my photo on the stage below.
+/* Hero section: black in both themes, my name on top, my photo on the stage below.
    --mouse-x / --mouse-y (set by useMouseDepth.js, -1 to 1) let each layer drift with the mouse. */
 
 .hero {
   position: relative; overflow: hidden; padding: clamp(28px, 4.5vh, 52px) 0 0; text-align: center;
   display: flex; flex-direction: column;
-  /* Ice Blue by day, Deep Navy by night; the Sapphire sun behind me stays in both */
-  --hero-page: var(--brand-ice-blue);
-  --hero-text: var(--brand-deep-navy);
-  --hero-text-soft: color-mix(in srgb, var(--brand-deep-navy) 72%, transparent);
-  --hero-accent: var(--brand-sapphire);
-  background: var(--hero-page); color: var(--hero-text);
-  transition: background-color 0.5s, color 0.5s;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .hero {
-    --hero-page: var(--brand-deep-navy);
-    --hero-text: var(--brand-ice-blue);
-    --hero-text-soft: color-mix(in srgb, var(--brand-ice-blue) 72%, transparent);
-    --hero-accent: var(--brand-powder-blue);
-  }
-}
-:root[data-theme='dark'] .hero {
-  --hero-page: var(--brand-deep-navy);
+  /* black in Day and Night; the Sapphire sun behind me is the only big colour */
+  --hero-page: #000000;
   --hero-text: var(--brand-ice-blue);
   --hero-text-soft: color-mix(in srgb, var(--brand-ice-blue) 72%, transparent);
   --hero-accent: var(--brand-powder-blue);
+  background: var(--hero-page); color: var(--hero-text);
+  /* room for the torn top edge of the journey section, which overlaps the bottom of the hero */
+  padding-bottom: 36px;
 }
 
 /* The stage holds the proof chips and my portrait. As big as fits, so the whole hero
