@@ -10,7 +10,7 @@
    Backgrounds down the page (Day: light pastels; Night: deep, rich darks; neighbours never match):
                    Day                  Night
      Hero          Ice Blue             Deep Navy        (Hero.css)
-     Journey       Rose Gold            Royal Amethyst
+     Journey       Rose Gold            Rose Gold
      Work          Mint Whisper         deep forest green
      Stack         Lilac Mist           Midnight Plum
      YouTube       Blush Pink           Deep Bordeaux
@@ -55,7 +55,7 @@
   --card-on-accent: var(--color-on-accent);
 }
 
-/* ───────── Journey: Rose Gold by day, Royal Amethyst with Blush Pink accents by night ───────── */
+/* ───────── Journey: Rose Gold in Day and Night (only the full-screen map changes) ───────── */
 .section-theme-journey {
   --color-page: #b66e79;
   --color-surface: #fadadd;
@@ -79,14 +79,14 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .section-theme-journey {
-    --color-page: #663399;
-    --color-surface: #57298a;
-    --color-text: #f3e3f3;
-    --color-text-muted: #dcc3e6;
-    --color-border: #8458b8;
+    --color-page: #b66e79;
+    --color-surface: #fadadd;
+    --color-text: #2a1411;
+    --color-text-muted: #3b1f1b;
+    --color-border: #c98a93;
     --color-accent: #fadadd;
     --color-on-accent: #3b1f1b;
-    --glow-warm: #e6c7e6;
+    --glow-warm: #fadadd;
   }
   /* the full-screen map keeps its own dark blue */
   :root:not([data-theme='light']) .section-theme-journey .journey-map {
@@ -101,14 +101,14 @@
   }
 }
 :root[data-theme='dark'] .section-theme-journey {
-  --color-page: #663399;
-  --color-surface: #57298a;
-  --color-text: #f3e3f3;
-  --color-text-muted: #dcc3e6;
-  --color-border: #8458b8;
+  --color-page: #b66e79;
+  --color-surface: #fadadd;
+  --color-text: #2a1411;
+  --color-text-muted: #3b1f1b;
+  --color-border: #c98a93;
   --color-accent: #fadadd;
   --color-on-accent: #3b1f1b;
-  --glow-warm: #e6c7e6;
+  --glow-warm: #fadadd;
 }
 :root[data-theme='dark'] .section-theme-journey .journey-map {
   --color-page: #06245c;
