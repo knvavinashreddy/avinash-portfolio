@@ -18,7 +18,7 @@ export default function ToolPicker() {
               {group.tools.map((tool) => (
                 <li key={tool.name}>
                   <button
-                    className={`toolkit-tool ${selectedTool.name === tool.name ? 'is-selected' : ''}`}
+                    className={`toolkit-tool section-card ${selectedTool.name === tool.name ? 'is-selected' : ''}`}
                     onMouseEnter={() => setSelectedTool(tool)}
                     onFocus={() => setSelectedTool(tool)}
                     onClick={() => setSelectedTool(tool)}

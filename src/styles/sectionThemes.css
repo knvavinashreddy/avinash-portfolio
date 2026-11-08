@@ -1,23 +1,26 @@
-/* Section themes: each section gets its own colour family, so the page reads as clear bands.
+/* Section themes: every section has its own background, and the cards inside it get a
+   different, contrasting colour so they stand apart from the section.
 
-   A section opts in with a class, e.g. <section className="section-theme-green">.
-   The class only re-sets the --color-* tokens (from tokens.css) for that section; every component
-   inside already uses those tokens, so it recolours itself with no other changes.
+   How it works
+   - A section opts in with a class, e.g. <section className="section-theme-work">.
+     The class re-sets the --color-* tokens (from tokens.css) for that section only.
+   - A card inside it adds className="section-card". That class swaps in the section's
+     --card-* colours, so the card (and everything inside it) uses them instead.
 
-   Order down the page:
-     Hero          deep navy (its own CSS, both themes)
-     Journey       blue        (the default page colours)
-     Work          green
-     Stack         purple
-     YouTube       red
-     Off the clock rose
-     Guestbook     powder blue
-     Contact       deep navy (both themes, mirroring the hero)
+   Backgrounds down the page (no two the same, in Day or Night):
+                   Day                  Night
+     Hero          Deep Navy            Deep Navy        (Hero.css)
+     Journey       Ice Blue             deep Sapphire
+     Work          Mint Whisper         Dark Evergreen
+     Stack         Lilac Mist           Midnight Plum
+     YouTube       Soft Blush           Deep Bordeaux
+     Off the clock Powder Blue          dark slate blue
+     Guestbook     Blush Pink           Dark Mahogany
+     Contact       Midnight Plum        Forest Green
 */
 
 /* every themed section paints its own background and leaves room at the bottom */
-.section-theme-blue, .section-theme-green, .section-theme-purple, .section-theme-red,
-.section-theme-rose, .section-theme-powder, .section-theme-navy {
+.section-theme-journey, .section-theme-work, .section-theme-stack, .section-theme-youtube, .section-theme-life-board, .section-theme-guestbook, .section-theme-contact {
   /* re-mixed here because the root version was mixed from the root surface colour */
   --color-glass: color-mix(in srgb, var(--color-surface) 78%, transparent);
   background: var(--color-page);
@@ -26,25 +29,68 @@
   transition: background-color 0.5s, color 0.5s;
 }
 @media (max-width: 760px) {
-  .section-theme-blue, .section-theme-green, .section-theme-purple, .section-theme-red,
-  .section-theme-rose, .section-theme-powder, .section-theme-navy { padding-bottom: 80px; }
+  .section-theme-journey, .section-theme-work, .section-theme-stack, .section-theme-youtube, .section-theme-life-board, .section-theme-guestbook, .section-theme-contact { padding-bottom: 80px; }
 }
 
-/* Contact: deep navy in Day and Night */
-.section-theme-navy {
-  --color-page: #000926;
-  --color-surface: #0a1638;
+/* A card: takes the section's card colours. Inside the card, "page" means the inset colour
+   (inputs, tags), so components need no card-specific CSS. */
+.section-card {
+  --color-surface: var(--card-page);
+  --color-page: var(--card-inset);
+  --color-text: var(--card-text);
+  --color-text-muted: var(--card-muted);
+  --color-border: var(--card-border);
+  --color-accent: var(--card-accent);
+  --color-on-accent: var(--card-on-accent);
+  color: var(--color-text);
+}
+/* sections without their own card colours keep the normal surface look */
+:root {
+  --card-page: var(--color-surface);
+  --card-inset: var(--color-page);
+  --card-text: var(--color-text);
+  --card-muted: var(--color-text-muted);
+  --card-border: var(--color-border);
+  --card-accent: var(--color-accent);
+  --card-on-accent: var(--color-on-accent);
+}
+
+/* ───────── Journey: Ice Blue by day, deep Sapphire by night ───────── */
+.section-theme-journey {
+  --color-page: #d6e6f3;
+  --color-surface: #f2f7fc;
+  --color-text: #000926;
+  --color-text-muted: #3e5571;
+  --color-border: #b8cfe1;
+  --color-accent: #0f52ba;
+  --color-on-accent: #ffffff;
+  --glow-warm: #0f52ba;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .section-theme-journey {
+    --color-page: #06245c;
+    --color-surface: #0c3275;
+    --color-text: #d6e6f3;
+    --color-text-muted: #a6c5d7;
+    --color-border: #1c4590;
+    --color-accent: #a6c5d7;
+    --color-on-accent: #000926;
+    --glow-warm: #4d86d9;
+  }
+}
+:root[data-theme='dark'] .section-theme-journey {
+  --color-page: #06245c;
+  --color-surface: #0c3275;
   --color-text: #d6e6f3;
   --color-text-muted: #a6c5d7;
-  --color-border: #1d2c55;
+  --color-border: #1c4590;
   --color-accent: #a6c5d7;
   --color-on-accent: #000926;
   --glow-warm: #4d86d9;
-  color-scheme: dark;
 }
 
-/* ───────── Work: Mint Whisper / Dark Evergreen ───────── */
-.section-theme-green {
+/* ───────── Work: Mint Whisper with Dark Evergreen cards / Dark Evergreen with Forest Green cards ───────── */
+.section-theme-work {
   --color-page: #d1f2eb;
   --color-surface: #ecfaf6;
   --color-text: #013220;
@@ -53,9 +99,16 @@
   --color-accent: #0b6e4f;
   --color-on-accent: #ffffff;
   --glow-warm: #50c878;
+  --card-page: #013220;
+  --card-inset: #0a4130;
+  --card-text: #d1f2eb;
+  --card-muted: #9fd8c2;
+  --card-border: #2a6b52;
+  --card-accent: #50c878;
+  --card-on-accent: #013220;
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .section-theme-green {
+  :root:not([data-theme='light']) .section-theme-work {
     --color-page: #013220;
     --color-surface: #0a4130;
     --color-text: #d1f2eb;
@@ -64,9 +117,16 @@
     --color-accent: #50c878;
     --color-on-accent: #013220;
     --glow-warm: #50c878;
+    --card-page: #0b6e4f;
+    --card-inset: #095c42;
+    --card-text: #d1f2eb;
+    --card-muted: #c3ecdf;
+    --card-border: #2d8a6b;
+    --card-accent: #d1f2eb;
+    --card-on-accent: #013220;
   }
 }
-:root[data-theme='dark'] .section-theme-green {
+:root[data-theme='dark'] .section-theme-work {
   --color-page: #013220;
   --color-surface: #0a4130;
   --color-text: #d1f2eb;
@@ -75,10 +135,17 @@
   --color-accent: #50c878;
   --color-on-accent: #013220;
   --glow-warm: #50c878;
+  --card-page: #0b6e4f;
+  --card-inset: #095c42;
+  --card-text: #d1f2eb;
+  --card-muted: #c3ecdf;
+  --card-border: #2d8a6b;
+  --card-accent: #d1f2eb;
+  --card-on-accent: #013220;
 }
 
-/* ───────── Stack: Lilac Mist / Midnight Plum ───────── */
-.section-theme-purple {
+/* ───────── Stack: Lilac Mist with Midnight Plum cards / Midnight Plum with Royal Amethyst cards ───────── */
+.section-theme-stack {
   --color-page: #e6c7e6;
   --color-surface: #f5e9f5;
   --color-text: #2e1a47;
@@ -87,9 +154,16 @@
   --color-accent: #663399;
   --color-on-accent: #ffffff;
   --glow-warm: #a3779d;
+  --card-page: #2e1a47;
+  --card-inset: #3b2659;
+  --card-text: #e6c7e6;
+  --card-muted: #c9adcf;
+  --card-border: #4e3870;
+  --card-accent: #a3779d;
+  --card-on-accent: #2e1a47;
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .section-theme-purple {
+  :root:not([data-theme='light']) .section-theme-stack {
     --color-page: #2e1a47;
     --color-surface: #3b2659;
     --color-text: #e6c7e6;
@@ -98,9 +172,16 @@
     --color-accent: #c79be0;
     --color-on-accent: #2e1a47;
     --glow-warm: #a3779d;
+    --card-page: #663399;
+    --card-inset: #57298a;
+    --card-text: #f3e3f3;
+    --card-muted: #dcc3e6;
+    --card-border: #8458b8;
+    --card-accent: #e6c7e6;
+    --card-on-accent: #2e1a47;
   }
 }
-:root[data-theme='dark'] .section-theme-purple {
+:root[data-theme='dark'] .section-theme-stack {
   --color-page: #2e1a47;
   --color-surface: #3b2659;
   --color-text: #e6c7e6;
@@ -109,10 +190,17 @@
   --color-accent: #c79be0;
   --color-on-accent: #2e1a47;
   --glow-warm: #a3779d;
+  --card-page: #663399;
+  --card-inset: #57298a;
+  --card-text: #f3e3f3;
+  --card-muted: #dcc3e6;
+  --card-border: #8458b8;
+  --card-accent: #e6c7e6;
+  --card-on-accent: #2e1a47;
 }
 
-/* ───────── YouTube launch: Soft Blush / Deep Bordeaux (YouTube red as the accent) ───────── */
-.section-theme-red {
+/* ───────── YouTube launch: Soft Blush with a Bordeaux card / Deep Bordeaux with a Soft Blush card ───────── */
+.section-theme-youtube {
   --color-page: #fbe4e3;
   --color-surface: #fff4f3;
   --color-text: #3f0d12;
@@ -124,7 +212,7 @@
   --countdown-number: #f26b78;
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .section-theme-red {
+  :root:not([data-theme='light']) .section-theme-youtube {
     --color-page: #3f0d12;
     --color-surface: #521419;
     --color-text: #fbe4e3;
@@ -136,7 +224,7 @@
     --countdown-number: #d72638;
   }
 }
-:root[data-theme='dark'] .section-theme-red {
+:root[data-theme='dark'] .section-theme-youtube {
   --color-page: #3f0d12;
   --color-surface: #521419;
   --color-text: #fbe4e3;
@@ -148,42 +236,8 @@
   --countdown-number: #d72638;
 }
 
-/* ───────── Off the clock: Blush Pink / Dark Mahogany ───────── */
-.section-theme-rose {
-  --color-page: #fadadd;
-  --color-surface: #fdeef0;
-  --color-text: #3b1f1b;
-  --color-text-muted: #74494a;
-  --color-border: #e9b9bf;
-  --color-accent: #8c4e4f;
-  --color-on-accent: #ffffff;
-  --glow-warm: #b66e79;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .section-theme-rose {
-    --color-page: #3b1f1b;
-    --color-surface: #4b2a25;
-    --color-text: #fadadd;
-    --color-text-muted: #d8a8ad;
-    --color-border: #5f3832;
-    --color-accent: #d48b96;
-    --color-on-accent: #3b1f1b;
-    --glow-warm: #b66e79;
-  }
-}
-:root[data-theme='dark'] .section-theme-rose {
-  --color-page: #3b1f1b;
-  --color-surface: #4b2a25;
-  --color-text: #fadadd;
-  --color-text-muted: #d8a8ad;
-  --color-border: #5f3832;
-  --color-accent: #d48b96;
-  --color-on-accent: #3b1f1b;
-  --glow-warm: #b66e79;
-}
-
-/* ───────── Guestbook: Powder Blue by day, deep Sapphire by night ───────── */
-.section-theme-powder {
+/* ───────── Off the clock: Powder Blue with a Deep Navy board / dark slate blue with a Sapphire board ───────── */
+.section-theme-life-board {
   --color-page: #a6c5d7;
   --color-surface: #d6e6f3;
   --color-text: #000926;
@@ -192,26 +246,157 @@
   --color-accent: #0f52ba;
   --color-on-accent: #ffffff;
   --glow-warm: #0f52ba;
+  --card-page: #000926;
+  --card-inset: #0a1638;
+  --card-text: #d6e6f3;
+  --card-muted: #a6c5d7;
+  --card-border: #24386b;
+  --card-accent: #0f52ba;
+  --card-on-accent: #ffffff;
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .section-theme-powder {
-    --color-page: #06245c;
-    --color-surface: #0c3275;
+  :root:not([data-theme='light']) .section-theme-life-board {
+    --color-page: #12334a;
+    --color-surface: #1a4260;
     --color-text: #d6e6f3;
     --color-text-muted: #a6c5d7;
-    --color-border: #1c4590;
+    --color-border: #2a5575;
     --color-accent: #a6c5d7;
     --color-on-accent: #000926;
     --glow-warm: #4d86d9;
+    --card-page: #0f52ba;
+    --card-inset: #0c47a3;
+    --card-text: #d6e6f3;
+    --card-muted: #c4daea;
+    --card-border: #3d74c9;
+    --card-accent: #a6c5d7;
+    --card-on-accent: #000926;
   }
 }
-:root[data-theme='dark'] .section-theme-powder {
-  --color-page: #06245c;
-  --color-surface: #0c3275;
+:root[data-theme='dark'] .section-theme-life-board {
+  --color-page: #12334a;
+  --color-surface: #1a4260;
   --color-text: #d6e6f3;
   --color-text-muted: #a6c5d7;
-  --color-border: #1c4590;
+  --color-border: #2a5575;
   --color-accent: #a6c5d7;
   --color-on-accent: #000926;
   --glow-warm: #4d86d9;
+  --card-page: #0f52ba;
+  --card-inset: #0c47a3;
+  --card-text: #d6e6f3;
+  --card-muted: #c4daea;
+  --card-border: #3d74c9;
+  --card-accent: #a6c5d7;
+  --card-on-accent: #000926;
+}
+
+/* ───────── Guestbook: Blush Pink with a Dark Mahogany form / Dark Mahogany with a Muted Copper form ───────── */
+.section-theme-guestbook {
+  --color-page: #fadadd;
+  --color-surface: #fdeef0;
+  --color-text: #3b1f1b;
+  --color-text-muted: #74494a;
+  --color-border: #e9b9bf;
+  --color-accent: #8c4e4f;
+  --color-on-accent: #ffffff;
+  --glow-warm: #b66e79;
+  --card-page: #3b1f1b;
+  --card-inset: #4b2a25;
+  --card-text: #fadadd;
+  --card-muted: #dcb0b4;
+  --card-border: #5f3832;
+  --card-accent: #b66e79;
+  --card-on-accent: #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .section-theme-guestbook {
+    --color-page: #3b1f1b;
+    --color-surface: #4b2a25;
+    --color-text: #fadadd;
+    --color-text-muted: #d8a8ad;
+    --color-border: #5f3832;
+    --color-accent: #d48b96;
+    --color-on-accent: #3b1f1b;
+    --glow-warm: #b66e79;
+    --card-page: #8c4e4f;
+    --card-inset: #7a4243;
+    --card-text: #fff0f1;
+    --card-muted: #f3d3d6;
+    --card-border: #a76768;
+    --card-accent: #fadadd;
+    --card-on-accent: #3b1f1b;
+  }
+}
+:root[data-theme='dark'] .section-theme-guestbook {
+  --color-page: #3b1f1b;
+  --color-surface: #4b2a25;
+  --color-text: #fadadd;
+  --color-text-muted: #d8a8ad;
+  --color-border: #5f3832;
+  --color-accent: #d48b96;
+  --color-on-accent: #3b1f1b;
+  --glow-warm: #b66e79;
+  --card-page: #8c4e4f;
+  --card-inset: #7a4243;
+  --card-text: #fff0f1;
+  --card-muted: #f3d3d6;
+  --card-border: #a76768;
+  --card-accent: #fadadd;
+  --card-on-accent: #3b1f1b;
+}
+
+/* ───────── Contact: Midnight Plum with Lilac Mist cards / Forest Green with Dark Evergreen cards ───────── */
+.section-theme-contact {
+  --color-page: #2e1a47;
+  --color-surface: #3b2659;
+  --color-text: #e6c7e6;
+  --color-text-muted: #c0a2c7;
+  --color-border: #4e3870;
+  --color-accent: #e6c7e6;
+  --color-on-accent: #2e1a47;
+  --glow-warm: #a3779d;
+  --card-page: #e6c7e6;
+  --card-inset: #f5e9f5;
+  --card-text: #2e1a47;
+  --card-muted: #5c4470;
+  --card-border: #cfa9d0;
+  --card-accent: #663399;
+  --card-on-accent: #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .section-theme-contact {
+    --color-page: #0b6e4f;
+    --color-surface: #0d7a58;
+    --color-text: #d1f2eb;
+    --color-text-muted: #c9efe3;
+    --color-border: #2d8a6b;
+    --color-accent: #d1f2eb;
+    --color-on-accent: #013220;
+    --glow-warm: #50c878;
+    --card-page: #013220;
+    --card-inset: #0a4130;
+    --card-text: #d1f2eb;
+    --card-muted: #8fcfb5;
+    --card-border: #1a5a43;
+    --card-accent: #50c878;
+    --card-on-accent: #013220;
+  }
+}
+:root[data-theme='dark'] .section-theme-contact {
+  --color-page: #0b6e4f;
+  --color-surface: #0d7a58;
+  --color-text: #d1f2eb;
+  --color-text-muted: #c9efe3;
+  --color-border: #2d8a6b;
+  --color-accent: #d1f2eb;
+  --color-on-accent: #013220;
+  --glow-warm: #50c878;
+  --card-page: #013220;
+  --card-inset: #0a4130;
+  --card-text: #d1f2eb;
+  --card-muted: #8fcfb5;
+  --card-border: #1a5a43;
+  --card-accent: #50c878;
+  --card-on-accent: #013220;
 }

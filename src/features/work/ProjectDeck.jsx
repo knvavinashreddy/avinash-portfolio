@@ -24,7 +24,7 @@ export default function ProjectDeck({ pickedProjectId, onPick }) {
             key={project.id}
             role="tab"
             aria-selected={isPicked}
-            className={`project-card ${isPicked ? 'is-picked' : ''}`}
+            className={`project-card section-card ${isPicked ? 'is-picked' : ''}`}
             style={{
               '--card-offset-y': `${(cardCount - 1 - position) * CARD_PEEK}px`,
               '--card-offset-x': `${position * 12}px`,

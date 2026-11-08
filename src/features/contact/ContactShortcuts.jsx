@@ -11,7 +11,7 @@ export default function ContactShortcuts() {
       {contactShortcuts.map((shortcut) => (
         <li key={shortcut.key}>
           <a
-            className="card-glow"
+            className="section-card card-glow"
             href={shortcut.href}
             target={isEmailLink(shortcut.href) ? undefined : '_blank'}
             rel="noreferrer"

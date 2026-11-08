@@ -3,7 +3,7 @@
 // Express + MongoDB API. See README.
 
 const STORAGE_KEY = 'wall-notes' // kept from the first version, so existing notes still load
-export const NOTE_COLORS = ['ice', 'powder', 'mint', 'lilac', 'blush']
+export const NOTE_COLORS = ['ice', 'powder', 'mint', 'lilac'] // no blush: the guestbook is Blush Pink
 // notes saved by earlier versions used other colour names; map them to today's
 const OLD_COLOR_NAMES = {
   n1: 'ice', n2: 'powder', n3: 'mint', n4: 'blush',

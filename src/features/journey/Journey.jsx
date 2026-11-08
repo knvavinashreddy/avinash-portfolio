@@ -31,7 +31,7 @@ export default function Journey({ theme, onToggleTheme }) {
   }
 
   return (
-    <section id="journey" className="journey section-theme-blue" aria-labelledby="journey-title">
+    <section id="journey" className="journey section-theme-journey" aria-labelledby="journey-title">
       <div className="page-container journey-heading">
         <p className="section-label">01 · The journey</p>
         <h2 id="journey-title">{journeyIntro.title}</h2>

@@ -4,7 +4,7 @@ import './ProjectDetail.css'
 
 export default function ProjectDetail({ project }) {
   return (
-    <article className="project-detail card-glow" role="tabpanel" aria-live="polite">
+    <article className="project-detail section-card card-glow" role="tabpanel" aria-live="polite">
       <h3>{project.name}</h3>
       <p>{project.summary}</p>
       <dl className="project-stats">

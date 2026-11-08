@@ -26,7 +26,7 @@ export default function GuestbookForm({ onPinNote }) {
   }
 
   return (
-    <form className="guestbook-form card-glow" onSubmit={submit} noValidate>
+    <form className="guestbook-form section-card card-glow" onSubmit={submit} noValidate>
       <label>
         Your name
         <input value={name} onChange={(e) => setName(e.target.value)} maxLength={40} />

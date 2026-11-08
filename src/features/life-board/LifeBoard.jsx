@@ -12,14 +12,14 @@ export default function LifeBoard() {
   const { positions, stackOrder, startDrag, moveDrag, endDrag, nudgeWithKeys } = useDraggableItems(lifeBoardItems, board)
 
   return (
-    <section id="off-the-clock" className="section-theme-rose" aria-labelledby="off-the-clock-title">
+    <section id="off-the-clock" className="section-theme-life-board" aria-labelledby="off-the-clock-title">
       <div className="page-container">
         <p className="section-label">05 · Off the clock</p>
         <h2 id="off-the-clock-title">Off the clock.</h2>
         <p className="section-intro">The non-work version of me: sports, music, food and way too many games.</p>
         <p className="handwritten life-board-hint">it’s my board, but go ahead, move stuff around</p>
         <div className="life-board-scroll">
-          <div className="life-board" ref={board}>
+          <div className="life-board section-card" ref={board}>
             {lifeBoardItems.map((item) => (
               <div
                 key={item.id}

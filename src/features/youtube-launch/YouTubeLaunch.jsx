@@ -11,7 +11,7 @@ export default function YouTubeLaunch() {
   const timeLeft = useCountdown(youtubeLaunch.launch)
 
   return (
-    <section id="youtube-launch" className="youtube-launch section-theme-red" aria-labelledby="youtube-launch-title">
+    <section id="youtube-launch" className="youtube-launch section-theme-youtube" aria-labelledby="youtube-launch-title">
       <div className="page-container">
         <div className="youtube-launch-card card-glow">
           <div>
