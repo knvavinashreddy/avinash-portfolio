@@ -8,7 +8,7 @@
 //   YouTubeLaunch   channel launch countdown                        features/youtube-launch
 //   LifeBoard       draggable "off the clock" board                 features/life-board
 //   Guestbook       leave a note                                    features/guestbook
-//   Contact         contact cards, palette, footer                  features/contact
+//   Contact         contact cards, footer                           features/contact
 //   SectionDock     floating navigation at the bottom               shared/section-dock
 //
 // App owns the two pieces of state several parts share: the theme and the music.

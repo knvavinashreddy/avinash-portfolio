@@ -1,8 +1,6 @@
-// Contact section: heading, the five contact cards (with keyboard shortcuts),
-// the site's colour palette, and the footer.
+// Contact section: heading, the five contact cards (with keyboard shortcuts), and the footer.
 
 import ContactShortcuts from './ContactShortcuts'
-import PaletteCard from './PaletteCard'
 import SiteFooter from './SiteFooter'
 import './Contact.css'
 
@@ -15,7 +13,6 @@ export default function Contact() {
         <p className="section-intro">I reply fast. Faster if it involves AI or food.</p>
         <p className="handwritten">psst, these work on your keyboard too</p>
         <ContactShortcuts />
-        <PaletteCard />
       </div>
       <SiteFooter />
     </section>

@@ -38,7 +38,7 @@ src/
     youtube-launch/     channel launch card + countdown
     life-board/         draggable "off the clock" board
     guestbook/          leave a note (saved in the browser)
-    contact/            contact cards + keyboard shortcuts, palette card, footer
+    contact/            contact cards + keyboard shortcuts, footer
 scripts/
   cutout.mjs          removes the black background from my photo (see README)
 ```
