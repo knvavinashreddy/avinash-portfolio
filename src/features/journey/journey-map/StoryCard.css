@@ -92,6 +92,10 @@
   transition: transform 0.2s;
 }
 .story-card-gallery li:hover { transform: rotate(0) translateY(-4px); }
+/* a single photo gets the whole width, in landscape, so it isn't a tiny thumbnail */
+.story-card-gallery li:only-child { flex: 1; width: auto; margin: 4px 6px 0; }
+.story-card-gallery li:only-child img,
+.story-card-gallery li:only-child .story-card-photo-placeholder { aspect-ratio: 16 / 10; }
 .story-card-gallery img, .story-card-gallery .story-card-photo-placeholder { width: 100%; aspect-ratio: 1; object-fit: cover; display: grid; place-items: center; }
 .story-card-gallery .story-card-photo-placeholder { background: repeating-linear-gradient(45deg, #efefef, #efefef 7px, #f8f8f8 7px, #f8f8f8 14px); color: #8a8a8a; font-size: 0.72rem; }
 .story-card-gallery .story-card-photo-caption { display: block; text-align: center; color: #444; font: 600 1.05rem var(--font-handwritten); padding-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

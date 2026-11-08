@@ -42,7 +42,7 @@ export const journeyStops = [
     badge: '4.0',
     color: '#a33c52',
     when: '2023',
-    place: 'Bhimavaram · online',
+    place: 'Online',
     headline: 'It wasn’t me. It was the system.',
     story:
       'In intermediate second year I joined **CCBP 4.0**, NxtWave’s online course, and wrote my first line of code. For the first time, learning clicked. I wasn’t bad at studies. The way I was being taught was. That’s where my real journey started.',
@@ -69,7 +69,7 @@ export const journeyStops = [
     color: '#6b2a4a',
     when: '2024',
     place: 'Tumakuru, Karnataka',
-    headline: 'Same story, different state.',
+    headline: 'I dropped out from SIT',
     story:
       'It was theory, mugging, exams, repeat. Nothing I could actually build with. After first year I made the hardest call so far: I **dropped out**, even with good placements on the table.',
     gallery: [{ caption: 'Last day on campus' }, { caption: 'Packing up' }],
@@ -82,7 +82,7 @@ export const journeyStops = [
     color: '#a33c52',
     when: '2024',
     place: 'Financial District, Hyderabad',
-    headline: 'Finally, a college that builds.',
+    headline: 'NxtWave Institute of Advanced Technologies',
     story:
       'I joined **NIAT**, NxtWave’s four-year program, with my **BSc in Computer Science**. No mugging, just the skills companies actually hire for. Next door: **Google, Amazon, Microsoft, Accenture, Infosys, Wipro**. Meeting engineers, managers and HRs here changed how I think.',
     gallery: [{ caption: 'First day' }, { caption: 'The neighbourhood' }, { caption: 'My batch' }, { caption: 'Industry visit' }],
@@ -98,7 +98,10 @@ export const journeyStops = [
     headline: 'Hit record, cringed, kept going.',
     story:
       'Two months into NIAT I recorded my **first piece of content**. Rough? Very. But it was the start of something I really care about.',
-    gallery: [{ caption: 'The first take' }, { caption: 'Behind the scenes' }],
+    gallery: [
+      { caption: 'The first take', src: '/photos/first-video-memoji.jpg' },
+      { caption: 'Face to camera', src: '/photos/first-video-on-camera.jpg' },
+    ],
   },
   {
     id: 'builder',
@@ -125,6 +128,6 @@ export const journeyStops = [
     headline: 'Going big on YouTube.',
     story:
       'In **January 2027** I’m launching my Telugu tech channel properly. Programming and AI, taught the way I wish someone had taught me.',
-    gallery: [{ caption: 'Coming soon' }],
+    gallery: [{ caption: 'The studio, ready for 2027', src: '/photos/youtube-studio-2027.jpg' }],
   },
 ]
