@@ -19,11 +19,7 @@ export const journeyStops = [
     headline: 'My School Journey — A Journey Beyond Academics',
     // a blank line between paragraphs ("\n\n") starts a new paragraph on the story card
     story:
-      'My school years were shaped by sports, games, friendships, and active participation in cultural activities. Academically, however, I faced challenges, particularly in mathematics, which was never my strongest subject.' +
-      '\n\n' +
-      'After 9th grade, I began recognising the importance of building a strong academic foundation. During the COVID period, I joined private coaching classes and started revisiting the fundamentals of mathematics. Gradually, my understanding improved, and I began making consistent progress.' +
-      '\n\n' +
-      'I wasn’t an outstanding student or a topper, but this phase marked an important shift in my approach to learning and personal growth.',
+      'My school life was filled with sports, games, friendships, and cultural activities, but academics were always a challenge, especially mathematics. After 9th grade, I realised the importance of strengthening my basics. During COVID, I joined private coaching classes and started working on my fundamentals. It wasn’t an easy journey, but gradually, I improved and developed a better approach towards learning. I was never a topper, but those struggles taught me the value of consistency and self-improvement.',
     gallery: [{ caption: 'School days' }, { caption: 'The classroom' }, { caption: '10th results day' }],
   },
   {
