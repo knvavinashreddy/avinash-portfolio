@@ -7,16 +7,16 @@
    - A card inside it adds className="section-card". That class swaps in the section's
      --card-* colours, so the card (and everything inside it) uses them instead.
 
-   Backgrounds down the page (Day uses only the four pastels; neighbours never match):
+   Backgrounds down the page (Day: light pastels; Night: deep, rich darks; neighbours never match):
                    Day                  Night
      Hero          Ice Blue             Deep Navy        (Hero.css)
-     Journey       Rose Gold            deep Sapphire
-     Work          Mint Whisper         Dark Evergreen
+     Journey       Rose Gold            Dark Mahogany
+     Work          Mint Whisper         deep forest green
      Stack         Lilac Mist           Midnight Plum
      YouTube       Blush Pink           Deep Bordeaux
-     Off the clock Mint Whisper         dark slate blue
-     Guestbook     Ice Blue             Dark Mahogany
-     Contact       Lilac Mist           Forest Green
+     Off the clock Mint Whisper         deep sapphire
+     Guestbook     Ice Blue             deep berry
+     Contact       Lilac Mist           Dark Evergreen
 */
 
 /* every themed section paints its own background and leaves room at the bottom */
@@ -55,7 +55,7 @@
   --card-on-accent: var(--color-on-accent);
 }
 
-/* ───────── Journey: Rose Gold by day, deep Sapphire by night ───────── */
+/* ───────── Journey: Rose Gold by day, Dark Mahogany by night ───────── */
 .section-theme-journey {
   --color-page: #b66e79;
   --color-surface: #fadadd;
@@ -78,7 +78,17 @@
   --glow-warm: #0f52ba;
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .section-theme-journey,
+  :root:not([data-theme='light']) .section-theme-journey {
+    --color-page: #3b1f1b;
+    --color-surface: #4b2a25;
+    --color-text: #fadadd;
+    --color-text-muted: #d8a8ad;
+    --color-border: #5f3832;
+    --color-accent: #d48b96;
+    --color-on-accent: #3b1f1b;
+    --glow-warm: #b66e79;
+  }
+  /* the full-screen map keeps its own dark blue */
   :root:not([data-theme='light']) .section-theme-journey .journey-map {
     --color-page: #06245c;
     --color-surface: #0c3275;
@@ -90,7 +100,16 @@
     --glow-warm: #4d86d9;
   }
 }
-:root[data-theme='dark'] .section-theme-journey,
+:root[data-theme='dark'] .section-theme-journey {
+  --color-page: #3b1f1b;
+  --color-surface: #4b2a25;
+  --color-text: #fadadd;
+  --color-text-muted: #d8a8ad;
+  --color-border: #5f3832;
+  --color-accent: #d48b96;
+  --color-on-accent: #3b1f1b;
+  --glow-warm: #b66e79;
+}
 :root[data-theme='dark'] .section-theme-journey .journey-map {
   --color-page: #06245c;
   --color-surface: #0c3275;
@@ -102,7 +121,7 @@
   --glow-warm: #4d86d9;
 }
 
-/* ───────── Work: Mint Whisper with Dark Evergreen cards / Dark Evergreen with Forest Green cards ───────── */
+/* ───────── Work: Mint Whisper with Dark Evergreen cards / deep forest green with Forest Green cards ───────── */
 .section-theme-work {
   --color-page: #d1f2eb;
   --color-surface: #ecfaf6;
@@ -122,11 +141,11 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .section-theme-work {
-    --color-page: #013220;
-    --color-surface: #0a4130;
+    --color-page: #0b3d2e;
+    --color-surface: #0f4a38;
     --color-text: #d1f2eb;
     --color-text-muted: #8fcfb5;
-    --color-border: #1a5a43;
+    --color-border: #1f6650;
     --color-accent: #50c878;
     --color-on-accent: #013220;
     --glow-warm: #50c878;
@@ -140,11 +159,11 @@
   }
 }
 :root[data-theme='dark'] .section-theme-work {
-  --color-page: #013220;
-  --color-surface: #0a4130;
+  --color-page: #0b3d2e;
+  --color-surface: #0f4a38;
   --color-text: #d1f2eb;
   --color-text-muted: #8fcfb5;
-  --color-border: #1a5a43;
+  --color-border: #1f6650;
   --color-accent: #50c878;
   --color-on-accent: #013220;
   --glow-warm: #50c878;
@@ -249,7 +268,7 @@
   --countdown-number: #d72638;
 }
 
-/* ───────── Off the clock: Mint Whisper with a Deep Navy board / dark slate blue with a Sapphire board ───────── */
+/* ───────── Off the clock: Mint Whisper with a Deep Navy board / deep sapphire with a Sapphire board ───────── */
 .section-theme-life-board {
   --color-page: #d1f2eb;
   --color-surface: #ecfaf6;
@@ -269,11 +288,11 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .section-theme-life-board {
-    --color-page: #12334a;
-    --color-surface: #1a4260;
+    --color-page: #0a2a5e;
+    --color-surface: #10367a;
     --color-text: #d6e6f3;
     --color-text-muted: #a6c5d7;
-    --color-border: #2a5575;
+    --color-border: #24498f;
     --color-accent: #a6c5d7;
     --color-on-accent: #000926;
     --glow-warm: #4d86d9;
@@ -287,11 +306,11 @@
   }
 }
 :root[data-theme='dark'] .section-theme-life-board {
-  --color-page: #12334a;
-  --color-surface: #1a4260;
+  --color-page: #0a2a5e;
+  --color-surface: #10367a;
   --color-text: #d6e6f3;
   --color-text-muted: #a6c5d7;
-  --color-border: #2a5575;
+  --color-border: #24498f;
   --color-accent: #a6c5d7;
   --color-on-accent: #000926;
   --glow-warm: #4d86d9;
@@ -304,7 +323,7 @@
   --card-on-accent: #000926;
 }
 
-/* ───────── Guestbook: Ice Blue with a Dark Mahogany form / Dark Mahogany with a Muted Copper form ───────── */
+/* ───────── Guestbook: Ice Blue with a Dark Mahogany form / deep berry with a Muted Copper form ───────── */
 .section-theme-guestbook {
   --color-page: #d6e6f3;
   --color-surface: #f2f7fc;
@@ -324,11 +343,11 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .section-theme-guestbook {
-    --color-page: #3b1f1b;
-    --color-surface: #4b2a25;
+    --color-page: #4a1f3d;
+    --color-surface: #5a2a4b;
     --color-text: #fadadd;
-    --color-text-muted: #d8a8ad;
-    --color-border: #5f3832;
+    --color-text-muted: #e0b3cc;
+    --color-border: #6e3a5d;
     --color-accent: #d48b96;
     --color-on-accent: #3b1f1b;
     --glow-warm: #b66e79;
@@ -342,11 +361,11 @@
   }
 }
 :root[data-theme='dark'] .section-theme-guestbook {
-  --color-page: #3b1f1b;
-  --color-surface: #4b2a25;
+  --color-page: #4a1f3d;
+  --color-surface: #5a2a4b;
   --color-text: #fadadd;
-  --color-text-muted: #d8a8ad;
-  --color-border: #5f3832;
+  --color-text-muted: #e0b3cc;
+  --color-border: #6e3a5d;
   --color-accent: #d48b96;
   --color-on-accent: #3b1f1b;
   --glow-warm: #b66e79;
@@ -359,7 +378,7 @@
   --card-on-accent: #3b1f1b;
 }
 
-/* ───────── Contact: Lilac Mist with Midnight Plum cards / Forest Green with Dark Evergreen cards ───────── */
+/* ───────── Contact: Lilac Mist with Midnight Plum cards / Dark Evergreen with Forest Green cards ───────── */
 .section-theme-contact {
   --color-page: #e6c7e6;
   --color-surface: #f5e9f5;
@@ -379,37 +398,37 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .section-theme-contact {
-    --color-page: #0b6e4f;
-    --color-surface: #0d7a58;
+    --color-page: #013220;
+    --color-surface: #0a4130;
     --color-text: #d1f2eb;
-    --color-text-muted: #c9efe3;
-    --color-border: #2d8a6b;
-    --color-accent: #d1f2eb;
+    --color-text-muted: #8fcfb5;
+    --color-border: #1a5a43;
+    --color-accent: #50c878;
     --color-on-accent: #013220;
     --glow-warm: #50c878;
-    --card-page: #013220;
-    --card-inset: #0a4130;
+    --card-page: #0b6e4f;
+    --card-inset: #095c42;
     --card-text: #d1f2eb;
-    --card-muted: #8fcfb5;
-    --card-border: #1a5a43;
-    --card-accent: #50c878;
+    --card-muted: #c3ecdf;
+    --card-border: #2d8a6b;
+    --card-accent: #d1f2eb;
     --card-on-accent: #013220;
   }
 }
 :root[data-theme='dark'] .section-theme-contact {
-  --color-page: #0b6e4f;
-  --color-surface: #0d7a58;
+  --color-page: #013220;
+  --color-surface: #0a4130;
   --color-text: #d1f2eb;
-  --color-text-muted: #c9efe3;
-  --color-border: #2d8a6b;
-  --color-accent: #d1f2eb;
+  --color-text-muted: #8fcfb5;
+  --color-border: #1a5a43;
+  --color-accent: #50c878;
   --color-on-accent: #013220;
   --glow-warm: #50c878;
-  --card-page: #013220;
-  --card-inset: #0a4130;
+  --card-page: #0b6e4f;
+  --card-inset: #095c42;
   --card-text: #d1f2eb;
-  --card-muted: #8fcfb5;
-  --card-border: #1a5a43;
-  --card-accent: #50c878;
+  --card-muted: #c3ecdf;
+  --card-border: #2d8a6b;
+  --card-accent: #d1f2eb;
   --card-on-accent: #013220;
 }
