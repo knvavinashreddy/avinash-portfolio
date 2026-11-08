@@ -27,5 +27,5 @@
 /* a ring that ripples out from the sun on every kick drum (created by useBeatEffects.js) */
 .beat-ring {
   position: absolute; left: 50%; bottom: -32%; width: 100%; aspect-ratio: 1; border-radius: 50%;
-  border: 3px solid var(--brand-powder-blue); pointer-events: none; transform: translateX(-50%); opacity: 0;
+  border: 3px solid var(--hero-accent); pointer-events: none; transform: translateX(-50%); opacity: 0;
 }

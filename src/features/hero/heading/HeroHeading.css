@@ -1,19 +1,19 @@
-/* Hero heading: "AI BUILDER · BHIMAVARAM → HYDERABAD", then "Hey, I'm Avinash." with a powder-blue full stop. */
+/* Hero heading: "AI BUILDER · BHIMAVARAM → HYDERABAD", then "Hey, I'm Avinash." with an accent-coloured full stop. */
 
 .hero-heading { position: relative; z-index: 2; }
 
 .hero-label {
   display: inline-flex; align-items: center; gap: 14px;
-  font: 600 0.72rem var(--font-mono); letter-spacing: 0.32em; text-transform: uppercase; color: var(--brand-ice-blue);
+  font: 600 0.72rem var(--font-mono); letter-spacing: 0.32em; text-transform: uppercase; color: var(--hero-text);
 }
-/* the little powder-blue bar after the label */
-.hero-label::after { content: ''; width: 28px; height: 6px; border-radius: 6px; background: var(--brand-powder-blue); }
+/* the little accent bar after the label */
+.hero-label::after { content: ''; width: 28px; height: 6px; border-radius: 6px; background: var(--hero-accent); }
 
 .hero h1 {
   margin-top: 12px; font-size: clamp(2.1rem, 5vw, 3.8rem); line-height: 0.98; letter-spacing: -0.035em;
-  font-weight: 800; color: var(--brand-ice-blue);
+  font-weight: 800; color: var(--hero-text);
 }
-.hero-name-dot { color: var(--brand-powder-blue); }
+.hero-name-dot { color: var(--hero-accent); }
 
 /* label, name and rotating line rise in one after another */
 .hero-heading > * { animation: hero-rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; }

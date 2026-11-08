@@ -7,16 +7,16 @@
    - A card inside it adds className="section-card". That class swaps in the section's
      --card-* colours, so the card (and everything inside it) uses them instead.
 
-   Backgrounds down the page (no two the same, in Day or Night):
+   Backgrounds down the page (Day uses only the four pastels; neighbours never match):
                    Day                  Night
-     Hero          Deep Navy            Deep Navy        (Hero.css)
-     Journey       Ice Blue             deep Sapphire
+     Hero          Ice Blue             Deep Navy        (Hero.css)
+     Journey       Blush Pink           deep Sapphire
      Work          Mint Whisper         Dark Evergreen
      Stack         Lilac Mist           Midnight Plum
-     YouTube       Soft Blush           Deep Bordeaux
-     Off the clock Powder Blue          dark slate blue
-     Guestbook     Blush Pink           Dark Mahogany
-     Contact       Midnight Plum        Forest Green
+     YouTube       Blush Pink           Deep Bordeaux
+     Off the clock Mint Whisper         dark slate blue
+     Guestbook     Ice Blue             Dark Mahogany
+     Contact       Lilac Mist           Forest Green
 */
 
 /* every themed section paints its own background and leaves room at the bottom */
@@ -55,13 +55,13 @@
   --card-on-accent: var(--color-on-accent);
 }
 
-/* ───────── Journey: Ice Blue by day, deep Sapphire by night ───────── */
+/* ───────── Journey: Blush Pink by day, deep Sapphire by night ───────── */
 .section-theme-journey {
-  --color-page: #d6e6f3;
-  --color-surface: #f2f7fc;
+  --color-page: #fadadd;
+  --color-surface: #fdeef0;
   --color-text: #000926;
   --color-text-muted: #3e5571;
-  --color-border: #b8cfe1;
+  --color-border: #e9b9bf;
   --color-accent: #0f52ba;
   --color-on-accent: #ffffff;
   --glow-warm: #0f52ba;
@@ -199,13 +199,13 @@
   --card-on-accent: #2e1a47;
 }
 
-/* ───────── YouTube launch: Soft Blush with a Bordeaux card / Deep Bordeaux with a Soft Blush card ───────── */
+/* ───────── YouTube launch: Blush Pink with a Bordeaux card / Deep Bordeaux with a Soft Blush card ───────── */
 .section-theme-youtube {
-  --color-page: #fbe4e3;
+  --color-page: #fadadd;
   --color-surface: #fff4f3;
   --color-text: #3f0d12;
   --color-text-muted: #7d3a41;
-  --color-border: #efc2c0;
+  --color-border: #e9b9bf;
   --color-accent: #d72638;
   --color-on-accent: #ffffff;
   --glow-warm: #d72638;
@@ -236,13 +236,13 @@
   --countdown-number: #d72638;
 }
 
-/* ───────── Off the clock: Powder Blue with a Deep Navy board / dark slate blue with a Sapphire board ───────── */
+/* ───────── Off the clock: Mint Whisper with a Deep Navy board / dark slate blue with a Sapphire board ───────── */
 .section-theme-life-board {
-  --color-page: #a6c5d7;
-  --color-surface: #d6e6f3;
+  --color-page: #d1f2eb;
+  --color-surface: #ecfaf6;
   --color-text: #000926;
-  --color-text-muted: #1f3a58;
-  --color-border: #8aafc6;
+  --color-text-muted: #2f4a5e;
+  --color-border: #a6dcc8;
   --color-accent: #0f52ba;
   --color-on-accent: #ffffff;
   --glow-warm: #0f52ba;
@@ -291,13 +291,13 @@
   --card-on-accent: #000926;
 }
 
-/* ───────── Guestbook: Blush Pink with a Dark Mahogany form / Dark Mahogany with a Muted Copper form ───────── */
+/* ───────── Guestbook: Ice Blue with a Dark Mahogany form / Dark Mahogany with a Muted Copper form ───────── */
 .section-theme-guestbook {
-  --color-page: #fadadd;
-  --color-surface: #fdeef0;
+  --color-page: #d6e6f3;
+  --color-surface: #f2f7fc;
   --color-text: #3b1f1b;
   --color-text-muted: #74494a;
-  --color-border: #e9b9bf;
+  --color-border: #b8cfe1;
   --color-accent: #8c4e4f;
   --color-on-accent: #ffffff;
   --glow-warm: #b66e79;
@@ -346,23 +346,23 @@
   --card-on-accent: #3b1f1b;
 }
 
-/* ───────── Contact: Midnight Plum with Lilac Mist cards / Forest Green with Dark Evergreen cards ───────── */
+/* ───────── Contact: Lilac Mist with Midnight Plum cards / Forest Green with Dark Evergreen cards ───────── */
 .section-theme-contact {
-  --color-page: #2e1a47;
-  --color-surface: #3b2659;
-  --color-text: #e6c7e6;
-  --color-text-muted: #c0a2c7;
-  --color-border: #4e3870;
-  --color-accent: #e6c7e6;
-  --color-on-accent: #2e1a47;
+  --color-page: #e6c7e6;
+  --color-surface: #f5e9f5;
+  --color-text: #2e1a47;
+  --color-text-muted: #5c4470;
+  --color-border: #cfa9d0;
+  --color-accent: #663399;
+  --color-on-accent: #ffffff;
   --glow-warm: #a3779d;
-  --card-page: #e6c7e6;
-  --card-inset: #f5e9f5;
-  --card-text: #2e1a47;
-  --card-muted: #5c4470;
-  --card-border: #cfa9d0;
-  --card-accent: #663399;
-  --card-on-accent: #ffffff;
+  --card-page: #2e1a47;
+  --card-inset: #3b2659;
+  --card-text: #e6c7e6;
+  --card-muted: #c9adcf;
+  --card-border: #4e3870;
+  --card-accent: #a3779d;
+  --card-on-accent: #2e1a47;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .section-theme-contact {
