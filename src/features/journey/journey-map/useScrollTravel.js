@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 import { stopDistances } from '../heart/heartShape'
 import { LEAVE_MAP_PUSH_DISTANCE, getCameraAnchor } from './mapCamera'
 
-export function useScrollTravel({ mapCamera, mapRootRef, storyCardRef, leaveMap }) {
+export function useScrollTravel({ mapCamera, mapRootRef, storyPanelRef, leaveMap }) {
   const [exitProgress, setExitProgress] = useState(0)
   const { camera, targetDistance, isLeaving, refs, drawCameraFrame, updateCurrentStop, stopGlide, setHasMoved, zoomBy } = mapCamera
 
@@ -30,13 +30,14 @@ export function useScrollTravel({ mapCamera, mapRootRef, storyCardRef, leaveMap 
     }
 
     const onWheel = (event) => {
-      // let the story card scroll its own text first, if it has more to show
-      const card = storyCardRef.current
-      if (card && card.contains(event.target)) {
-        const cardCanScroll = card.scrollHeight > card.clientHeight + 2
-        const atTop = card.scrollTop <= 0
-        const atBottom = card.scrollTop + card.clientHeight >= card.scrollHeight - 2
-        if (cardCanScroll && !((event.deltaY < 0 && atTop) || (event.deltaY > 0 && atBottom))) return
+      // over the story card: let a long story scroll its own text first; only once you
+      // reach its top or bottom does scrolling move the map again
+      const storyPanel = storyPanelRef.current
+      if (storyPanel && storyPanel.contains(event.target)) {
+        const storyCanScroll = storyPanel.scrollHeight > storyPanel.clientHeight + 2
+        const atTop = storyPanel.scrollTop <= 0
+        const atBottom = storyPanel.scrollTop + storyPanel.clientHeight >= storyPanel.scrollHeight - 2
+        if (storyCanScroll && !((event.deltaY < 0 && atTop) || (event.deltaY > 0 && atBottom))) return
       }
       event.preventDefault()
       // pinch / ctrl + scroll zooms instead
@@ -102,7 +103,7 @@ export function useScrollTravel({ mapCamera, mapRootRef, storyCardRef, leaveMap 
       clearTimeout(drainTimer)
       mapRoot.removeEventListener('wheel', onWheel)
     }
-  }, [camera, targetDistance, isLeaving, refs, drawCameraFrame, updateCurrentStop, stopGlide, setHasMoved, zoomBy, mapRootRef, storyCardRef, leaveMap])
+  }, [camera, targetDistance, isLeaving, refs, drawCameraFrame, updateCurrentStop, stopGlide, setHasMoved, zoomBy, mapRootRef, storyPanelRef, leaveMap])
 
   return exitProgress
 }

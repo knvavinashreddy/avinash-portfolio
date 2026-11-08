@@ -32,7 +32,7 @@ const LAST_STOP_INDEX = journeyStops.length - 1
 
 export default function JourneyMap({ startAtStop = 0, onClose, onLeave, theme, onToggleTheme }) {
   const mapRoot = useRef(null)
-  const storyCard = useRef(null)
+  const storyPanel = useRef(null) // the scrolling part of the story card
   const closeButton = useRef(null)
 
   const mapCamera = useMapCamera({ startAtStop })
@@ -50,7 +50,7 @@ export default function JourneyMap({ startAtStop = 0, onClose, onLeave, theme, o
     [targetDistance, leaveMap, travelToStop]
   )
 
-  const exitProgress = useScrollTravel({ mapCamera, mapRootRef: mapRoot, storyCardRef: storyCard, leaveMap })
+  const exitProgress = useScrollTravel({ mapCamera, mapRootRef: mapRoot, storyPanelRef: storyPanel, leaveMap })
   useMapKeyboard({ travelOneStop, targetDistance, onClose, zoomBy })
   const dragHandlers = useDragToLook({ camera, isDragging, drawCameraFrame })
 
@@ -81,7 +81,7 @@ export default function JourneyMap({ startAtStop = 0, onClose, onLeave, theme, o
       <MapTopBar onClose={onClose} closeButtonRef={closeButton} theme={theme} onToggleTheme={onToggleTheme} />
       <MapCompass compassNeedleRef={refs.compassNeedleRef} />
       <ZoomControls onRecenter={recenter} onZoomBy={zoomBy} />
-      <StoryCard stopIndex={currentStopIndex} storyCardRef={storyCard} />
+      <StoryCard stopIndex={currentStopIndex} storyPanelRef={storyPanel} />
       <JourneyProgress currentStopIndex={currentStopIndex} onTravelOneStop={travelOneStop} onDotClick={travelToStop} />
 
       {!hasMoved && currentStopIndex < LAST_STOP_INDEX && <p className="scroll-hint handwritten">scroll to travel</p>}

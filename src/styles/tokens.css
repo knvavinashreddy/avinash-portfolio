@@ -56,6 +56,8 @@
   --font-body: 'Figtree', 'Segoe UI', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
   --font-handwritten: 'Caveat', 'Comic Sans MS', cursive;
+  /* serif for story headlines and drop caps on the journey map */
+  --font-serif: 'Fraunces', Georgia, 'Times New Roman', serif;
 
   color-scheme: light;
   box-sizing: border-box;
