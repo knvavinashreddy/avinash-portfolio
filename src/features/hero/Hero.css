@@ -4,11 +4,11 @@
 .hero {
   position: relative; overflow: hidden; padding: clamp(28px, 4.5vh, 52px) 0 0; text-align: center;
   display: flex; flex-direction: column;
-  /* black in Day and Night; the Sapphire sun behind me is the only big colour */
+  /* black in Day and Night; the Ember sun behind me is the only big colour */
   --hero-page: #000000;
-  --hero-text: var(--brand-ice-blue);
-  --hero-text-soft: color-mix(in srgb, var(--brand-ice-blue) 72%, transparent);
-  --hero-accent: var(--brand-powder-blue);
+  --hero-text: var(--brand-paper);
+  --hero-text-soft: color-mix(in srgb, var(--brand-paper) 72%, transparent);
+  --hero-accent: var(--brand-ember);
   background: var(--hero-page); color: var(--hero-text);
   /* room for the torn top edge of the journey section, which overlaps the bottom of the hero */
   padding-bottom: 36px;

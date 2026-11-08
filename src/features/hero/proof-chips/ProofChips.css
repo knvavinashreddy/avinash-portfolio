@@ -8,23 +8,23 @@
 .proof-chip {
   position: absolute; z-index: 3; display: flex; align-items: baseline; gap: 8px; white-space: nowrap;
   padding: 10px 14px; border-radius: 16px; text-decoration: none; text-align: left;
-  color: var(--brand-ice-blue); background: rgba(0, 9, 38, 0.62); border: 1px solid rgba(214, 230, 243, 0.16);
+  color: var(--brand-paper); background: rgba(18, 18, 18, 0.68); border: 1px solid rgba(244, 239, 230, 0.16);
   backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
   /* chips are the nearest layer, so they drift the most */
   translate: calc(var(--mouse-x, 0) * 26px) calc(var(--mouse-y, 0) * 16px);
   animation: proof-chip-fade-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both, proof-chip-float 6s ease-in-out infinite;
   transition: border-color 0.25s, background-color 0.25s;
 }
-.proof-chip:hover, .proof-chip:focus-visible { border-color: var(--brand-powder-blue); background: rgba(0, 9, 38, 0.85); }
+.proof-chip:hover, .proof-chip:focus-visible { border-color: var(--brand-ember); background: rgba(18, 18, 18, 0.88); }
 
-.proof-chip strong { font: 800 1.15rem var(--font-display); color: var(--brand-powder-blue); letter-spacing: -0.01em; }
-.proof-chip span { font: 500 0.78rem var(--font-mono); letter-spacing: 0.04em; color: rgba(214, 230, 243, 0.75); }
+.proof-chip strong { font: 800 1.15rem var(--font-display); color: var(--brand-ember); letter-spacing: -0.01em; }
+.proof-chip span { font: 500 0.78rem var(--font-mono); letter-spacing: 0.04em; color: rgba(244, 239, 230, 0.75); }
 
 /* tooltip under the chip */
 .proof-chip em {
   position: absolute; left: 0; top: calc(100% + 8px); padding: 7px 11px; border-radius: 10px;
-  font: 500 0.8rem var(--font-body); font-style: normal; color: var(--brand-ice-blue); white-space: nowrap;
-  background: rgba(0, 9, 38, 0.92); border: 1px solid rgba(166, 197, 215, 0.4);
+  font: 500 0.8rem var(--font-body); font-style: normal; color: var(--brand-paper); white-space: nowrap;
+  background: rgba(18, 18, 18, 0.94); border: 1px solid rgba(255, 91, 46, 0.45);
   opacity: 0; transform: translateY(-4px); pointer-events: none; transition: opacity 0.25s ease, transform 0.25s ease;
 }
 .proof-chip:hover em, .proof-chip:focus-visible em { opacity: 1; transform: none; }

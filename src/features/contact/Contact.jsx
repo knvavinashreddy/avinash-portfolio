@@ -6,7 +6,7 @@ import './Contact.css'
 
 export default function Contact() {
   return (
-    <section id="contact" className="contact-section section-theme-contact" aria-labelledby="contact-title">
+    <section id="contact" className="contact-section section-tone-paper" aria-labelledby="contact-title">
       <div className="page-container">
         <p className="section-label">07 · Contact</p>
         <h2 id="contact-title">Got a project, a role, or a bug that won’t die?</h2>

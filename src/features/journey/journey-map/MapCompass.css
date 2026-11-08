@@ -13,7 +13,7 @@
 .map-compass .compass-west { left: 9px; top: 50%; transform: translateY(-50%); }
 .map-compass-needle {
   position: absolute; left: 50%; top: 50%; width: 10px; height: 64px; margin: -32px 0 0 -5px;
-  background: linear-gradient(var(--brand-sapphire) 50%, var(--color-text-muted) 50%);
+  background: linear-gradient(var(--brand-ember) 50%, var(--color-text-muted) 50%);
   clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
 }
 @media (max-width: 760px) {

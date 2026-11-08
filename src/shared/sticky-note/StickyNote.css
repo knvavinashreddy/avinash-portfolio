@@ -1,10 +1,10 @@
 /* Sticky note look, shared by the life board and the guestbook. */
 
-.sticky-note { width: 210px; padding: 18px 18px 20px; border-radius: 6px; color: var(--brand-deep-navy); box-shadow: 0 10px 22px rgba(0, 0, 0, 0.16); }
+.sticky-note { width: 210px; padding: 18px 18px 20px; border-radius: 6px; color: var(--brand-ink); box-shadow: 0 10px 22px rgba(0, 0, 0, 0.16); }
 .sticky-note strong { font-family: var(--font-display); font-size: 1.12rem; display: block; margin-bottom: 4px; }
 .sticky-note p { font-size: 0.98rem; line-height: 1.45; }
 .sticky-note-ice { background: var(--note-ice); }
-.sticky-note-powder { background: var(--note-powder); }
+.sticky-note-peach { background: var(--note-peach); }
 .sticky-note-mint { background: var(--note-mint); }
 .sticky-note-lilac { background: var(--note-lilac); }
 .sticky-note-blush { background: var(--note-blush); }

@@ -10,7 +10,7 @@ export default function Work() {
   const pickedProject = projects.find((project) => project.id === pickedProjectId)
 
   return (
-    <section id="work" className="section-theme-work" aria-labelledby="work-title">
+    <section id="work" className="section-tone-ink" aria-labelledby="work-title">
       <div className="page-container">
         <p className="section-label">02 · Work</p>
         <h2 id="work-title">Things I built, and what they actually do.</h2>

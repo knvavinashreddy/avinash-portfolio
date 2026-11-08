@@ -11,9 +11,9 @@ export default function YouTubeLaunch() {
   const timeLeft = useCountdown(youtubeLaunch.launch)
 
   return (
-    <section id="youtube-launch" className="youtube-launch section-theme-youtube" aria-labelledby="youtube-launch-title">
+    <section id="youtube-launch" className="youtube-launch section-tone-ember" aria-labelledby="youtube-launch-title">
       <div className="page-container">
-        <div className="youtube-launch-card card-glow">
+        <div className="youtube-launch-card section-card card-glow">
           <div>
             <p className="section-label">04 · Coming soon</p>
             <h2 id="youtube-launch-title">{timeLeft.isFinished ? 'My Telugu tech channel is live.' : youtubeLaunch.title}</h2>

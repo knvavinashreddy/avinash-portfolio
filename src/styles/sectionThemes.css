@@ -1,102 +1,61 @@
-/* Section themes: every section has its own background, and the cards inside it get a
-   different, contrasting colour so they stand apart from the section.
+/* Section tones: every section is either Paper, Ink or Ember (see tokens.css), so the page
+   reads as cream and black sheets with one bright orange moment. Each section starts with a
+   torn top edge that rips into the section above, like torn paper.
 
    How it works
-   - A section opts in with a class, e.g. <section className="section-theme-work">.
+   - A section opts in with a class, e.g. <section className="section-tone-ink">.
      The class re-sets the --color-* tokens (from tokens.css) for that section only.
-   - A card inside it adds className="section-card". That class swaps in the section's
-     --card-* colours, so the card (and everything inside it) uses them instead.
+   - A card inside it adds className="section-card". That class swaps in the tone's
+     --card-* colours, so cards are always the opposite of their section (ink on paper, paper on ink).
 
-   Backgrounds down the page (Day: light pastels; Night: deep, rich darks; neighbours never match):
-                   Day                  Night
-     Hero          Ice Blue             Deep Navy        (Hero.css)
-     Journey       Rose Gold            Rose Gold
-     Work          Mint Whisper         deep forest green
-     Stack         Lilac Mist           Midnight Plum
-     YouTube       Blush Pink           Deep Bordeaux
-     Off the clock Mint Whisper         deep sapphire
-     Guestbook     Ice Blue             deep berry
-     Contact       Lilac Mist           Dark Evergreen
+   Down the page:
+     Hero (black, Hero.css) · Journey paper · Work ink · Stack paper · YouTube ember
+     · Off the clock paper · Guestbook ink · Contact paper
 */
 
-/* Every themed section starts with a torn, uneven top edge (styles/torn-edge.svg) that bites
-   into the section above, and is lit by two soft glows in its own colours. */
-.section-theme-journey, .section-theme-work, .section-theme-stack, .section-theme-youtube,
-.section-theme-life-board, .section-theme-guestbook, .section-theme-contact {
+.section-tone-paper, .section-tone-ink, .section-tone-ember {
   /* re-mixed here because the root version was mixed from the root surface colour */
   --color-glass: color-mix(in srgb, var(--color-surface) 78%, transparent);
   --section-edge-height: 40px;
   --section-edge-width: 1600px;
   position: relative;
   background:
-    /* the glows stay clear of the top edge, so the torn strip matches the section exactly */
-    radial-gradient(60% 50% at 100% 50%, color-mix(in srgb, var(--glow-warm) 20%, transparent), transparent 70%),
-    radial-gradient(60% 40% at 0% 100%, color-mix(in srgb, var(--color-accent) 14%, transparent), transparent 70%),
+    /* a soft glow on the right, kept clear of the top edge so the torn strip matches exactly */
+    radial-gradient(60% 50% at 100% 50%, color-mix(in srgb, var(--glow-warm) 12%, transparent), transparent 70%),
     var(--color-page);
   color: var(--color-text);
   padding-bottom: 112px;
   transition: color 0.5s;
 }
-/* the torn edge: a strip in the section's colour, cut to the ragged shape, sitting on top of the
-   section above. ::before is a darker copy a few pixels higher, giving the edge a soft dark rim. */
-.section-theme-journey::before,
-.section-theme-work::before,
-.section-theme-stack::before,
-.section-theme-youtube::before,
-.section-theme-life-board::before,
-.section-theme-guestbook::before,
-.section-theme-contact::before,
-.section-theme-journey::after,
-.section-theme-work::after,
-.section-theme-stack::after,
-.section-theme-youtube::after,
-.section-theme-life-board::after,
-.section-theme-guestbook::after,
-.section-theme-contact::after {
+
+/* the torn edge: a strip in the section's colour, cut to the ragged shape (styles/torn-edge.svg),
+   sitting on top of the section above. ::before is a darker copy a few pixels higher: the rim. */
+.section-tone-paper::before, .section-tone-ink::before, .section-tone-ember::before,
+.section-tone-paper::after, .section-tone-ink::after, .section-tone-ember::after {
   content: ''; position: absolute; left: 0; right: 0; pointer-events: none;
   height: var(--section-edge-height);
   -webkit-mask: url('./torn-edge.svg') var(--section-edge-offset, 0px) 0 / var(--section-edge-width) 100% repeat-x;
   mask: url('./torn-edge.svg') var(--section-edge-offset, 0px) 0 / var(--section-edge-width) 100% repeat-x;
 }
-.section-theme-journey::after,
-.section-theme-work::after,
-.section-theme-stack::after,
-.section-theme-youtube::after,
-.section-theme-life-board::after,
-.section-theme-guestbook::after,
-.section-theme-contact::after {
+.section-tone-paper::after, .section-tone-ink::after, .section-tone-ember::after {
   top: calc(var(--section-edge-height) * -1 + 1px);
   background: var(--color-page);
 }
-.section-theme-journey::before,
-.section-theme-work::before,
-.section-theme-stack::before,
-.section-theme-youtube::before,
-.section-theme-life-board::before,
-.section-theme-guestbook::before,
-.section-theme-contact::before {
+.section-tone-paper::before, .section-tone-ink::before, .section-tone-ember::before {
   top: calc(var(--section-edge-height) * -1 - 3px);
   background: color-mix(in srgb, var(--color-page) 55%, #000);
   opacity: 0.45;
 }
 /* each section tears in a different place */
-.section-theme-work { --section-edge-offset: -310px; }
-.section-theme-stack { --section-edge-offset: -655px; }
-.section-theme-youtube { --section-edge-offset: -905px; }
-.section-theme-life-board { --section-edge-offset: -1150px; }
-.section-theme-guestbook { --section-edge-offset: -430px; }
-.section-theme-contact { --section-edge-offset: -805px; }
+main > section:nth-of-type(3n) { --section-edge-offset: -520px; }
+main > section:nth-of-type(3n + 1) { --section-edge-offset: -1040px; }
+main > section:nth-of-type(4n) { --section-edge-offset: -290px; }
+
 @media (max-width: 760px) {
-  .section-theme-journey, .section-theme-work, .section-theme-stack, .section-theme-youtube,
-.section-theme-life-board, .section-theme-guestbook, .section-theme-contact {
-    --section-edge-height: 26px; --section-edge-width: 1000px; padding-bottom: 80px;
-  }
+  .section-tone-paper, .section-tone-ink, .section-tone-ember { --section-edge-height: 26px; --section-edge-width: 1000px; padding-bottom: 80px; }
 }
 
-/* selected text takes the colours of the section (or card) it is in */
-::selection { background: var(--color-accent); color: var(--color-on-accent); }
-
-/* A card: takes the section's card colours. Inside the card, "page" means the inset colour
+/* A card: takes its tone's card colours. Inside the card, "page" means the inset colour
    (inputs, tags), so components need no card-specific CSS. */
 .section-card {
   --color-surface: var(--card-page);
@@ -108,7 +67,7 @@
   --color-on-accent: var(--card-on-accent);
   color: var(--color-text);
 }
-/* sections without their own card colours keep the normal surface look */
+/* outside a toned section, cards keep the normal surface look */
 :root {
   --card-page: var(--color-surface);
   --card-inset: var(--color-page);
@@ -119,380 +78,137 @@
   --card-on-accent: var(--color-on-accent);
 }
 
-/* ───────── Journey: Rose Gold in Day and Night (only the full-screen map changes) ───────── */
-.section-theme-journey {
-  --color-page: #b66e79;
-  --color-surface: #fadadd;
-  --color-text: #2a1411;
-  --color-text-muted: #3b1f1b;
-  --color-border: #c98a93;
-  --color-accent: #fadadd;
-  --color-on-accent: #3b1f1b;
-  --glow-warm: #fadadd;
-}
-/* the full-screen map opens inside this section but keeps its own blue map colours */
-.section-theme-journey .journey-map {
-  --color-page: #d6e6f3;
-  --color-surface: #f2f7fc;
-  --color-text: #000926;
-  --color-text-muted: #3e5571;
-  --color-border: #b8cfe1;
-  --color-accent: #0f52ba;
-  --color-on-accent: #ffffff;
-  --glow-warm: #0f52ba;
+/* selected text takes the colours of the section (or card) it is in */
+::selection { background: var(--color-accent); color: var(--color-on-accent); }
+
+/* ───────── Paper: warm cream with ink-black cards (Night: warm charcoal with black cards) ───────── */
+.section-tone-paper {
+  --color-page: #f4efe6;
+  --color-surface: #fffdf8;
+  --color-text: #121212;
+  --color-text-muted: #5a554d;
+  --color-border: #ddd5c7;
+  --color-accent: #ff5b2e;
+  --color-on-accent: #121212;
+  --glow-warm: #ff5b2e;
+  --card-page: #121212;
+  --card-inset: #1f1d1a;
+  --card-text: #f4efe6;
+  --card-muted: #b9b2a6;
+  --card-border: #2e2b26;
+  --card-accent: #ff5b2e;
+  --card-on-accent: #121212;
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .section-theme-journey {
-    --color-page: #b66e79;
-    --color-surface: #fadadd;
-    --color-text: #2a1411;
-    --color-text-muted: #3b1f1b;
-    --color-border: #c98a93;
-    --color-accent: #fadadd;
-    --color-on-accent: #3b1f1b;
-    --glow-warm: #fadadd;
-  }
-  /* the full-screen map keeps its own dark blue */
-  :root:not([data-theme='light']) .section-theme-journey .journey-map {
-    --color-page: #06245c;
-    --color-surface: #0c3275;
-    --color-text: #d6e6f3;
-    --color-text-muted: #a6c5d7;
-    --color-border: #1c4590;
-    --color-accent: #a6c5d7;
-    --color-on-accent: #000926;
-    --glow-warm: #4d86d9;
+  :root:not([data-theme='light']) .section-tone-paper {
+    --color-page: #1a1815;
+    --color-surface: #24211d;
+    --color-text: #f4efe6;
+    --color-text-muted: #a8a196;
+    --color-border: #34302a;
+    --color-accent: #ff6b3d;
+    --color-on-accent: #121212;
+    --glow-warm: #ff5b2e;
+    --card-page: #0b0b0b;
+    --card-inset: #1a1815;
+    --card-text: #f4efe6;
+    --card-muted: #a8a196;
+    --card-border: #2e2b26;
+    --card-accent: #ff6b3d;
+    --card-on-accent: #121212;
   }
 }
-:root[data-theme='dark'] .section-theme-journey {
-  --color-page: #b66e79;
-  --color-surface: #fadadd;
-  --color-text: #2a1411;
-  --color-text-muted: #3b1f1b;
-  --color-border: #c98a93;
-  --color-accent: #fadadd;
-  --color-on-accent: #3b1f1b;
-  --glow-warm: #fadadd;
-}
-:root[data-theme='dark'] .section-theme-journey .journey-map {
-  --color-page: #06245c;
-  --color-surface: #0c3275;
-  --color-text: #d6e6f3;
-  --color-text-muted: #a6c5d7;
-  --color-border: #1c4590;
-  --color-accent: #a6c5d7;
-  --color-on-accent: #000926;
-  --glow-warm: #4d86d9;
+:root[data-theme='dark'] .section-tone-paper {
+  --color-page: #1a1815;
+  --color-surface: #24211d;
+  --color-text: #f4efe6;
+  --color-text-muted: #a8a196;
+  --color-border: #34302a;
+  --color-accent: #ff6b3d;
+  --color-on-accent: #121212;
+  --glow-warm: #ff5b2e;
+  --card-page: #0b0b0b;
+  --card-inset: #1a1815;
+  --card-text: #f4efe6;
+  --card-muted: #a8a196;
+  --card-border: #2e2b26;
+  --card-accent: #ff6b3d;
+  --card-on-accent: #121212;
 }
 
-/* ───────── Work: Mint Whisper with Dark Evergreen cards / deep forest green with Forest Green cards ───────── */
-.section-theme-work {
-  --color-page: #d1f2eb;
-  --color-surface: #ecfaf6;
-  --color-text: #013220;
-  --color-text-muted: #2f5d4c;
-  --color-border: #a6dcc8;
-  --color-accent: #0b6e4f;
-  --color-on-accent: #ffffff;
-  --glow-warm: #50c878;
-  --card-page: #013220;
-  --card-inset: #0a4130;
-  --card-text: #d1f2eb;
-  --card-muted: #9fd8c2;
-  --card-border: #2a6b52;
-  --card-accent: #50c878;
-  --card-on-accent: #013220;
+/* ───────── Ink: near black with paper-cream cards (Night: pure black with charcoal cards) ───────── */
+.section-tone-ink {
+  --color-page: #121212;
+  --color-surface: #1d1b18;
+  --color-text: #f4efe6;
+  --color-text-muted: #b9b2a6;
+  --color-border: #2e2b26;
+  --color-accent: #ff5b2e;
+  --color-on-accent: #121212;
+  --glow-warm: #ff5b2e;
+  --card-page: #f4efe6;
+  --card-inset: #e9e2d5;
+  --card-text: #121212;
+  --card-muted: #5a554d;
+  --card-border: #d9d1c3;
+  --card-accent: #ff5b2e;
+  --card-on-accent: #121212;
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .section-theme-work {
-    --color-page: #0b3d2e;
-    --color-surface: #0f4a38;
-    --color-text: #d1f2eb;
-    --color-text-muted: #8fcfb5;
-    --color-border: #1f6650;
-    --color-accent: #50c878;
-    --color-on-accent: #013220;
-    --glow-warm: #50c878;
-    --card-page: #0b6e4f;
-    --card-inset: #095c42;
-    --card-text: #d1f2eb;
-    --card-muted: #c3ecdf;
-    --card-border: #2d8a6b;
-    --card-accent: #d1f2eb;
-    --card-on-accent: #013220;
+  :root:not([data-theme='light']) .section-tone-ink {
+    --color-page: #050505;
+    --color-surface: #141311;
+    --color-text: #f4efe6;
+    --color-text-muted: #a8a196;
+    --color-border: #2a2722;
+    --color-accent: #ff6b3d;
+    --color-on-accent: #121212;
+    --glow-warm: #ff5b2e;
+    --card-page: #24211d;
+    --card-inset: #2e2a25;
+    --card-text: #f4efe6;
+    --card-muted: #a8a196;
+    --card-border: #3a352e;
+    --card-accent: #ff6b3d;
+    --card-on-accent: #121212;
   }
 }
-:root[data-theme='dark'] .section-theme-work {
-  --color-page: #0b3d2e;
-  --color-surface: #0f4a38;
-  --color-text: #d1f2eb;
-  --color-text-muted: #8fcfb5;
-  --color-border: #1f6650;
-  --color-accent: #50c878;
-  --color-on-accent: #013220;
-  --glow-warm: #50c878;
-  --card-page: #0b6e4f;
-  --card-inset: #095c42;
-  --card-text: #d1f2eb;
-  --card-muted: #c3ecdf;
-  --card-border: #2d8a6b;
-  --card-accent: #d1f2eb;
-  --card-on-accent: #013220;
+:root[data-theme='dark'] .section-tone-ink {
+  --color-page: #050505;
+  --color-surface: #141311;
+  --color-text: #f4efe6;
+  --color-text-muted: #a8a196;
+  --color-border: #2a2722;
+  --color-accent: #ff6b3d;
+  --color-on-accent: #121212;
+  --glow-warm: #ff5b2e;
+  --card-page: #24211d;
+  --card-inset: #2e2a25;
+  --card-text: #f4efe6;
+  --card-muted: #a8a196;
+  --card-border: #3a352e;
+  --card-accent: #ff6b3d;
+  --card-on-accent: #121212;
 }
 
-/* ───────── Stack: Lilac Mist with Midnight Plum cards / Midnight Plum with Royal Amethyst cards ───────── */
-.section-theme-stack {
-  --color-page: #e6c7e6;
-  --color-surface: #f5e9f5;
-  --color-text: #2e1a47;
-  --color-text-muted: #5c4470;
-  --color-border: #cfa9d0;
-  --color-accent: #663399;
-  --color-on-accent: #ffffff;
-  --glow-warm: #a3779d;
-  --card-page: #2e1a47;
-  --card-inset: #3b2659;
-  --card-text: #e6c7e6;
-  --card-muted: #c9adcf;
-  --card-border: #4e3870;
-  --card-accent: #a3779d;
-  --card-on-accent: #2e1a47;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .section-theme-stack {
-    --color-page: #2e1a47;
-    --color-surface: #3b2659;
-    --color-text: #e6c7e6;
-    --color-text-muted: #c0a2c7;
-    --color-border: #4e3870;
-    --color-accent: #c79be0;
-    --color-on-accent: #2e1a47;
-    --glow-warm: #a3779d;
-    --card-page: #663399;
-    --card-inset: #57298a;
-    --card-text: #f3e3f3;
-    --card-muted: #dcc3e6;
-    --card-border: #8458b8;
-    --card-accent: #e6c7e6;
-    --card-on-accent: #2e1a47;
-  }
-}
-:root[data-theme='dark'] .section-theme-stack {
-  --color-page: #2e1a47;
-  --color-surface: #3b2659;
-  --color-text: #e6c7e6;
-  --color-text-muted: #c0a2c7;
-  --color-border: #4e3870;
-  --color-accent: #c79be0;
-  --color-on-accent: #2e1a47;
-  --glow-warm: #a3779d;
-  --card-page: #663399;
-  --card-inset: #57298a;
-  --card-text: #f3e3f3;
-  --card-muted: #dcc3e6;
-  --card-border: #8458b8;
-  --card-accent: #e6c7e6;
-  --card-on-accent: #2e1a47;
+/* ───────── Ember: the one bright section, full orange with an ink card (the same in Day and Night) ───────── */
+.section-tone-ember {
+  --color-page: #ff5b2e;
+  --color-surface: #ff7a52;
+  --color-text: #121212;
+  --color-text-muted: #3d1a0c;
+  --color-border: #e64a1f;
+  --color-accent: #121212;
+  --color-on-accent: #f4efe6;
+  --glow-warm: #ffd1bd;
+  --card-page: #121212;
+  --card-inset: #1f1d1a;
+  --card-text: #f4efe6;
+  --card-muted: #b9b2a6;
+  --card-border: #2e2b26;
+  --card-accent: #ff5b2e;
+  --card-on-accent: #121212;
 }
 
-/* ───────── YouTube launch: Blush Pink with a Bordeaux card / Deep Bordeaux with a Soft Blush card ───────── */
-.section-theme-youtube {
-  --color-page: #fadadd;
-  --color-surface: #fff4f3;
-  --color-text: #3f0d12;
-  --color-text-muted: #7d3a41;
-  --color-border: #e9b9bf;
-  --color-accent: #d72638;
-  --color-on-accent: #ffffff;
-  --glow-warm: #d72638;
-  --countdown-number: #f26b78;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .section-theme-youtube {
-    --color-page: #3f0d12;
-    --color-surface: #521419;
-    --color-text: #fbe4e3;
-    --color-text-muted: #e3a9ac;
-    --color-border: #6c1f26;
-    --color-accent: #d72638;
-    --color-on-accent: #ffffff;
-    --glow-warm: #d72638;
-    --countdown-number: #d72638;
-  }
-}
-:root[data-theme='dark'] .section-theme-youtube {
-  --color-page: #3f0d12;
-  --color-surface: #521419;
-  --color-text: #fbe4e3;
-  --color-text-muted: #e3a9ac;
-  --color-border: #6c1f26;
-  --color-accent: #d72638;
-  --color-on-accent: #ffffff;
-  --glow-warm: #d72638;
-  --countdown-number: #d72638;
-}
-
-/* ───────── Off the clock: Mint Whisper with a Deep Navy board / deep sapphire with a Sapphire board ───────── */
-.section-theme-life-board {
-  --color-page: #d1f2eb;
-  --color-surface: #ecfaf6;
-  --color-text: #000926;
-  --color-text-muted: #2f4a5e;
-  --color-border: #a6dcc8;
-  --color-accent: #0f52ba;
-  --color-on-accent: #ffffff;
-  --glow-warm: #0f52ba;
-  --card-page: #000926;
-  --card-inset: #0a1638;
-  --card-text: #d6e6f3;
-  --card-muted: #a6c5d7;
-  --card-border: #24386b;
-  --card-accent: #0f52ba;
-  --card-on-accent: #ffffff;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .section-theme-life-board {
-    --color-page: #0a2a5e;
-    --color-surface: #10367a;
-    --color-text: #d6e6f3;
-    --color-text-muted: #a6c5d7;
-    --color-border: #24498f;
-    --color-accent: #a6c5d7;
-    --color-on-accent: #000926;
-    --glow-warm: #4d86d9;
-    --card-page: #0f52ba;
-    --card-inset: #0c47a3;
-    --card-text: #d6e6f3;
-    --card-muted: #c4daea;
-    --card-border: #3d74c9;
-    --card-accent: #a6c5d7;
-    --card-on-accent: #000926;
-  }
-}
-:root[data-theme='dark'] .section-theme-life-board {
-  --color-page: #0a2a5e;
-  --color-surface: #10367a;
-  --color-text: #d6e6f3;
-  --color-text-muted: #a6c5d7;
-  --color-border: #24498f;
-  --color-accent: #a6c5d7;
-  --color-on-accent: #000926;
-  --glow-warm: #4d86d9;
-  --card-page: #0f52ba;
-  --card-inset: #0c47a3;
-  --card-text: #d6e6f3;
-  --card-muted: #c4daea;
-  --card-border: #3d74c9;
-  --card-accent: #a6c5d7;
-  --card-on-accent: #000926;
-}
-
-/* ───────── Guestbook: Ice Blue with a Dark Mahogany form / deep berry with a Muted Copper form ───────── */
-.section-theme-guestbook {
-  --color-page: #d6e6f3;
-  --color-surface: #f2f7fc;
-  --color-text: #3b1f1b;
-  --color-text-muted: #74494a;
-  --color-border: #b8cfe1;
-  --color-accent: #8c4e4f;
-  --color-on-accent: #ffffff;
-  --glow-warm: #b66e79;
-  --card-page: #3b1f1b;
-  --card-inset: #4b2a25;
-  --card-text: #fadadd;
-  --card-muted: #dcb0b4;
-  --card-border: #5f3832;
-  --card-accent: #b66e79;
-  --card-on-accent: #ffffff;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .section-theme-guestbook {
-    --color-page: #4a1f3d;
-    --color-surface: #5a2a4b;
-    --color-text: #fadadd;
-    --color-text-muted: #e0b3cc;
-    --color-border: #6e3a5d;
-    --color-accent: #d48b96;
-    --color-on-accent: #3b1f1b;
-    --glow-warm: #b66e79;
-    --card-page: #8c4e4f;
-    --card-inset: #7a4243;
-    --card-text: #fff0f1;
-    --card-muted: #f3d3d6;
-    --card-border: #a76768;
-    --card-accent: #fadadd;
-    --card-on-accent: #3b1f1b;
-  }
-}
-:root[data-theme='dark'] .section-theme-guestbook {
-  --color-page: #4a1f3d;
-  --color-surface: #5a2a4b;
-  --color-text: #fadadd;
-  --color-text-muted: #e0b3cc;
-  --color-border: #6e3a5d;
-  --color-accent: #d48b96;
-  --color-on-accent: #3b1f1b;
-  --glow-warm: #b66e79;
-  --card-page: #8c4e4f;
-  --card-inset: #7a4243;
-  --card-text: #fff0f1;
-  --card-muted: #f3d3d6;
-  --card-border: #a76768;
-  --card-accent: #fadadd;
-  --card-on-accent: #3b1f1b;
-}
-
-/* ───────── Contact: Lilac Mist with Midnight Plum cards / Dark Evergreen with Forest Green cards ───────── */
-.section-theme-contact {
-  --color-page: #e6c7e6;
-  --color-surface: #f5e9f5;
-  --color-text: #2e1a47;
-  --color-text-muted: #5c4470;
-  --color-border: #cfa9d0;
-  --color-accent: #663399;
-  --color-on-accent: #ffffff;
-  --glow-warm: #a3779d;
-  --card-page: #2e1a47;
-  --card-inset: #3b2659;
-  --card-text: #e6c7e6;
-  --card-muted: #c9adcf;
-  --card-border: #4e3870;
-  --card-accent: #a3779d;
-  --card-on-accent: #2e1a47;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .section-theme-contact {
-    --color-page: #013220;
-    --color-surface: #0a4130;
-    --color-text: #d1f2eb;
-    --color-text-muted: #8fcfb5;
-    --color-border: #1a5a43;
-    --color-accent: #50c878;
-    --color-on-accent: #013220;
-    --glow-warm: #50c878;
-    --card-page: #0b6e4f;
-    --card-inset: #095c42;
-    --card-text: #d1f2eb;
-    --card-muted: #c3ecdf;
-    --card-border: #2d8a6b;
-    --card-accent: #d1f2eb;
-    --card-on-accent: #013220;
-  }
-}
-:root[data-theme='dark'] .section-theme-contact {
-  --color-page: #013220;
-  --color-surface: #0a4130;
-  --color-text: #d1f2eb;
-  --color-text-muted: #8fcfb5;
-  --color-border: #1a5a43;
-  --color-accent: #50c878;
-  --color-on-accent: #013220;
-  --glow-warm: #50c878;
-  --card-page: #0b6e4f;
-  --card-inset: #095c42;
-  --card-text: #d1f2eb;
-  --card-muted: #c3ecdf;
-  --card-border: #2d8a6b;
-  --card-accent: #d1f2eb;
-  --card-on-accent: #013220;
-}
+/* YouTube's countdown numbers glow Ember on the ink card */
+.section-tone-ember { --countdown-number: #ff5b2e; }
