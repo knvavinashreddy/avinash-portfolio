@@ -1,6 +1,6 @@
 // While music plays, on every kick drum:
 //   1. the sun "thumps" (grows 4.5% and settles back)
-//   2. a mustard ring ripples out from the sun and fades
+//   2. a powder-blue ring ripples out from the sun and fades
 //   3. a ♪ or ♫ floats up from the headphones and fades
 // The lo-fi player sends a window event on each kick (shared/music/useLofiMusic.js).
 // Effects 2 and 3 create a temporary element, animate it with element.animate(),

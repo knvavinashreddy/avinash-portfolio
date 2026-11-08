@@ -3,7 +3,7 @@
 //   HeroHeading   "AI BUILDER · …", "Hey, I'm Avinash.", and the rotating "I build …" line
 //   hero stage
 //     ProofChips    small floating proof chips around the sun
-//     HeroPortrait  my photo on the mustard sun, headphones = music button, two buttons
+//     HeroPortrait  my photo on the sapphire sun, headphones = music button, two buttons
 //
 // useMouseDepth makes the layers drift with the mouse; the music state comes from App.
 

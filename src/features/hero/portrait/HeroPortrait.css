@@ -1,4 +1,4 @@
-/* My cut-out photo standing in front of the Mustard Oil sun.
+/* My cut-out photo standing in front of the Sapphire sun.
    The sun sits lower than the photo, so my head rises above it. */
 
 .hero-portrait {
@@ -9,7 +9,7 @@
 .hero-sun {
   position: absolute; left: 50%; bottom: -32%; width: 100%; aspect-ratio: 1; border-radius: 50%;
   transform: translateX(-50%);
-  background: var(--brand-mustard-oil);
+  background: var(--brand-sapphire);
   /* depth: the sun drifts the opposite way to the mouse */
   translate: calc(var(--mouse-x, 0) * -10px) calc(var(--mouse-y, 0) * -6px);
   animation: sun-rise 1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s both;
@@ -27,5 +27,5 @@
 /* a ring that ripples out from the sun on every kick drum (created by useBeatEffects.js) */
 .beat-ring {
   position: absolute; left: 50%; bottom: -32%; width: 100%; aspect-ratio: 1; border-radius: 50%;
-  border: 3px solid var(--brand-mustard-oil); pointer-events: none; transform: translateX(-50%); opacity: 0;
+  border: 3px solid var(--brand-powder-blue); pointer-events: none; transform: translateX(-50%); opacity: 0;
 }

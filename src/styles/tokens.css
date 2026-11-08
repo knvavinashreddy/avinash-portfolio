@@ -1,55 +1,80 @@
 /* Design tokens: every colour, font and theme value the site uses, in one place.
    Other CSS files only ever say var(--something); change a value here and it changes everywhere.
 
-   The five brand colours and their jobs:
-     Red Chicory  · Day accent: buttons, focus rings
-     Lime Cream   · Night accent: the one luminous colour on charcoal
-     Light Blue   · the cool end of the heart line
-     Mustard Oil  · the sun behind my photo, warm highlights
-     Breezy Beige · Day background, Night text
+   The site uses five four-colour families (light → dark). The blue family is the default
+   for the whole page; the other four each colour one section (see sectionThemes.css).
+     Blue    Ice Blue · Powder Blue · Sapphire · Deep Navy
+     Green   Mint Whisper · Emerald Green · Forest Green · Dark Evergreen
+     Purple  Lilac Mist · Soft Violet · Royal Amethyst · Midnight Plum
+     Red     Soft Blush · Crimson Silk · Ruby Red · Deep Bordeaux
+     Rose    Blush Pink · Rose Gold · Muted Copper · Dark Mahogany
+
+   The blue family's jobs:
+     Ice Blue     #D6E6F3 · Day background, Night text
+     Powder Blue  #A6C5D7 · Night accent (buttons, links), soft highlights, the heart line
+     Sapphire     #0F52BA · Day accent, map pins, the sun behind my photo
+     Deep Navy    #000926 · Night background, Day text, the hero
 */
 
 /* ───────── Day (the default) ───────── */
 :root {
   /* page */
-  --color-page: #f8f1df;
-  --color-surface: #fffaf0;
-  --color-text: #2d1218;
-  --color-text-muted: #7b5d58;
-  --color-border: #e9d8bd;
-  --color-accent: #a33c52;
-  --color-on-accent: #f8f1df;
+  --color-page: #d6e6f3;
+  --color-surface: #f2f7fc;
+  --color-text: #000926;
+  --color-text-muted: #3e5571;
+  --color-border: #b8cfe1;
+  --color-accent: #0f52ba;
+  --color-on-accent: #ffffff;
   --color-glass: color-mix(in srgb, var(--color-surface) 78%, transparent);
 
-  /* the five brand colours (the same in Day and Night) */
-  --brand-red-chicory: #a33c52;
-  --brand-mustard-oil: #dbc977;
-  --brand-breezy-beige: #f8f1df;
-  --brand-lime-cream: #d4e79e;
-  --brand-light-blue: #add8e6;
+  /* every brand colour (the same in Day and Night) */
+  --brand-ice-blue: #d6e6f3;
+  --brand-powder-blue: #a6c5d7;
+  --brand-sapphire: #0f52ba;
+  --brand-deep-navy: #000926;
+  --brand-mint-whisper: #d1f2eb;
+  --brand-emerald-green: #50c878;
+  --brand-forest-green: #0b6e4f;
+  --brand-dark-evergreen: #013220;
+  --brand-lilac-mist: #e6c7e6;
+  --brand-soft-violet: #a3779d;
+  --brand-royal-amethyst: #663399;
+  --brand-midnight-plum: #2e1a47;
+  --brand-soft-blush: #fbe4e3;
+  --brand-crimson-silk: #d72638;
+  --brand-ruby-red: #98111e;
+  --brand-deep-bordeaux: #3f0d12;
+  --brand-blush-pink: #fadadd;
+  --brand-rose-gold: #b66e79;
+  --brand-muted-copper: #8c4e4f;
+  --brand-dark-mahogany: #3b1f1b;
 
   /* soft glow behind section labels and under the cursor on cards */
-  --glow-warm: #a33c52;
+  --glow-warm: #0f52ba;
   /* film grain strength over the whole page */
   --grain-opacity: 0.035;
+  /* countdown numbers sit on an inverted card (navy in Day, ice in Night) */
+  --countdown-number: #a6c5d7;
 
   /* journey map */
-  --map-land: #f5eedb;
-  --map-contour: rgba(45, 18, 24, 0.11);
-  --map-contour-strong: rgba(45, 18, 24, 0.22);
-  --map-grid-dot: rgba(45, 18, 24, 0.13);
-  --map-label: #8a7266;
-  --heart-route-start: #4f9ab3;
-  --heart-route-middle: #7d9c3c;
-  --heart-route-end: #b59a35;
-  --heart-route-glow: #7d9c3c;
-  --heart-route-ahead-opacity: 0.28;
+  --map-land: #e4eef8;
+  --map-contour: rgba(0, 9, 38, 0.1);
+  --map-contour-strong: rgba(0, 9, 38, 0.2);
+  --map-grid-dot: rgba(0, 9, 38, 0.12);
+  --map-label: #5d7590;
+  --heart-route-start: #8fb3cc;
+  --heart-route-middle: #5d8fb3;
+  --heart-route-end: #2f5f96;
+  --heart-route-glow: #5d8fb3;
+  --heart-route-ahead-opacity: 0.3;
 
-  /* sticky notes (life board and guestbook) */
-  --note-mustard: #ecdd94;
-  --note-light-blue: #cfe8f0;
-  --note-lime: #e1eeb8;
-  --note-rose: #efc7cf;
+  /* sticky notes (life board and guestbook): the lightest colour of each family */
+  --note-ice: #d6e6f3;
+  --note-powder: #c4daea;
+  --note-mint: #d1f2eb;
+  --note-lilac: #e6c7e6;
+  --note-blush: #fadadd;
 
   /* fonts */
   --font-display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
@@ -70,47 +95,49 @@
    The same values appear twice because CSS can't share one block between those two cases. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --color-page: #1c1716;
-    --color-surface: #272120;
-    --color-text: #f8f1df;
-    --color-text-muted: #b9a79a;
-    --color-border: #3e3431;
-    --color-accent: #d4e79e;
-    --color-on-accent: #22101a;
-    --glow-warm: #d4627c;
+    --color-page: #000926;
+    --color-surface: #0a1638;
+    --color-text: #d6e6f3;
+    --color-text-muted: #a6c5d7;
+    --color-border: #1d2c55;
+    --color-accent: #a6c5d7;
+    --color-on-accent: #000926;
+    --glow-warm: #4d86d9;
     --grain-opacity: 0.05;
-    --map-land: #1f1a19;
-    --map-contour: rgba(248, 241, 223, 0.075);
-    --map-contour-strong: rgba(248, 241, 223, 0.16);
-    --map-grid-dot: rgba(248, 241, 223, 0.08);
-    --map-label: #8d7d74;
-    --heart-route-start: #add8e6;
-    --heart-route-middle: #d4e79e;
-    --heart-route-end: #dbc977;
-    --heart-route-glow: #d4e79e;
+    --countdown-number: #0f52ba;
+    --map-land: #030f33;
+    --map-contour: rgba(214, 230, 243, 0.07);
+    --map-contour-strong: rgba(214, 230, 243, 0.15);
+    --map-grid-dot: rgba(214, 230, 243, 0.08);
+    --map-label: #6f88a8;
+    --heart-route-start: #d6e6f3;
+    --heart-route-middle: #a6c5d7;
+    --heart-route-end: #6f9fd6;
+    --heart-route-glow: #a6c5d7;
     --heart-route-ahead-opacity: 0.3;
     color-scheme: dark;
   }
 }
 :root[data-theme='dark'] {
-  --color-page: #1c1716;
-  --color-surface: #272120;
-  --color-text: #f8f1df;
-  --color-text-muted: #b9a79a;
-  --color-border: #3e3431;
-  --color-accent: #d4e79e;
-  --color-on-accent: #22101a;
-  --glow-warm: #d4627c;
+  --color-page: #000926;
+  --color-surface: #0a1638;
+  --color-text: #d6e6f3;
+  --color-text-muted: #a6c5d7;
+  --color-border: #1d2c55;
+  --color-accent: #a6c5d7;
+  --color-on-accent: #000926;
+  --glow-warm: #4d86d9;
   --grain-opacity: 0.05;
-  --map-land: #1f1a19;
-  --map-contour: rgba(248, 241, 223, 0.075);
-  --map-contour-strong: rgba(248, 241, 223, 0.16);
-  --map-grid-dot: rgba(248, 241, 223, 0.08);
-  --map-label: #8d7d74;
-  --heart-route-start: #add8e6;
-  --heart-route-middle: #d4e79e;
-  --heart-route-end: #dbc977;
-  --heart-route-glow: #d4e79e;
+  --countdown-number: #0f52ba;
+  --map-land: #030f33;
+  --map-contour: rgba(214, 230, 243, 0.07);
+  --map-contour-strong: rgba(214, 230, 243, 0.15);
+  --map-grid-dot: rgba(214, 230, 243, 0.08);
+  --map-label: #6f88a8;
+  --heart-route-start: #d6e6f3;
+  --heart-route-middle: #a6c5d7;
+  --heart-route-end: #6f9fd6;
+  --heart-route-glow: #a6c5d7;
   --heart-route-ahead-opacity: 0.3;
   color-scheme: dark;
 }

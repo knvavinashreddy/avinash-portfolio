@@ -1,11 +1,11 @@
-/* Hero section: pure black, my name on top, my photo on the stage below.
+/* Hero section: deep navy, my name on top, my photo on the stage below.
    --mouse-x / --mouse-y (set by useMouseDepth.js, -1 to 1) let each layer drift with the mouse. */
 
 .hero {
   position: relative; overflow: hidden; padding: clamp(28px, 4.5vh, 52px) 0 0; text-align: center;
   display: flex; flex-direction: column;
-  /* pure black in both themes; the only colour is the sun behind me */
-  background: #000; color: var(--brand-breezy-beige);
+  /* Deep Navy in both themes; the only bright colour is the Sapphire sun behind me */
+  background: var(--brand-deep-navy); color: var(--brand-ice-blue);
 }
 
 /* The stage holds the proof chips and my portrait. As big as fits, so the whole hero

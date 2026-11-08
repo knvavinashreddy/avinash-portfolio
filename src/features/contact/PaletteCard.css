@@ -1,21 +1,21 @@
-/* The five colours of the site, like a swatch sheet. */
+/* The site's five colour families as a swatch sheet: four columns, one row per family. */
 
-.palette-card { display: grid; grid-template-columns: repeat(5, 1fr); margin: 64px 0 0; padding: 0; border-radius: 22px; overflow: hidden; border: 1px solid var(--color-border); }
-.palette-card li { list-style: none; padding: 22px 20px 18px; min-height: 132px; display: flex; flex-direction: column; justify-content: space-between; gap: 18px; }
-.palette-card strong { font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; letter-spacing: -0.02em; line-height: 1.05; }
-.palette-card span { display: flex; justify-content: space-between; font: 500 0.72rem var(--font-mono); letter-spacing: 0.08em; opacity: 0.85; }
-.palette-card em { font-style: normal; opacity: 0.8; }
-.palette-card .palette-chicory { background: var(--brand-red-chicory); color: var(--brand-mustard-oil); }
-.palette-card .palette-mustard { background: var(--brand-mustard-oil); color: #6b2236; }
-.palette-card .palette-beige { background: var(--brand-breezy-beige); color: var(--brand-red-chicory); }
-.palette-card .palette-lime { background: var(--brand-lime-cream); color: #4a1530; }
-.palette-card .palette-light-blue { background: var(--brand-light-blue); color: #6b2236; }
-.palette-card .palette-light-blue strong { font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-weight: 600; letter-spacing: -0.01em; }
-.palette-card .palette-lime strong { text-transform: uppercase; letter-spacing: 0.01em; }
-@media (max-width: 960px) {
-  .palette-card { grid-template-columns: repeat(3, 1fr); }
+.palette-card {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 64px 0 0; padding: 0; border-radius: 22px; overflow: hidden; border: 1px solid var(--color-border);
 }
-@media (max-width: 760px) {
-  .palette-card { grid-template-columns: 1fr 1fr; }
-  .palette-card .palette-light-blue { grid-column: 1 / -1; }
+.palette-swatch {
+  list-style: none; min-height: 96px; padding: 16px clamp(10px, 2.4vw, 18px) 14px;
+  display: flex; flex-direction: column; justify-content: space-between; gap: 10px;
+}
+.palette-swatch.is-light { color: #1a1a2a; }
+.palette-swatch.is-dark { color: #f6f2ee; }
+.palette-swatch span { font: 500 0.7rem var(--font-mono); letter-spacing: 0.08em; opacity: 0.8; }
+.palette-swatch strong { font-family: var(--font-display); font-weight: 800; font-size: 1rem; letter-spacing: -0.01em; line-height: 1.1; }
+
+/* on phones the swatches get small, so only the colour name stays */
+@media (max-width: 560px) {
+  .palette-swatch { min-height: 72px; }
+  .palette-swatch span { display: none; }
+  .palette-swatch strong { font-size: 0.78rem; }
 }

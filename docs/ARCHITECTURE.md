@@ -57,8 +57,11 @@ scripts/
 
 ## How the CSS fits together
 
-- Colours and fonts are CSS variables in `styles/tokens.css` (`--color-text`, `--brand-mustard-oil`, …).
+- Colours and fonts are CSS variables in `styles/tokens.css` (`--color-text`, `--brand-sapphire`, …).
   Night mode only changes those variables, so components never need "if dark" code.
+- Each section has its own colour family (`styles/sectionThemes.css`): a class like
+  `section-theme-green` re-sets the `--color-*` variables for that section only, so everything
+  inside recolours itself.
 - `main.jsx` imports the global CSS **before** `App`, so each component's own CSS (imported in its
   `.jsx` file) loads later and wins over the shared defaults when both are equally specific.
 - State is shown with `is-…` / `has-…` classes added by React: `is-playing`, `is-active`,

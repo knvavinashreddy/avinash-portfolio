@@ -1,4 +1,4 @@
-// Hero heading: small label, my name with a mustard full stop, and the rotating "I build …" line.
+// Hero heading: small label, my name with a powder-blue full stop, and the rotating "I build …" line.
 
 import { profile } from '../../../data/profile'
 import RotatingLine from './RotatingLine'

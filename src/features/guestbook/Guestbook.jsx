@@ -16,7 +16,7 @@ export default function Guestbook() {
   }
 
   return (
-    <section id="guestbook" aria-labelledby="guestbook-title">
+    <section id="guestbook" className="section-theme-powder" aria-labelledby="guestbook-title">
       <div className="page-container">
         <p className="section-label">06 · Guestbook</p>
         <h2 id="guestbook-title">Before you go, leave a note.</h2>

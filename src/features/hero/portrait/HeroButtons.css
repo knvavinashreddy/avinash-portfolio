@@ -1,4 +1,4 @@
-/* "See my work →" (mustard) and "▶ Walk my journey" (outline), sitting over my chest. */
+/* "See my work →" (powder blue) and "▶ Walk my journey" (outline), sitting over my chest. */
 
 .hero-buttons {
   position: absolute; z-index: 3; left: 50%; bottom: 9%; transform: translateX(-50%);
@@ -12,9 +12,9 @@
   transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
 }
 .hero-button:hover { transform: translateY(-2px); }
-.hero-button-primary { background: var(--brand-mustard-oil); color: #2d1218; }
+.hero-button-primary { background: var(--brand-powder-blue); color: var(--brand-deep-navy); }
 .hero-button-outline {
-  color: var(--brand-breezy-beige); background: rgba(28, 23, 22, 0.72); border: 1.5px solid rgba(248, 241, 223, 0.85);
+  color: var(--brand-ice-blue); background: rgba(0, 9, 38, 0.72); border: 1.5px solid rgba(214, 230, 243, 0.85);
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
 }
 

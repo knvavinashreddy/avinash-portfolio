@@ -1,5 +1,5 @@
 /* Top bar: brand on the left, a live status line, then the music and Day/Night buttons.
-   A thin band of the five brand colours runs underneath. */
+   A thin band of the brand blues runs underneath. */
 
 .top-bar {
   position: sticky;
@@ -20,29 +20,28 @@
   margin-left: auto; display: inline-flex; align-items: center; gap: 8px;
   font: 500 0.78rem var(--font-mono); letter-spacing: 0.06em; color: var(--color-text-muted); white-space: nowrap;
 }
-/* the little "online" light: Lime Cream, softly pinging */
+/* the little "online" light, softly pinging in the accent colour */
 .top-bar-status i {
   width: 8px; height: 8px; border-radius: 50%;
-  background: #9ec24f; box-shadow: 0 0 0 0 rgba(158, 194, 79, 0.6);
+  background: var(--color-accent); box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 60%, transparent);
   animation: status-light-ping 2.4s infinite;
 }
-@keyframes status-light-ping { 0% { box-shadow: 0 0 0 0 rgba(158, 194, 79, 0.6); } 70% { box-shadow: 0 0 0 8px rgba(158, 194, 79, 0); } }
+@keyframes status-light-ping { 70% { box-shadow: 0 0 0 8px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
 
 .top-bar-actions { display: flex; align-items: center; gap: 10px; }
 
-/* Colour band: all five colours at night; in the day, beige would vanish on beige, so it's left out */
+/* Colour band: the brand blues. At night Deep Navy would vanish on the navy page, and in the
+   day Ice Blue would vanish on the ice page, so each theme leaves that one out. */
 .top-bar::after {
   content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px;
-  background: linear-gradient(90deg,
-    var(--brand-red-chicory) 0 20%, var(--brand-mustard-oil) 20% 40%, var(--brand-breezy-beige) 40% 60%,
-    var(--brand-lime-cream) 60% 80%, var(--brand-light-blue) 80% 100%);
+  background: linear-gradient(90deg, var(--brand-sapphire) 0 33.4%, var(--brand-powder-blue) 33.4% 66.7%, var(--brand-ice-blue) 66.7% 100%);
 }
 :root[data-theme='light'] .top-bar::after {
-  background: linear-gradient(90deg, var(--brand-red-chicory) 0 25%, var(--brand-mustard-oil) 25% 50%, var(--brand-lime-cream) 50% 75%, var(--brand-light-blue) 75% 100%);
+  background: linear-gradient(90deg, var(--brand-deep-navy) 0 33.4%, var(--brand-sapphire) 33.4% 66.7%, var(--brand-powder-blue) 66.7% 100%);
 }
 @media (prefers-color-scheme: light) {
   :root:not([data-theme='dark']) .top-bar::after {
-    background: linear-gradient(90deg, var(--brand-red-chicory) 0 25%, var(--brand-mustard-oil) 25% 50%, var(--brand-lime-cream) 50% 75%, var(--brand-light-blue) 75% 100%);
+    background: linear-gradient(90deg, var(--brand-deep-navy) 0 33.4%, var(--brand-sapphire) 33.4% 66.7%, var(--brand-powder-blue) 66.7% 100%);
   }
 }
 
