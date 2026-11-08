@@ -16,10 +16,10 @@ export const journeyStops = [
     color: '#a33c52',
     when: '2021', // year of your 10th, edit if needed
     place: 'Bhimavaram',
-    headline: 'My School Journey — A Journey Beyond Academics',
+    headline: 'A Journey Beyond Academics',
     // a blank line between paragraphs ("\n\n") starts a new paragraph on the story card
     story:
-      'My school life was filled with sports, games, friendships, and cultural activities, but academics were always a challenge, especially mathematics. After 9th grade, I realised the importance of strengthening my basics. During COVID, I joined private coaching classes and started working on my fundamentals. It wasn’t an easy journey, but gradually, I improved and developed a better approach towards learning. I was never a topper, but those struggles taught me the value of consistency and self-improvement.',
+      'My school life was more about sports, games, friendships, and cultural activities. Academics, especially mathematics, were a struggle. After 9th grade, I started focusing on my basics through private coaching during COVID. Though I was never a topper, I gradually improved through consistent effort.',
     gallery: [{ caption: 'School days' }, { caption: 'The classroom' }, { caption: '10th results day' }],
   },
   {
