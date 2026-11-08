@@ -17,7 +17,7 @@
 .project-card-name { font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .project-card-emoji { font-size: 1.4rem; flex: none; }
 .project-card-tagline { opacity: 0.8; font-size: 1.05rem; }
-.project-card-footer { margin-top: auto; font-size: 1.5rem; }
+.project-card-footer { margin-top: auto; font-size: 1.35rem; }
 .project-card.is-picked .project-card-footer { color: var(--color-on-accent); }
 @media (max-width: 960px) {
   .project-deck-area { grid-template-columns: 1fr; }

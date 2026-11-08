@@ -1,4 +1,4 @@
 /* Journey section heading. */
 
 .journey-heading { text-align: center; display: flex; flex-direction: column; align-items: center; }
-.journey-heading h2 { max-width: 16ch; font-size: clamp(2.4rem, 6vw, 4.8rem); }
+.journey-heading h2 { max-width: 16ch; font-size: clamp(1.8rem, 3.6vw, 2.8rem); }

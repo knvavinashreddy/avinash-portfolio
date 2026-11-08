@@ -2,7 +2,7 @@
 
 .launch-countdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 0; }
 .launch-countdown div { background: color-mix(in srgb, var(--color-page) 10%, transparent); border-radius: 18px; padding: 18px 8px; text-align: center; }
-.launch-countdown dd { margin: 0; font-family: var(--font-display); font-weight: 800; font-size: clamp(2rem, 4vw, 3rem); line-height: 1; color: var(--color-accent); font-variant-numeric: tabular-nums; }
+.launch-countdown dd { margin: 0; font-family: var(--font-display); font-weight: 800; font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1; color: var(--color-accent); font-variant-numeric: tabular-nums; }
 .launch-countdown dt { font-size: 0.85rem; opacity: 0.75; margin-top: 6px; }
 @media (max-width: 760px) {
   .launch-countdown { grid-template-columns: repeat(2, 1fr); }

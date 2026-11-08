@@ -9,8 +9,8 @@
 .heart-preview-open-button {
   margin-top: -40px; position: relative;
   display: inline-flex; align-items: center; gap: 12px;
-  padding: 18px 34px; border-radius: 999px; cursor: pointer;
-  font: 700 1.2rem var(--font-display);
+  padding: 15px 28px; border-radius: 999px; cursor: pointer;
+  font: 700 1.05rem var(--font-display);
   background: var(--color-text); color: var(--color-page); border: 0;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
   transition: transform 0.2s;

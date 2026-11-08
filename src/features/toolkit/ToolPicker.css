@@ -14,8 +14,8 @@
   background: var(--color-accent); color: var(--color-on-accent);
   border-radius: 28px 28px 28px 6px; padding: 32px; min-height: 200px;
 }
-.toolkit-tool-note strong { font-family: var(--font-display); font-size: 2rem; line-height: 1.05; display: block; margin-bottom: 10px; }
-.toolkit-tool-note p { font-size: 1.15rem; }
+.toolkit-tool-note strong { font-family: var(--font-display); font-size: 1.6rem; line-height: 1.05; display: block; margin-bottom: 10px; }
+.toolkit-tool-note p { font-size: 1.05rem; }
 @media (max-width: 960px) {
   .toolkit-layout { grid-template-columns: 1fr; }
   .toolkit-tool-note { position: static; min-height: 0; }

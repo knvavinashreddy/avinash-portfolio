@@ -8,7 +8,7 @@
 }
 .contact-shortcuts a:hover { border-color: var(--color-accent); transform: translateY(-3px); }
 .contact-shortcuts kbd {
-  font-family: var(--font-display); font-weight: 800; font-size: 1.3rem;
+  font-family: var(--font-display); font-weight: 800; font-size: 1.15rem;
   width: 44px; height: 44px; display: grid; place-items: center; margin-bottom: 12px;
   border-radius: 10px; background: var(--color-accent); color: var(--color-on-accent);
   box-shadow: 0 4px 0 color-mix(in srgb, var(--color-accent) 60%, #000);

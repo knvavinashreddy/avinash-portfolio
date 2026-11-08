@@ -2,7 +2,7 @@
 
 .palette-card { display: grid; grid-template-columns: repeat(5, 1fr); margin: 64px 0 0; padding: 0; border-radius: 22px; overflow: hidden; border: 1px solid var(--color-border); }
 .palette-card li { list-style: none; padding: 22px 20px 18px; min-height: 132px; display: flex; flex-direction: column; justify-content: space-between; gap: 18px; }
-.palette-card strong { font-family: var(--font-display); font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em; line-height: 1.05; }
+.palette-card strong { font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; letter-spacing: -0.02em; line-height: 1.05; }
 .palette-card span { display: flex; justify-content: space-between; font: 500 0.72rem var(--font-mono); letter-spacing: 0.08em; opacity: 0.85; }
 .palette-card em { font-style: normal; opacity: 0.8; }
 .palette-card .palette-chicory { background: var(--brand-red-chicory); color: var(--brand-mustard-oil); }
